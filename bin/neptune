@@ -1,0 +1,17 @@
+#!/usr/bin/env escript
+%% -*- erlang -*-
+%%! -pa @neptune_ebindir@
+
+-define(COMMAND_NAME, "neptune").
+
+main([Salutation]) ->
+    neptune:main(Salutation);
+main([]) ->
+    neptune:main();
+main(_) ->
+    usage().
+
+usage() ->
+    io:format("~s [salutation]~n", [?COMMAND_NAME]),
+    io:format("see manual page for ~s(1) for more details~n", [?COMMAND_NAME]).
+

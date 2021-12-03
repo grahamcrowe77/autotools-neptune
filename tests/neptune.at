@@ -1,0 +1,6 @@
+AT_SETUP([neptune-execution])
+FIND_NEPTUNE
+AT_CHECK_UNQUOTED(["${neptune}"],,
+                  [Hello from neptune!
+])
+AT_CLEANUP
