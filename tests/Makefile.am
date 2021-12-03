@@ -1,9 +1,22 @@
-EXTRA_DIST = testsuite.at local.at jupiter.at print.at \
-	     $(TESTSUITE) atconfig package.m4
+EXTRA_DIST = \
+  testsuite.at \
+  local.at \
+  neptune-eunit.at \
+  neptune-default.at \
+  neptune-argument.at \
+  $(TESTSUITE) \
+  atconfig \
+  package.m4
 
 TESTSUITE = $(srcdir)/testsuite
-TESTSOURCES = $(srcdir)/local.at $(srcdir)/testsuite.at \
-	      $(srcdir)/neptune_unit.at $(srcdir)/neptune.at
+
+TESTSOURCES = \
+  $(srcdir)/local.at \
+  $(srcdir)/testsuite.at \
+  $(srcdir)/neptune-eunit.at \
+  $(srcdir)/neptune-default.at \
+  $(srcdir)/neptune-argument.at
+
 AUTOM4TE = $(SHELL) $(top_srcdir)/missing --run autom4te
 AUTOTEST = $(AUTOM4TE) --language=autotest
 
@@ -11,10 +24,10 @@ check-local: atconfig atlocal $(TESTSUITE)
 	$(SHELL) '$(TESTSUITE)' $(TESTSUITEFLAGS)
 
 installcheck-local: atconfig atlocal $(TESTSUITE)
-	$(SHELL) '$(TESTSUITE)' 'AUTOTEST_PATH=$(DESTDIR)$(bindir)' $(TESTSUITEFLAGS)
+	$(SHELL) '$(TESTSUITE)' 'AUTOTEST_PATH=$(DESTDIR)$(bindir)' 'prefix=$(prefix)' 'ebindir=/lib64/erlang/lib/neptune-0.1.0/ebin' $(TESTSUITEFLAGS)
 
 clean-local:
-	test | -f '$(TESTSUITE)' || $(SHELL) '$(TESTSUITE)' --clean
+	test ! -f '$(TESTSUITE)' || $(SHELL) '$(TESTSUITE)' --clean
 	rm -rf atconfig
 
 atconfig: $(top_builddir)/config.status

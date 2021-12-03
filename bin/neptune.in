@@ -1,11 +1,11 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
-%%! -pa @neptune_ebindir@
+%%! -pa ebin @neptune_ebindir@
 
 -define(COMMAND_NAME, "neptune").
 
 main([Salutation]) ->
-    neptune:main(Salutation);
+    neptune:main(list_to_binary(Salutation));
 main([]) ->
     neptune:main();
 main(_) ->

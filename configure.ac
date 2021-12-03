@@ -28,7 +28,16 @@ AC_ERLANG_CHECK_LIB([stdlib], [],
   [AC_MSG_ERROR([stdlib was not found!])])
 AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([neptune], [0.1.0])
 
-AC_CONFIG_FILES([
-  Makefile
-  ebin/neptune.app])
+if test "x${prefix}" == "xNONE"; then
+  prefix=/usr/local
+fi
+exec_prefix="${prefix}"
+libdir="${exec_prefix}/lib64"
+ERLANG_INSTALL_LIB_DIR="${libdir}/erlang/lib"
+ERLANG_INSTALL_LIB_DIR_neptune="${ERLANG_INSTALL_LIB_DIR}/neptune-0.1.0"
+neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
+AC_SUBST([neptune_ebindir])
+
+AC_CONFIG_FILES([Makefile ebin/neptune.app])
+AC_CONFIG_FILES([bin/neptune],[chmod +x bin/neptune])
 AC_OUTPUT

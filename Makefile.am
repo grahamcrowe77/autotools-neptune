@@ -5,22 +5,22 @@ neptune_incdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/include
 neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
 neptune_privdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/priv
 
-bin_SCRIPTS = \
+dist_bin_SCRIPTS = \
   bin/neptune
 
-man1_MANS = \
+dist_man1_MANS = \
   man/neptune.1
 
-neptune_src_DATA = \
+dist_neptune_src_DATA = \
   $(neptune_priv_headers) \
   $(neptune_sources)
 
 neptune_priv_headers =
 
 neptune_sources = \
-  src/neptune.erl
+  $(srcdir)/src/neptune.erl
 
-neptune_inc_DATA = \
+dist_neptune_inc_DATA = \
   $(neptune_pub_headers)
 
 neptune_pub_headers = \
@@ -30,7 +30,7 @@ neptune_ebin_DATA = \
   ebin/neptune.app \
   ebin/neptune.beam
 
-neptune_priv_DATA =
+dist_neptune_priv_DATA =
 
 ebin/%.beam: $(neptune_sources) ebin
 	$(ERLC) $(ERLCFLAGS) -I$(top_srcdir)/src -I$(top_srcdir)/include -o ebin $<
@@ -40,6 +40,9 @@ dialyzer.plt:
 
 check-local: dialyzer.plt
 	$(DIALYZER) -Wno_behaviours -Wno_fail_call --plts $< -- $(neptune_sources)
+
+uninstall-local:
+	rm -f  $(DESTDIR)$(bindir)/neptune_test
 
 MOSTLYCLEANFILES = \
   $(addsuffix .beam, $(test_modules)) \
@@ -54,17 +57,3 @@ DIALYZER_APPS = \
   stdlib \
   compiler \
   crypto
-
-DISTCLEANFILES = \
-  configure \
-  Makefile.in \
-  Makefile \
-  aclocal.m4 \
-  config.log \
-  config.status \
-  install-sh \
-  missing \
-  ebin/neptune.app
-
-distclean-local:
-	rm -rf autom4te.cache

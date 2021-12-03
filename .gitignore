@@ -2,6 +2,7 @@ ebin/neptune.app
 *.beam
 *~
 dialyzer.plt
+bin/neptune
 
 Makefile
 Makefile.in

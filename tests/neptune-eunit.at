@@ -1,8 +1,8 @@
-AT_SETUP([neptune_unit])
+AT_SETUP([neptune-eunit])
 EUNIT_COMPILE([neptune])
 EUNIT_RUN([neptune])
 AT_CHECK_UNQUOTED([${eunit_run}],,
-		  [  2 tests passed.
+                  [  2 tests passed.
 ])
 EUNIT_CLEANUP([neptune])
 AT_CLEANUP
