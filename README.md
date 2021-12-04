@@ -1,6 +1,5 @@
-This repo contains the history of the development of a trivial program that
-demonstrates how to use Autotools for an Erlang project making use of
-Autotools built in portability features.
+This repo contains a trivial Erlang project using Autotools and its built in
+portability features.
 
 This git repo is inspired by:
 **Autotools 2nd Edition**
@@ -12,7 +11,7 @@ To bootstrap the build system run the following:
 ./bootstrap.sh
 ```
 
-To test building in the src tree:
+To test building in the source tree:
 ```bash
 ./configure
 make
@@ -24,7 +23,7 @@ make distcheck
 make maintainer-clean
 ```
 
-To test building out of tree
+To test building out of source tree:
 ```
 mkdir -pv ../build
 cd ../build
