@@ -4,3 +4,5 @@
 * TODO Add a documentation example
 * TODO Extend example to include a simple C linked in driver
   Demonstrate true power of Autotools portability features
+* TODO Refactor configure.ac
+  Consistent shell variable usage
