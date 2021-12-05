@@ -1,34 +1,37 @@
-neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
+TESTCASES = \
+  neptune-dialyzer.at \
+  neptune-eunit.at \
+  neptune-default.at \
+  neptune-argument.at
 
 EXTRA_DIST = \
   testsuite.at \
   local.at \
-  neptune-dialyzer.at \
-  neptune-eunit.at \
-  neptune-default.at \
-  neptune-argument.at \
-  $(TESTSUITE) \
   atconfig \
-  package.m4
+  package.m4 \
+  $(TESTCASES) \
+  $(TESTSUITE)
 
 TESTSUITE = $(srcdir)/testsuite
 
 TESTSOURCES = \
   $(srcdir)/local.at \
   $(srcdir)/testsuite.at \
-  $(srcdir)/neptune-dialyzer.at \
-  $(srcdir)/neptune-eunit.at \
-  $(srcdir)/neptune-default.at \
-  $(srcdir)/neptune-argument.at
+  $(addprefix $(srcdir)/, $(TESTCASES))
 
 AUTOM4TE = $(SHELL) $(top_srcdir)/missing --run autom4te
 AUTOTEST = $(AUTOM4TE) --language=autotest
 
 check-local: atconfig atlocal $(TESTSUITE)
-	$(SHELL) '$(TESTSUITE)' 'DIALYZER=$(DIALYZER)' $(TESTSUITEFLAGS)
+	$(SHELL) '$(TESTSUITE)' \
+           'DIALYZER=$(DIALYZER)' $(TESTSUITEFLAGS)
 
 installcheck-local: atconfig atlocal $(TESTSUITE)
-	$(SHELL) '$(TESTSUITE)' 'AUTOTEST_PATH=$(DESTDIR)$(bindir)' 'DIALYZER=$(DIALYZER)' 'prefix=$(prefix)' 'neptune_ebindir=$(neptune_ebindir)' $(TESTSUITEFLAGS)
+	$(SHELL) '$(TESTSUITE)' \
+           'AUTOTEST_PATH=$(DESTDIR)$(bindir)' \
+           'DIALYZER=$(DIALYZER)' \
+           'prefix=$(prefix)' \
+           'neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin' $(TESTSUITEFLAGS)
 
 clean-local:
 	test ! -f '$(TESTSUITE)' || $(SHELL) '$(TESTSUITE)' --clean
