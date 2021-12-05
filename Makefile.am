@@ -32,14 +32,13 @@ neptune_ebin_DATA = \
 
 dist_neptune_priv_DATA =
 
-ebin/%.beam: $(neptune_sources) ebin
+ebin/%.beam: $(neptune_sources)
 	$(ERLC) $(ERLCFLAGS) -I$(top_srcdir)/src -I$(top_srcdir)/include -o ebin $<
 
-dialyzer.plt:
+neptune.plt:
 	$(DIALYZER) --build_plt --output_plt $@ --apps $(DIALYZER_APPS)
 
-check-local: dialyzer.plt
-	$(DIALYZER) -Wno_behaviours -Wno_fail_call --plts $< -- $(neptune_sources)
+check-local: neptune.plt
 
 uninstall-local:
 	rm -f  $(DESTDIR)$(bindir)/neptune_test
@@ -49,7 +48,7 @@ MOSTLYCLEANFILES = \
   $(neptune_ebin_DATA)
 
 CLEANFILES = \
-  dialyzer.plt
+  neptune.plt
 
 DIALYZER_APPS = \
   erts \

@@ -1,16 +1,16 @@
 AT_INIT
 AT_COLOR_TESTS
 
-m4_define([NEPTUNE_CLEANUP], [[set -x
-rm ${abs_top_builddir}/bin/neptune_test
-]]).
+m4_define([DIALYZER_RUN], [[set -x
+${DIALYZER} -Wno_behaviours -Wno_fail_call --plts ${abs_top_builddir}/neptune.plt -- ${abs_top_srcdir}/src/*.[eh]rl
+]])
 
 m4_define([EUNIT_COMPILE], [[set -x
-erlc -DTEST -I${abs_top_srcdir}/src -I${abs_top_srcdir}/include -o ${abs_top_builddir}/tests ${abs_top_srcdir}/src/$1.erl
+${ERLC} -DTEST -I${abs_top_srcdir}/src -I${abs_top_srcdir}/include -o ${abs_top_builddir}/tests ${abs_top_srcdir}/src/$1.erl
 ]]).
 
 m4_define([EUNIT_RUN], [[set -x
-eunit_run="erl -pa ${abs_top_builddir}/tests -noshell -run $1 test -s erlang halt"
+eunit_run="${ERL} -pa ${abs_top_builddir}/tests -noshell -run $1 test -s erlang halt"
 ]]).
 
 m4_define([EUNIT_CLEANUP], [[set -x
@@ -22,7 +22,11 @@ if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
   sed -e s#ebin#${abs_top_builddir}/ebin#g ${abs_top_builddir}/bin/neptune > ${abs_top_builddir}/bin/neptune_test
   chmod +x ${abs_top_builddir}/bin/neptune_test
 else
-  sed -e s#ebin#${DESTDIR}${prefix}${ebindir}#g ${abs_top_builddir}/bin/neptune > ${DESTDIR}${prefix}/bin/neptune_test
+  sed -e s#ebin#${DESTDIR}${neptune_ebindir}#g ${abs_top_builddir}/bin/neptune > ${DESTDIR}${prefix}/bin/neptune_test
   chmod +x ${DESTDIR}${prefix}/bin/neptune_test
 fi
 PATH=${abs_top_builddir}/bin:${PATH} export PATH]]).
+
+m4_define([NEPTUNE_CLEANUP], [[set -x
+rm ${abs_top_builddir}/bin/neptune_test
+]]).
