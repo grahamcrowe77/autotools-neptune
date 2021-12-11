@@ -1,9 +1,10 @@
-SUBDIRS = . tests
+ACLOCAL_AMFLAGS = -I m4
+
+SUBDIRS = c_src . tests
 
 neptune_srcdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/src
 neptune_incdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/include
 neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
-neptune_privdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/priv
 
 dist_bin_SCRIPTS = \
   bin/neptune
@@ -29,8 +30,6 @@ neptune_pub_headers = \
 neptune_ebin_DATA = \
   ebin/neptune.app \
   ebin/neptune.beam
-
-dist_neptune_priv_DATA =
 
 ebin/%.beam: $(neptune_sources)
 	$(ERLC) $(ERLCFLAGS) -I$(top_srcdir)/src -I$(top_srcdir)/include -o ebin $<

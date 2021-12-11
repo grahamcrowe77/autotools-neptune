@@ -1,8 +1,9 @@
+* DONE Extend example to include a simple NIF
+* TODO Add test cases for NIF foo and bar
 * TODO Refactor Makefile.am files
 Everything works as expected. Make solution more elegant.
 * TODO Add a common test example
 * TODO Add a documentation example
-* TODO Extend example to include a simple C linked in driver
 Demonstrate true power of Autotools portability features
 * TODO Refactor configure.ac
 ** TODO Consistent shell variable usage

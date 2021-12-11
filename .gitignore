@@ -1,5 +1,8 @@
 ebin/neptune.app
 *.beam
+*.la
+*.lo
+*.o
 *~
 neptune.plt
 bin/neptune
@@ -7,12 +10,18 @@ bin/neptune
 Makefile
 Makefile.in
 aclocal.m4
+m4/
 autom4te.cache/
-config.log
-config.status
+config.*
 configure
 missing
 install-sh
+compile
+depcomp
+ltmain.sh
+libtool
+.deps/
+.libs/
 
 bin/neptune_test
 tests/atconfig

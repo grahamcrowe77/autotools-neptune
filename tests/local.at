@@ -25,8 +25,10 @@ else
   sed -e s#ebin#${DESTDIR}${neptune_ebindir}#g ${abs_top_builddir}/bin/neptune > ${DESTDIR}${prefix}/bin/neptune_test
   chmod +x ${DESTDIR}${prefix}/bin/neptune_test
 fi
+mkdir -p ${abs_top_srcdir}/priv && cd ${abs_top_srcdir}/priv && ln -s ${abs_top_srcdir}/c_src/.libs/libneptune_nif.so . && cd -
 PATH=${abs_top_builddir}/bin:${PATH} export PATH]]).
 
 m4_define([NEPTUNE_CLEANUP], [[set -x
 rm ${abs_top_builddir}/bin/neptune_test
+rm -rf ${abs_top_srcdir}/priv
 ]]).

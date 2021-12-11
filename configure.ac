@@ -3,7 +3,10 @@ AC_INIT([neptune], [0.1.0], [graham.crowe@telia.com])
 AC_CONFIG_SRCDIR([src/neptune.erl])
 AM_INIT_AUTOMAKE([foreign])
 AM_SILENT_RULES
+LT_PREREQ([2.4.6])
+LT_INIT
 
+AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_TESTDIR([tests])
 AC_CONFIG_FILES([tests/Makefile
 		 tests/atlocal])
@@ -13,8 +16,10 @@ AC_ERLANG_NEED_ERL
 AC_ERLANG_NEED_ERLC
 AC_PATH_PROG(DIALYZER, dialyzer)
 AC_PROG_MKDIR_P
+AC_PROG_CC
 
 # Checks for libraries.
+AC_ERLANG_SUBST_ROOT_DIR
 AC_ERLANG_SUBST_ERTS_VER
 erlang_erts_maj_ver=`echo $ERLANG_ERTS_VER | cut -d'.' -f1`
 if test $erlang_erts_maj_ver -lt 10; then
@@ -38,7 +43,7 @@ ERLANG_INSTALL_LIB_DIR_neptune="${ERLANG_INSTALL_LIB_DIR}/neptune-0.1.0"
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 
-AC_CONFIG_FILES([Makefile ebin/neptune.app])
+AC_CONFIG_FILES([c_src/Makefile Makefile ebin/neptune.app])
 AC_CONFIG_FILES([bin/neptune],[chmod +x bin/neptune])
 AC_OUTPUT
 cat << EOF
