@@ -8,7 +8,7 @@
 
 -endif.
 
--export([main/0, main/1, foo/1, bar/1]).
+-export([main/0, main/1, double_up/1, square/1]).
 
 -on_load(init/0).
 
@@ -31,10 +31,10 @@ main() ->
 main(Salutation) ->
     io:format("~s~n", [greeting(Salutation)]).
 
-foo(_X) ->
+double_up(_X) ->
     exit(nif_library_not_loaded).
 
-bar(_Y) ->
+square(_Y) ->
     exit(nif_library_not_loaded).
 
 greeting(Salutation) ->
@@ -44,11 +44,13 @@ greeting(Salutation) ->
 -ifdef(TEST).
 
 greeting_test_() ->
-    [?_assertMatch(
-	<<"Hello from neptune!">>,
-	greeting(<<"Hello">>)),
-     ?_assertMatch(
-	<<"Hi there from neptune!">>,
-	greeting(<<"Hi there">>))
-    ].
+    [?_assertMatch(<<"Hello from neptune!">>, greeting(<<"Hello">>)),
+     ?_assertMatch(<<"Hi there from neptune!">>, greeting(<<"Hi there">>))].
+-endif.
+
+-ifdef(TEST).
+
+double_up_test_() ->
+    [?_assertMatch(6, double_up(3)),
+     ?_assertMatch(9, square(3))].
 -endif.
