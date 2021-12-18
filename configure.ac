@@ -1,5 +1,6 @@
 AC_PREREQ([2.69])
 AC_INIT([neptune], [0.1.0], [graham.crowe@telia.com])
+AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/neptune.erl])
 AM_INIT_AUTOMAKE([foreign])
 AM_SILENT_RULES

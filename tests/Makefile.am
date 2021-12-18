@@ -19,7 +19,7 @@ TESTSOURCES = \
   $(srcdir)/testsuite.at \
   $(addprefix $(srcdir)/, $(TESTCASES))
 
-AUTOM4TE = $(SHELL) $(top_srcdir)/missing --run autom4te
+AUTOM4TE = $(SHELL) $(top_srcdir)/build-aux/missing --run autom4te
 AUTOTEST = $(AUTOM4TE) --language=autotest
 
 check-local: atconfig atlocal $(TESTSUITE)

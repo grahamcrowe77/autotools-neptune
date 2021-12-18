@@ -3,6 +3,7 @@ ebin/neptune.app
 *.la
 *.lo
 *.o
+*.tar.gz
 *~
 neptune.plt
 bin/neptune
@@ -12,16 +13,13 @@ Makefile.in
 aclocal.m4
 m4/
 autom4te.cache/
+build-aux/
 config.*
 configure
-missing
-install-sh
-compile
-depcomp
-ltmain.sh
 libtool
 .deps/
 .libs/
+inst/
 
 bin/neptune_test
 tests/atconfig
