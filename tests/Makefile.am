@@ -1,3 +1,5 @@
+ACLOCAL_AMFLAGS = -I m4
+
 TESTCASES = \
   neptune-dialyzer.at \
   neptune-eunit.at \
@@ -22,7 +24,24 @@ TESTSOURCES = \
 AUTOM4TE = $(SHELL) $(top_srcdir)/build-aux/missing --run autom4te
 AUTOTEST = $(AUTOM4TE) --language=autotest
 
-check-local: atconfig atlocal $(TESTSUITE)
+neptune.plt:
+	$(DIALYZER) --build_plt --output_plt $@ --apps $(DIALYZER_APPS)
+
+MOSTLYCLEANFILES = \
+  $(addsuffix .beam, $(test_modules)) \
+  $(neptune_ebin_DATA)
+
+CLEANFILES = \
+  neptune.plt
+
+DIALYZER_APPS = \
+  erts \
+  kernel \
+  stdlib \
+  compiler \
+  crypto
+
+check-local: atconfig atlocal $(TESTSUITE) neptune.plt
 	$(SHELL) '$(TESTSUITE)' \
            'DIALYZER=$(DIALYZER)' $(TESTSUITEFLAGS)
 
@@ -32,6 +51,9 @@ installcheck-local: atconfig atlocal $(TESTSUITE)
            'DIALYZER=$(DIALYZER)' \
            'prefix=$(prefix)' \
            'neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin' $(TESTSUITEFLAGS)
+
+uninstall-local:
+	rm -f  $(DESTDIR)$(bindir)/neptune_test
 
 clean-local:
 	test ! -f '$(TESTSUITE)' || $(SHELL) '$(TESTSUITE)' --clean
