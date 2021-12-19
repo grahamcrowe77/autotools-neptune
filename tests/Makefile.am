@@ -57,7 +57,7 @@ uninstall-local:
 
 clean-local:
 	test ! -f '$(TESTSUITE)' || $(SHELL) '$(TESTSUITE)' --clean
-	rm -rf atconfig
+	rm -rf atconfig $(top_builddir)/src/*.beam
 
 atconfig: $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status tests/$@

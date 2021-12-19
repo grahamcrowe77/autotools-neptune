@@ -1,11 +1,6 @@
 * TODO Add a common test example
 * TODO Add a documentation example
-* TODO Explore AT_CHECK_EUNIT autotest macro
-This does not seem to work when source modules have embedded eunit tests that
-are included with the TEST pre-processor macro, e.g. not possible to
-pass/export ERLCFLAGS with -DTEST to compile the code accordingly before
-running AT_CHECK_EUNIT. The current workaround is to define specialized M4
-macros in tests/local.at
+* DONE Explore AT_CHECK_EUNIT autotest macro
 * DONE Extend example to include a simple NIF
 * DONE Add test cases for NIF double_up and square
 * DONE Refactor Makefile.am files

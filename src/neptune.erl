@@ -46,11 +46,13 @@ greeting(Salutation) ->
 greeting_test_() ->
     [?_assertMatch(<<"Hello from neptune!">>, greeting(<<"Hello">>)),
      ?_assertMatch(<<"Hi there from neptune!">>, greeting(<<"Hi there">>))].
--endif.
-
--ifdef(TEST).
 
 double_up_test_() ->
-    [?_assertMatch(6, double_up(3)),
-     ?_assertMatch(9, square(3))].
+    [?_assertMatch(6,  double_up(3)),
+     ?_assertMatch(12, double_up(6))].
+
+square_test_() ->
+    [?_assertMatch(9,  square(3)),
+     ?_assertMatch(36, square(6))].
+
 -endif.
