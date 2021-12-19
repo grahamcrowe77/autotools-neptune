@@ -9,8 +9,7 @@ LT_INIT
 
 AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_TESTDIR([tests])
-AC_CONFIG_FILES([tests/Makefile
-		 tests/atlocal])
+AC_CONFIG_FILES([tests/Makefile tests/atlocal])
 
 # Checks for programs.
 AC_ERLANG_NEED_ERL
@@ -23,7 +22,7 @@ AC_PROG_CC
 AC_ERLANG_SUBST_ROOT_DIR
 AC_ERLANG_SUBST_ERTS_VER
 erlang_erts_maj_ver=`echo $ERLANG_ERTS_VER | cut -d'.' -f1`
-if test $erlang_erts_maj_ver -lt 10; then
+if test ${erlang_erts_maj_ver} -lt 10; then
   AC_MSG_ERROR([Erlang/OTP version must >= OTP-22.0!])
 fi
 AC_ERLANG_CHECK_LIB([erts], [],

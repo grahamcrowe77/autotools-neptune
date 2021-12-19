@@ -5,8 +5,8 @@ Everything works as expected. Make solution more elegant.
 * TODO Add a common test example
 * TODO Add a documentation example
 Demonstrate true power of Autotools portability features
-* TODO Refactor configure.ac
-** TODO Consistent shell variable usage
+* DONE Refactor configure.ac
+** DONE Consistent shell variable usage
 ** DONE Reduce autotools clutter in top_srcdir
 * TODO Explore AT_CHECK_EUNIT autotest macro
 This does not seem to work when source modules have embedded eunit tests that
