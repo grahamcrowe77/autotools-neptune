@@ -16,6 +16,7 @@ To test building in the source tree:
 ./configure
 make
 make check
+make check TESTSUITEFLAGS=-v
 make install DESTDIR=$PWD/inst
 make installcheck DESTDIR=$PWD/inst
 make dist

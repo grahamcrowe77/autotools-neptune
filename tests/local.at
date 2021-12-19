@@ -2,7 +2,7 @@ AT_INIT
 AT_COLOR_TESTS
 
 m4_define([DIALYZER_RUN], [[set -x
-${DIALYZER} -Wno_behaviours -Wno_fail_call --plts ${abs_top_builddir}/neptune.plt -- ${abs_top_srcdir}/src/*.[eh]rl
+${DIALYZER} -Wno_behaviours -Wno_fail_call --plts ${abs_top_builddir}/tests/neptune.plt -- ${abs_top_srcdir}/src/*.[eh]rl
 ]])
 
 m4_define([EUNIT_COMPILE], [[set -x
