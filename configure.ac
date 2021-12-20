@@ -47,7 +47,7 @@ AC_CONFIG_FILES([Makefile ebin/neptune.app])
 AC_CONFIG_FILES([bin/neptune],[chmod +x bin/neptune])
 AC_OUTPUT
 cat << EOF
------------------------------------------------------------
+----------------------------------------------------------------------
 
 ${PACKAGE_NAME} Version ${PACKAGE_VERSION}
 
@@ -56,7 +56,9 @@ Compiler: '${ERLC} ${ERLCFLAGS}'
 
 Now type 'make @<:@<target>@:>@'
   where the optional argument <target> is:
-    all                         - build all binaries
-    install                     - install everything
------------------------------------------------------------
+    all                       - build all binaries
+    check @<:@TESTSUITEFLAGS=-v@:>@ - run all tests @<:@verbose@:>@
+    install                   - install everything
+    installcheck              - test installation
+----------------------------------------------------------------------
 EOF

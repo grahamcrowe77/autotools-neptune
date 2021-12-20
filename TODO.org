@@ -1,3 +1,4 @@
+* TODO Complete non-recursive build
 * TODO Add a common test example
 * TODO Add a documentation example
 * DONE Explore AT_CHECK_EUNIT autotest macro
