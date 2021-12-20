@@ -8,6 +8,7 @@ ${DIALYZER} -Wno_behaviours -Wno_fail_call \
 ]])
 
 m4_define([COMPILE_EUNIT], [[set -x
+mkdir -pv ${abs_top_builddir}/src
 ${ERLC} -DTEST -I${abs_top_srcdir}/include -o ${abs_top_builddir}/src $1
 ]]).
 
@@ -23,7 +24,7 @@ else
 fi
 mkdir -p ${abs_top_srcdir}/priv && \
   cd ${abs_top_srcdir}/priv && \
-  ln -s ${abs_top_srcdir}/c_src/.libs/libneptune_nif.so . && cd -
+  ln -s ${abs_top_srcdir}/.libs/libneptune_nif.so . && cd -
 PATH=${abs_top_builddir}/bin:${PATH} export PATH]]).
 
 m4_define([NEPTUNE_CLEANUP], [[set -x

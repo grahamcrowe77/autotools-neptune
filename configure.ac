@@ -2,7 +2,7 @@ AC_PREREQ([2.69])
 AC_INIT([neptune], [0.1.0], [graham.crowe@telia.com])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/neptune.erl])
-AM_INIT_AUTOMAKE([foreign])
+AM_INIT_AUTOMAKE([foreign subdir-objects])
 AM_SILENT_RULES([yes])
 LT_PREREQ([2.4.6])
 LT_INIT
@@ -43,13 +43,7 @@ ERLANG_INSTALL_LIB_DIR_neptune="${ERLANG_INSTALL_LIB_DIR}/neptune-0.1.0"
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 
-AC_CONFIG_FILES([Makefile
-		 c_src/Makefile
-		 include/Makefile
-		 src/Makefile
-		 man/Makefile
-		 bin/Makefile
-		 ebin/neptune.app])
+AC_CONFIG_FILES([Makefile ebin/neptune.app])
 AC_CONFIG_FILES([bin/neptune],[chmod +x bin/neptune])
 AC_OUTPUT
 cat << EOF

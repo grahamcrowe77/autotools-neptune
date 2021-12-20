@@ -18,7 +18,7 @@ init() ->
 		      BeamPath = code:where_is_file("neptune.beam"),
 		      BeamDir = filename:dirname(BeamPath),
 		      AppDir = filename:dirname(BeamDir),
-		      filename:join(AppDir, "c_src/.libs");
+		      filename:join(AppDir, ".libs");
 		  Dir ->
 		      Dir
 	      end,

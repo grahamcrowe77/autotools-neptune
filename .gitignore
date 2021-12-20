@@ -20,6 +20,7 @@ libtool
 .deps/
 .libs/
 inst/
+.dirstamp
 
 bin/neptune_test
 tests/atconfig
