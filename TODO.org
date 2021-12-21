@@ -1,3 +1,5 @@
+* TODO Create release workflow
+* TODO Create CI workflow
 * TODO Complete non-recursive build
 * TODO Add a common test example
 * TODO Add a documentation example
