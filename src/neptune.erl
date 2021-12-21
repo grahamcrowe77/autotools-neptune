@@ -1,6 +1,7 @@
 -module(neptune).
 
 -include("neptune.hrl").
+-include("neptune_limits.hrl").
 
 -ifdef(TEST).
 
@@ -28,18 +29,22 @@ init() ->
 main() ->
     io:format("~s~n", [greeting(?DEFAULT_SALUTATION)]).
 
+main(Salutation)
+  when size(Salutation) > ?MAX_SALUTATION_LENGTH ->
+    {error, max_salutation_length};
 main(Salutation) ->
     io:format("~s~n", [greeting(Salutation)]).
 
+greeting(Salutation) ->
+    Place = atom_to_binary(?MODULE),
+    <<Salutation/binary, " from ", Place/binary, "!">>.
+
+%% NIF Functions
 double_up(_X) ->
     exit(nif_library_not_loaded).
 
 square(_Y) ->
     exit(nif_library_not_loaded).
-
-greeting(Salutation) ->
-    Place = atom_to_binary(?MODULE),
-    <<Salutation/binary, " from ", Place/binary, "!">>.
 
 -ifdef(TEST).
 

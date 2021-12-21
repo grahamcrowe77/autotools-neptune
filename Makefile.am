@@ -56,7 +56,8 @@ dist_neptune_src_DATA = \
   $(neptune_priv_headers) \
   $(neptune_sources)
 
-neptune_priv_headers =
+neptune_priv_headers = \
+  $(top_srcdir)/src/neptune_limits.hrl
 
 neptune_sources = \
   $(top_srcdir)/src/neptune.erl

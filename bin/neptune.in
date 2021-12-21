@@ -5,11 +5,18 @@
 -define(COMMAND_NAME, "neptune").
 
 main([Salutation]) ->
-    neptune:main(list_to_binary(Salutation));
+    case neptune:main(list_to_binary(Salutation)) of
+	ok ->
+	    halt(0);
+	{error, max_salutation_length} ->
+	    io:format("ERROR: Salutation length limit exceeded~n"),
+	    halt(1)
+    end;
 main([]) ->
     neptune:main();
 main(_) ->
-    usage().
+    usage(),
+    halt(1).
 
 usage() ->
     io:format("~s [salutation]~n", [?COMMAND_NAME]),

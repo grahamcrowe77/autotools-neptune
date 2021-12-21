@@ -3,6 +3,7 @@ ebin/neptune.app
 *.la
 *.lo
 *.o
+*.so
 *.tar.gz
 *~
 neptune.plt
