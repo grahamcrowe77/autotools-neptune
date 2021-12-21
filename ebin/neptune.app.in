@@ -3,12 +3,13 @@
   {vsn, "@VERSION@"},
   {modules, [neptune]},
   {registered, []},
-  {applications, [kernel,
-		  stdlib]},
+  {applications,
+   [kernel,
+    stdlib]},
   {env, []},
-  {runtime_dependencies, ["erts-@ERLANG_LIB_VER_erts@",
-			  "kernel-@ERLANG_LIB_VER_kernel@"]},
+  {runtime_dependencies,
+   ["erts-@ERLANG_LIB_VER_erts@",
+    "kernel-@ERLANG_LIB_VER_kernel@"]},
   {mod, {neptune, []}}
  ]
 }.
-
