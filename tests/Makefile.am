@@ -43,15 +43,11 @@ neptune.plt:
 ######################################################################
 
 check-local: atconfig atlocal $(TESTSUITE) neptune.plt
-	$(SHELL) '$(TESTSUITE)' \
-           'DIALYZER=$(DIALYZER)' $(TESTSUITEFLAGS)
+	$(SHELL) '$(TESTSUITE)' $(TESTSUITEFLAGS)
 
 installcheck-local: atconfig atlocal $(TESTSUITE)
 	$(SHELL) '$(TESTSUITE)' \
            'AUTOTEST_PATH=$(DESTDIR)$(bindir)' \
-           'DIALYZER=$(DIALYZER)' \
-           'prefix=$(prefix)' \
-           'neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin' \
            $(TESTSUITEFLAGS)
 
 uninstall-local:
