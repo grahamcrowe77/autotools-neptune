@@ -5,13 +5,13 @@ ebin/neptune.app
 *.o
 *.so
 *.tar.gz
+*.m4
 *~
 neptune.plt
 bin/neptune
 
 Makefile
 Makefile.in
-aclocal.m4
 m4/
 autom4te.cache/
 build-aux/
