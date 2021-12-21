@@ -2,9 +2,9 @@ This repo contains a trivial Erlang project using Autotools and its built in
 portability features.
 
 This git repo is inspired by:
-**Autotools 2nd Edition**
-*A Practinioner's Guide To GNU Autoconf, GNU Automake and Libtool*
-**by John Calcote**
+1. **Autotools 2nd Edition** *A Practitioner's Guide To GNU Autoconf, GNU
+   Automake and Libtool* **by John Calcote**
+2. **[Romain Lenglet's blog](http://www.berabera.info/2009/08/02/eunit-integration-into-gnu-autotest/)**
 
 To bootstrap the build system run the following:
 ```bash
