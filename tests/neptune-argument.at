@@ -1,4 +1,5 @@
 AT_SETUP([neptune-argument])
+AT_KEYWORDS([blackbox])
 NEPTUNE_TEST
 AT_CHECK_UNQUOTED([neptune_test Greetings],,
                   [Greetings from neptune!

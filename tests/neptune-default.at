@@ -1,4 +1,6 @@
+AT_BANNER([Blackbox tests])
 AT_SETUP([neptune-default])
+AT_KEYWORDS([blackbox])
 NEPTUNE_TEST
 AT_CHECK_UNQUOTED([neptune_test],,
                   [Hello from neptune!

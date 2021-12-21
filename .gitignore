@@ -22,10 +22,10 @@ libtool
 .libs/
 inst/
 .dirstamp
+testsuite.dir/
+testsuite.log
 
 bin/neptune_test
 tests/atconfig
 tests/atlocal
 tests/testsuite
-tests/testsuite.dir/
-tests/testsuite.log

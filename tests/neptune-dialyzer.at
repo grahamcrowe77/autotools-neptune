@@ -1,4 +1,6 @@
+AT_BANNER([Static analysis test])
 AT_SETUP([neptune-dialyzer])
+AT_KEYWORDS([dialyzer])
 DIALYZER_RUN
 AT_CHECK_UNQUOTED([${dialyzer_run}],[0])
 AT_CLEANUP

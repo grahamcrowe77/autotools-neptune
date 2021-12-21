@@ -16,7 +16,6 @@ To test building in the source tree:
 ./configure
 make
 make check
-make check TESTSUITEFLAGS=-v
 make install DESTDIR=$PWD/inst
 make installcheck DESTDIR=$PWD/inst
 make dist
@@ -39,4 +38,13 @@ ensure the correct installation run configure as follows:
 ./configure --prefix=/usr
 make
 sudo make install
+```
+
+Tests can be selected or run in verbose mode:
+```bash
+make check                              # All tests
+make check TESTSUITEFLAGS=-v            # All tests verbose
+make check TESTSUITEFLAGS="-k dialyzer" # Dialyzer test
+make check TESTSUITEFLAGS="-k eunit"    # Eunit tests
+make check TESTSUITEFLAGS="-k blackbox" # Blackbox tests
 ```

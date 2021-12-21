@@ -1,4 +1,6 @@
+AT_BANNER([Eunit tests])
 AT_SETUP([neptune-eunit])
+AT_KEYWORDS([eunit])
 COMPILE_EUNIT(["${abs_top_srcdir}/src/neptune.erl"])
 AT_CHECK_EUNIT([neptune_testsuite], [{module, neptune}],
   [-pa "${abs_top_builddir}/src"])
