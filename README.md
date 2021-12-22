@@ -38,6 +38,7 @@ ensure the correct installation run configure as follows:
 ./configure --prefix=/usr
 make
 sudo make install
+sudo make installcheck
 ```
 
 Tests can be selected or run in verbose mode:
@@ -46,5 +47,6 @@ make check                              # All tests
 make check TESTSUITEFLAGS=-v            # All tests verbose
 make check TESTSUITEFLAGS="-k dialyzer" # Dialyzer test
 make check TESTSUITEFLAGS="-k eunit"    # Eunit tests
+make check TESTSUITEFLAGS="-k ct"       # Common tests
 make check TESTSUITEFLAGS="-k blackbox" # Blackbox tests
 ```

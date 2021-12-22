@@ -6,6 +6,7 @@ ebin/neptune.app
 *.so
 *.tar.gz
 *.m4
+*.html
 *~
 neptune.plt
 bin/neptune
@@ -24,6 +25,10 @@ inst/
 .dirstamp
 testsuite.dir/
 testsuite.log
+ct_run.ct*/
+ct_*
+jquery*
+variables-*
 
 bin/neptune_test
 tests/atconfig

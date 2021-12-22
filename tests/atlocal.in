@@ -1,3 +1,4 @@
 DIALYZER=@DIALYZER@
+CT_RUN=@CT_RUN@
 prefix=@prefix@
 neptune_ebindir=@neptune_ebindir@

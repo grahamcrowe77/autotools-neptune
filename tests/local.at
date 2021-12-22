@@ -1,10 +1,11 @@
 AT_INIT
 AT_COLOR_TESTS
 
-m4_define([DIALYZER_RUN], [[set -x
-${DIALYZER} -Wno_behaviours -Wno_fail_call \
+m4_define([DIALYZER], [[set -x
+export dialyzer_runcmd="${DIALYZER} \
+  -Wno_behaviours -Wno_fail_call \
   --plts ${abs_top_builddir}/tests/neptune.plt \
-  -- ${abs_top_srcdir}/src/*.[eh]rl
+  -- ${abs_top_srcdir}/src/*.erl"
 ]])
 
 m4_define([COMPILE_EUNIT], [[set -x
@@ -31,3 +32,10 @@ m4_define([NEPTUNE_CLEANUP], [[set -x
 rm ${abs_top_builddir}/bin/neptune_test
 rm -rf ${abs_top_srcdir}/priv
 ]]).
+
+m4_define([CT_RUN], [[set -x
+export ct_runcmd="${CT_RUN} \
+  -include ${abs_top_srcdir}/include ${abs_top_srcdir}/src \
+  -pa ${abs_top_builddir}/ebin \
+  -dir ${abs_top_srcdir}/tests"
+]])
