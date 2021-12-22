@@ -2,26 +2,32 @@ ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = . tests
 
+neptune_srcdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/src
+neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
+neptune_incdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/include
+neptune_privdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/priv
+
 ######################################################################
 # bin directory containing Escripts
 ######################################################################
 dist_bin_SCRIPTS = \
   $(top_builddir)/bin/neptune
 
+$(top_builddir)/bin/neptune: $(top_srcdir)/bin/neptune.in
+	$(MKDIR_P) $(@D)
+	sed -e s#NEPTUNE_EBINDIR#$(DESTDIR)$(neptune_ebindir)#g $< > $@
+	chmod +x $@
+
 ######################################################################
 
 ######################################################################
 # c_src directory containing C sources
 ######################################################################
-neptune_privdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/priv
-
 neptune_priv_LTLIBRARIES = libneptune_nif.la
 libneptune_nif_la_CFLAGS = -I@ERLANG_ROOT_DIR@/usr/include
 
 libneptune_nif_la_SOURCES = \
   $(top_srcdir)/c_src/neptune.c
-
-neptune_incdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/include
 
 ######################################################################
 
@@ -55,9 +61,6 @@ MODULES = \
 SOURCES = $(addprefix $(top_srcdir)/src/, $(addsuffix .erl, $(MODULES)))
 BEAMS   = $(addprefix $(top_builddir)/ebin/, $(addsuffix .beam, $(MODULES)))
 
-neptune_srcdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/src
-neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
-
 dist_neptune_src_DATA = \
   $(neptune_priv_headers) \
   $(SOURCES)
@@ -76,6 +79,14 @@ $(top_builddir)/ebin/%.beam: $(SOURCES)
            -o $(@D) $<
 
 MOSTLYCLEANFILES = \
-  $(BEAMS)
+  $(BEAMS) \
+  $(top_builddir)/bin/neptune
+
+######################################################################
+# Distribution
+######################################################################
+
+EXTRA_DIST = \
+  $(top_builddir)/bin/neptune.in
 
 ######################################################################

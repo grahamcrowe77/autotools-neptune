@@ -15,13 +15,9 @@ ${ERLC} -DTEST -I${abs_top_srcdir}/include -o ${abs_top_builddir}/src $1
 
 m4_define([NEPTUNE_TEST], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
-  sed -e s#ebin#${abs_top_builddir}/ebin#g \
-    ${abs_top_builddir}/bin/neptune > ${abs_top_builddir}/bin/neptune_test
-  chmod +x ${abs_top_builddir}/bin/neptune_test
-else
-  sed -e s#ebin#${DESTDIR}${neptune_ebindir}#g \
-    ${abs_top_builddir}/bin/neptune > ${DESTDIR}${prefix}/bin/neptune_test
-  chmod +x ${DESTDIR}${prefix}/bin/neptune_test
+  sed -e s#NEPTUNE_EBINDIR#${abs_top_builddir}/ebin#g \
+    ${abs_top_srcdir}/bin/neptune.in > ${abs_top_builddir}/bin/neptune
+  chmod +x ${abs_top_builddir}/bin/neptune
 fi
 mkdir -p ${abs_top_srcdir}/priv && \
   cd ${abs_top_srcdir}/priv && \
@@ -30,9 +26,7 @@ PATH=${abs_top_builddir}/bin:${PATH} export PATH]]).
 
 m4_define([NEPTUNE_CLEANUP], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
-  rm ${abs_top_builddir}/bin/neptune_test
-else
-  rm ${DESTDIR}${prefix}/bin/neptune_test
+  rm ${abs_top_builddir}/bin/neptune
 fi
 rm -rf ${abs_top_srcdir}/priv
 ]]).

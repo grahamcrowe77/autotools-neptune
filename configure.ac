@@ -45,7 +45,6 @@ neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 
 AC_CONFIG_FILES([Makefile ebin/neptune.app])
-AC_CONFIG_FILES([bin/neptune],[chmod +x bin/neptune])
 AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------

@@ -38,7 +38,7 @@ ensure the correct installation run configure as follows:
 ./configure --prefix=/usr
 make
 sudo make install
-sudo make installcheck
+make installcheck
 ```
 
 Tests can be selected or run in verbose mode:

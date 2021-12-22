@@ -1,6 +1,6 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
-%%! -pa ebin @neptune_ebindir@
+%%! -pa NEPTUNE_EBINDIR
 
 -define(COMMAND_NAME, "neptune").
 
