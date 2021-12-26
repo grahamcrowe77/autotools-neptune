@@ -2,3 +2,7 @@
 * TODO Create CI workflow
 * TODO Complete non-recursive build
 * TODO Add a documentation example
+Use erl_docgen to generate XML from edoc tags in code
+Add checks for fop in configure
+Use standard GNU autotools make rules for generating
+html, PDF and man pages.
