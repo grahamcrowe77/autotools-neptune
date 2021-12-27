@@ -16,11 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Cache
-        uses: actions/cache@v2.1.7
-        with:
-          path: ~/neptune.plt
-
       - name: Build and test
         run: |
           set -xv
