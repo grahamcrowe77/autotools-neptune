@@ -15,8 +15,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Cache
+        uses: actions/cache@v2.1.7
+        with:
+          path: ~/neptune.plt
 
-      - name: Run a multi-line script
+      - name: Build and test
         run: |
           set -xv
           erl +B -noinput -eval 'io:put_chars(erlang:system_info(system_version)),halt(0).'
@@ -24,3 +29,14 @@ jobs:
           ./configure --prefix=/usr
           make
           make check
+
+      - name: Install and check installation
+        run: |
+          make install DESTDIR=$PWD/inst
+          make installcheck DESTDIR=$PWD/inst
+                - name: Install and check installation
+
+      - name: Build and test distribution tarball
+        run: |
+          make dist
+          make distcheck
