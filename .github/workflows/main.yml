@@ -40,8 +40,7 @@ jobs:
       - name: Install and check installation
         run: |
           make install DESTDIR=$PWD/inst
-          # TODO: sudo rights needed to run installcheck
-          # make installcheck DESTDIR=$PWD/inst
+          sudo make installcheck DESTDIR=$PWD/inst
 
       - name: Build and test distribution tarball
         run: |
