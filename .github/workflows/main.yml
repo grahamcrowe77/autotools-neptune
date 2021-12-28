@@ -16,7 +16,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      # TODO: cache neptune.plt
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-plt
+        with:
+          path: ~/neptune.plt
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       
       - name: Build and test
         run: |
