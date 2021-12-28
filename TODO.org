@@ -1,9 +1,5 @@
-* TODO Create CI workflow
-** TODO Test installcheck
-Use sudo in yaml workflow file
-** TODO Test distcheck
-Use sudo in yaml workflow file
-** TODO Fix caching of neptune.plt
+* TODO Test distcheck
+Working locally but not in the workflow
 * TODO Add a documentation example
 erl_docgen supports generation of xml from edoc tags
 but the erl_docgen documentation is lacking.
