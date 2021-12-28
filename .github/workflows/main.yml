@@ -35,15 +35,17 @@ jobs:
           ./bootstrap.sh
           ./configure --prefix=/usr
           make
+          # Use cached ./tests/neptune.plt
           make check
 
       - name: Install and check installation
         run: |
           make install DESTDIR=$PWD/inst
+          # Use cached ./tests/neptune.plt
           sudo make installcheck DESTDIR=$PWD/inst
 
       - name: Build and test distribution tarball
         run: |
           make dist
-          # TODO: sudo rights needed to run distcheck
-          # make distcheck
+          # Not possible to use cached ./tests/neptune.plt
+          make distcheck
