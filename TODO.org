@@ -1,8 +1,15 @@
-* TODO Create release workflow
 * TODO Create CI workflow
-* TODO Complete non-recursive build
+** TODO Test installcheck
+Use sudo in yaml workflow file
+** TODO Test distcheck
+Use sudo in yaml workflow file
+** TODO Fix caching of neptune.plt
 * TODO Add a documentation example
-Use erl_docgen to generate XML from edoc tags in code
-Add checks for fop in configure
-Use standard GNU autotools make rules for generating
-html, PDF and man pages.
+erl_docgen supports generation of xml from edoc tags
+but the erl_docgen documentation is lacking.
+Investigate how this is solved using rebar3 and other solutions
+** TODO Generate man pages
+** TODO Generate pdf manual
+** TODO Generate html manual
+* TODO Create release workflow
+* TODO Complete non-recursive build
