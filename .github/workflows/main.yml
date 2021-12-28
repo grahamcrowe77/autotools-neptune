@@ -21,7 +21,7 @@ jobs:
         env:
           cache-name: cache-plt
         with:
-          path: ~/tests/neptune.plt
+          path: ./tests/neptune.plt
           key: ${{ runner.os }}-build-${{ env.cache-name }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}
