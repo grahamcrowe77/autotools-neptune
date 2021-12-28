@@ -28,19 +28,31 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       
-      - name: Build and test
+      - name: Bootstrap
         run: |
           set -xv
           erl +B -noinput -eval 'io:put_chars(erlang:system_info(system_version)),halt(0).'
           ./bootstrap.sh
+          
+      - name: Configure
+        run:
           ./configure --prefix=/usr
+
+      - name: Build
+        run:
           make
+
+      - name: Test
+        run:
           # Use cached ./tests/neptune.plt
           make check
 
-      - name: Install and check installation
-        run: |
+      - name: Install
+        run:
           make install DESTDIR=$PWD/inst
+
+      - name: Install Check
+        run:
           # Use cached ./tests/neptune.plt
           sudo make installcheck DESTDIR=$PWD/inst
 
@@ -48,4 +60,4 @@ jobs:
         run: |
           make dist
           # Not possible to use cached ./tests/neptune.plt
-          make distcheck
+          sudo make distcheck
