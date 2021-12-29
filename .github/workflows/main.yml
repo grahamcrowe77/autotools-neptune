@@ -60,5 +60,4 @@ jobs:
         run: |
           make dist
           # Not possible to use cached ./tests/neptune.plt
-          # TODO: Fix. This works run locally but not in the workflow
-          # make distcheck
+          make distcheck
