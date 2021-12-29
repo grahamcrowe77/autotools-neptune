@@ -6,9 +6,17 @@ This git repo is inspired by:
    Automake and Libtool* **by John Calcote**
 2. **[Romain Lenglet's blog](http://www.berabera.info/2009/08/02/eunit-integration-into-gnu-autotest/)**
 
-To bootstrap the build system run the following:
+Bootstrapping the build system requires the installation of GNU Autotools
+(autoconf, automake and libtool).To bootstrap the build system run the
+following:
 ```bash
 ./bootstrap.sh
+```
+
+Alternatively a distribution tarball can be fetched. These can be configured
+and built without the need to install GNU Autotools:
+```bash
+wget https://github.com/grahamcrowe77/autotools-neptune/releases/download/0.1.0/neptune-0.1.0.tar.gz
 ```
 
 To test building in the source tree:
