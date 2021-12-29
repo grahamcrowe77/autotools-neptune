@@ -10,6 +10,8 @@ Bootstrapping the build system requires the installation of GNU Autotools
 (autoconf, automake and libtool).To bootstrap the build system run the
 following:
 ```bash
+git clone https://github.com/grahamcrowe77/autotools-neptune.git
+cd autotools-neptune
 ./bootstrap.sh
 ```
 
@@ -17,6 +19,8 @@ Alternatively a distribution tarball can be fetched. These can be configured
 and built without the need to install GNU Autotools:
 ```bash
 wget https://github.com/grahamcrowe77/autotools-neptune/releases/download/0.1.0/neptune-0.1.0.tar.gz
+tar xf neptune-0.1.0.tar.gz
+cd neptune-0.1.0
 ```
 
 To test building in the source tree:
