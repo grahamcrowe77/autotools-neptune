@@ -27,7 +27,12 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-      
+
+      - name: Install xsltproc
+      - run: |
+           sudo apt-get update -y
+           sudo apt-get install -y xsltproc 
+
       - name: Bootstrap
         run: |
           set -xv
