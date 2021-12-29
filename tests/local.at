@@ -15,6 +15,7 @@ ${ERLC} -DTEST -I${abs_top_srcdir}/include -o ${abs_top_builddir}/src $1
 
 m4_define([NEPTUNE_TEST], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
+  mkdir -pv ${abs_top_builddir}/bin
   sed -e s#NEPTUNE_EBINDIR#${abs_top_builddir}/ebin#g \
     ${abs_top_srcdir}/bin/neptune.in > ${abs_top_builddir}/bin/neptune
   chmod +x ${abs_top_builddir}/bin/neptune
