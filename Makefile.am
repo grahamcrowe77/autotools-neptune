@@ -40,10 +40,38 @@ dist_neptune_inc_DATA = \
 ######################################################################
 
 ######################################################################
-# man directory containing manual pages for Escripts
+# man1 directory containing manual pages for Escripts
 ######################################################################
 dist_man1_MANS = \
-  $(top_srcdir)/man/neptune.1
+  $(top_srcdir)/man1/neptune.1
+
+######################################################################
+
+######################################################################
+# man3 directory containing manual pages for application
+######################################################################
+AM_V_DOC = $(am__v_DOC_@AM_V@)
+am__v_DOC_ = $(am__v_DOC_@AM_DEFAULT_V@)
+am__v_DOC_0 = @echo "  GENDOC  " $@;
+am__v_DOC_1 = 
+
+dist_man3_MANS = \
+  $(top_builddir)/man3/neptune.3
+
+$(top_builddir)/man3/neptune.3: $(top_builddir)/neptune.xml
+	$(AM_V_DOC)$(XSLTPROC) --output $@ \
+	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
+	  --stringparam gendate "`date +"%B %e, %Y"`" \
+	  --stringparam appname $(PACKAGE_NAME) \
+	  --stringparam appver $(PACKAGE_VERSION) \
+	  --xinclude \
+	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
+	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
+          $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_man.xsl $<
+
+$(top_builddir)/neptune.xml: $(top_srcdir)/src/neptune.erl
+	$(AM_V_DOC)$(ESCRIPT) \
+	  $(ERLANG_LIB_DIR_erl_docgen)/priv/bin/xml_from_edoc.escript $<
 
 ######################################################################
 
@@ -80,7 +108,9 @@ $(top_builddir)/ebin/%.beam: $(SOURCES)
 
 MOSTLYCLEANFILES = \
   $(BEAMS) \
-  $(top_builddir)/bin/neptune
+  $(top_builddir)/bin/neptune \
+  $(top_builddir)/man3/neptune.3 \
+  $(top_builddir)/neptune.xml
 
 ######################################################################
 # Distribution

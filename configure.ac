@@ -16,8 +16,13 @@ AC_ERLANG_NEED_ERL
 AC_ERLANG_NEED_ERLC
 AC_PATH_PROG(DIALYZER, dialyzer)
 AC_PATH_PROG(CT_RUN, ct_run)
+AC_PATH_PROG(ESCRIPT, escript)
+AC_PATH_PROG(XSLTPROC, xsltproc)
 AC_PROG_MKDIR_P
 AC_PROG_CC
+if test "x${XSLTPROC}" == "x"; then
+  AC_MSG_WARN([xsltproc was not found! Documentation build disabled])
+fi
 
 # Checks for libraries.
 AC_ERLANG_SUBST_ROOT_DIR
@@ -32,6 +37,8 @@ AC_ERLANG_CHECK_LIB([kernel], [],
   [AC_MSG_ERROR([kernel was not found!])])
 AC_ERLANG_CHECK_LIB([stdlib], [],
   [AC_MSG_ERROR([stdlib was not found!])])
+AC_ERLANG_CHECK_LIB([erl_docgen], [],
+  [AC_MSG_WARN([erl_docgen was not found! Documentation build disabled])])
 AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([neptune], [0.1.0])
 
 if test "x${prefix}" == "xNONE"; then
