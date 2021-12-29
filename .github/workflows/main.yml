@@ -28,15 +28,12 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install xsltproc
-      - run: |
-           sudo apt-get update -y
-           sudo apt-get install -y xsltproc 
-
       - name: Bootstrap
         run: |
           set -xv
           erl +B -noinput -eval 'io:put_chars(erlang:system_info(system_version)),halt(0).'
+          sudo apt-get update -y
+          sudo apt-get install -y xsltproc 
           ./bootstrap.sh
           
       - name: Configure
