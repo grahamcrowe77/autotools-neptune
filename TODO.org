@@ -1,5 +1,3 @@
-* TODO Test distcheck
-Working locally but not in the workflow
 * TODO Add a documentation example
 erl_docgen supports generation of xml from edoc tags
 but the erl_docgen documentation is lacking.
@@ -7,5 +5,5 @@ Investigate how this is solved using rebar3 and other solutions
 ** TODO Generate man pages
 ** TODO Generate pdf manual
 ** TODO Generate html manual
-* TODO Create release workflow
+* TODO Create automated release workflow
 * TODO Complete non-recursive build
