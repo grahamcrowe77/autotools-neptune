@@ -1,5 +1,24 @@
-* TODO Add a documentation example
-** TODO Generate pdf manual
-** TODO Generate html manual
+* TODO Documentation example
+Study how SASL documentation is built:
+- Generate XMLs
+- Generate chunks
+- Generate man3 pages
+- Generate man6 pages
+- Generate htmls
+- Generate pdf
+** DONE Generate module man3 page
+** TODO Generate application man6 page
+** TODO Generate html pages
+*** TODO Application index page
+- user guide
+- reference guide
+*** TODO Application user guide
+Chapters, one html per chapter
+*** TODO Application reference guide (module)
+- contents, one html per module + extra pages
+** TODO Generate pdf (of html pages)
+* TODO Create an Erlang System Release example with GNU Autotools
+Using a .rel file to define a release to generate .script and .boot files
+and a self contained, minimal, deployable, cross compiled erlang system
 * TODO Create automated release workflow
 * TODO Complete non-recursive build
