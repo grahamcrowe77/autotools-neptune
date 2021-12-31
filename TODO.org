@@ -1,22 +1,20 @@
-* TODO Documentation example
-Study how SASL documentation is built:
-- Generate XMLs
-- Generate chunks
-- Generate man3 pages
-- Generate man6 pages
-- Generate htmls
-- Generate pdf
-** DONE Generate module man3 page
-** TODO Generate application man6 page
-** TODO Generate html pages
-*** TODO Application index page
-- user guide
-- reference guide
-*** TODO Application user guide
-Chapters, one html per chapter
-*** TODO Application reference guide (module)
-- contents, one html per module + extra pages
-** TODO Generate pdf (of html pages)
+* TODO Fix edoc
+Running edoc works locally but not with the workflow.
+This seems to be due to quirks with edoc dependency to
+code:lib_dir/1 for returning the path of the application
+directory to compile the edoc tags which seems to be unreliable.
+Consider using from edoc to html escript (erl_docgen) to
+generate htmls for modules
+* TODO Fix distcheck dependency
+The distcheck target works when preceded by the targets run in the order:
+- 'all'
+- 'check'
+- 'install' DESTDIR=$PWD/inst
+- 'installcheck' DESTDIR=$PWD/inst
+- 'dist'
+- 'distcheck'
+However any change to that order breaks distcheck, e.g. 'all' followed by
+'distcheck' implying hidden dependency bug.
 * TODO Create an Erlang System Release example with GNU Autotools
 Using a .rel file to define a release to generate .script and .boot files
 and a self contained, minimal, deployable, cross compiled erlang system
