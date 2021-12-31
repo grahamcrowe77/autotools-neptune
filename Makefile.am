@@ -6,7 +6,6 @@ neptune_srcdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/src
 neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
 neptune_incdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/include
 neptune_privdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/priv
-neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
 
 ######################################################################
 # bin directory containing Escripts
@@ -77,31 +76,6 @@ $(top_builddir)/neptune.xml: $(top_srcdir)/src/neptune.erl
 ######################################################################
 
 ######################################################################
-# doc directory containing html pages application
-######################################################################
-neptune_doc_DATA = \
-  $(top_builddir)/doc/modules-frame.html \
-  $(top_builddir)/doc/overview-summary.html \
-  $(top_builddir)/doc/edoc-info \
-  $(top_builddir)/doc/stylesheet.css \
-  $(top_builddir)/doc/erlang.png \
-  $(top_builddir)/doc/neptune.html \
-  $(top_builddir)/doc/index.html
-
-$(top_builddir)/doc/modules-frame.html:
-$(top_builddir)/doc/overview-summary.html:
-$(top_builddir)/doc/edoc-info:
-$(top_builddir)/doc/stylesheet.css:
-$(top_builddir)/doc/erlang.png:
-$(top_builddir)/doc/neptune.html:
-$(top_builddir)/doc/index.html:
-	$(AM_V_DOC) ERL_LIBS="$(top_srcdir)/.." \
-	  $(ERL) -noshell -pa $(top_srcdir)/ebin \
-	  -run edoc_run application $(PACKAGE_NAME) \
-	  "[{dir,\"$(top_builddir)/doc\"},{source_path,\"$(top_srcdir)/src\"}]" \
-	  -s erlang halt
-
-######################################################################
 # src directory containing Erlang sources and private header files
 ######################################################################
 AM_V_ERLC = $(am__v_ERLC_@AM_V@)
@@ -136,14 +110,7 @@ MOSTLYCLEANFILES = \
   $(BEAMS) \
   $(top_builddir)/bin/neptune \
   $(top_builddir)/man3/neptune.3 \
-  $(top_builddir)/neptune.xml \
-  $(top_builddir)/doc/neptune.html \
-  $(top_builddir)/doc/modules-frame.html \
-  $(top_builddir)/doc/overview-summary.html \
-  $(top_builddir)/doc/index.html \
-  $(top_builddir)/doc/edoc-info \
-  $(top_builddir)/doc/stylesheet.css \
-  $(top_builddir)/doc/erlang.png
+  $(top_builddir)/neptune.xml
 
 ######################################################################
 # Distribution

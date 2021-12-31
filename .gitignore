@@ -9,7 +9,6 @@ ebin/neptune.app
 *.html
 *.xml
 man3/
-doc/
 *~
 neptune.plt
 bin/neptune
