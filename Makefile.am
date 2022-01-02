@@ -13,7 +13,8 @@ neptune_privdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/priv
 neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
 
 MODULES = \
-  neptune
+  neptune \
+  neptune_nif
 
 ######################################################################
 
@@ -83,7 +84,7 @@ dist_man1_MANS = \
 
 MAN3S = $(addprefix $(top_builddir)/man3/, $(addsuffix .3, $(MODULES)))
 
-dist_man3_MANS = \
+man3_MANS = \
   $(MAN3S)
 
 $(top_builddir)/man3/%.3: $(top_builddir)/%.xml
@@ -153,7 +154,7 @@ neptune_ebin_DATA = \
   $(top_builddir)/ebin/neptune.app \
   $(BEAMS)
 
-$(top_builddir)/ebin/%.beam: $(SOURCES)
+$(top_builddir)/ebin/%.beam: $(top_srcdir)/src/%.erl
 	$(AM_V_ERLC)$(ERLC) $(ERLCFLAGS) \
            -I$(top_srcdir)/src \
            -I$(top_srcdir)/include \

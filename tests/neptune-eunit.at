@@ -4,4 +4,7 @@ AT_KEYWORDS([eunit])
 COMPILE_EUNIT(["${abs_top_srcdir}/src/neptune.erl"])
 AT_CHECK_EUNIT([neptune_testsuite], [{module, neptune}],
   [-pa "${abs_top_builddir}/src"])
+COMPILE_EUNIT(["${abs_top_srcdir}/src/neptune_nif.erl"])
+AT_CHECK_EUNIT([neptune_nif_testsuite], [{module, neptune_nif}],
+  [-pa "${abs_top_builddir}/src"])
 AT_CLEANUP

@@ -38,4 +38,4 @@ int square(int y)
   return (y * y);
 }
 
-ERL_NIF_INIT(neptune, nif_funcs, NULL, NULL, NULL, NULL)
+ERL_NIF_INIT(neptune_nif, nif_funcs, NULL, NULL, NULL, NULL)
