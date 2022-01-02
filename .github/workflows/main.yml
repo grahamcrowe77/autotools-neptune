@@ -33,7 +33,7 @@ jobs:
           set -xv
           erl +B -noinput -eval 'io:put_chars(erlang:system_info(system_version)),halt(0).'
           sudo apt-get update -y
-          sudo apt-get install -y xsltproc 
+          sudo apt-get install -y xsltproc fop
           ./bootstrap.sh
           
       - name: Configure
