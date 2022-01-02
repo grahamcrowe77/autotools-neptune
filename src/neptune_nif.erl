@@ -1,7 +1,9 @@
 %% @author Graham Crowe <graham.crowe@telia.com>
 %% @copyright 2021 Graham Crowe
-%% @doc This module demonstrates using GNU Autotools to build NIFs.
+%% @doc This module does nothing useful.
 %%
+%% Its purpose is to serve as an example for using GNU Autotools to
+%% build an Erlang Application with a module that uses NIFs.
 %% @end
 
 -module(neptune_nif).
@@ -20,6 +22,7 @@
 %% On load functions
 %% -------------------------------------------------------------------
 %% @doc Initialize the module on loading.
+%%
 
 -spec init() -> ok.
 
@@ -42,6 +45,7 @@ init() ->
 %% Exported functions
 %% -------------------------------------------------------------------
 %% @doc Double an integer.
+%%
 
 -spec double_up(integer()) -> integer().
 
@@ -50,6 +54,7 @@ double_up(_X) ->
 
 %% -------------------------------------------------------------------
 %% @doc Square an integer.
+%%
 
 -spec square(integer()) -> integer().
 
