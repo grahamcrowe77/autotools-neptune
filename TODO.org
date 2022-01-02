@@ -1,10 +1,15 @@
-* TODO Fix edoc
-Running edoc works locally but not with the workflow.
-This seems to be due to quirks with edoc dependency to
-code:lib_dir/1 for returning the path of the application
-directory to compile the edoc tags which seems to be unreliable.
-Consider using from edoc to html escript (erl_docgen) to
-generate htmls for modules
+* TODO Fix PDF Documentation
+To generate pdf (Not working, perhaps wrong XML input, e.g. look at book.xml):
+xsltproc --output neptune.fo \
+ --stringparam docgen /usr/lib64/erlang/lib/erl_docgen-1.1.2 \
+ --stringparam gendate  "December 5 2011" \
+ --stringparam appname Neptune \
+ --stringparam appver 0.2.0 \
+ --xinclude \
+ -path /usr/lib64/erlang/lib/erl_docgen-1.1.2/priv/dtd \
+ -path /usr/lib64/erlang/lib/erl_docgen-1.1.2/priv/dtd_html_entities \
+ /usr/lib64/erlang/lib/erl_docgen-1.1.2/priv/xsl/db_pdf.xsl neptune.xml > neptune.fo
+
 * TODO Fix distcheck dependency
 The distcheck target works when preceded by the targets run in the order:
 - 'all'
