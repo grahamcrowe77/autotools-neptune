@@ -3,7 +3,6 @@ Generate index HTML
 * TODO Tidy Up PDF Documentation
 * TODO Ensure build targets work without xsltproc and/or fop
 * TODO Separate targets for documentation builds?
-* TODO Fix illegal character error 'border-color'
 * TODO Fix distcheck dependency
 The distcheck target works when preceded by the targets run in the order:
 - 'all'

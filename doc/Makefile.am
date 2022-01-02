@@ -64,7 +64,7 @@ $(top_builddir)/doc/neptune.fo: $(HTMLS)
 	  --stringparam appver $(PACKAGE_VERSION) \
 	  --stringparam logo \
 	    $(ERLANG_LIB_DIR_erl_docgen)/priv/images/erlang-logo.png \
-	  --stringparam pdfcolor "\#960003" \
+	  --stringparam pdfcolor "#960003" \
 	  --stringparam extra_front_page_info "$(PACKAGE_NAME)" \
 	  --xinclude \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
