@@ -18,11 +18,9 @@ AC_PATH_PROG(DIALYZER, dialyzer)
 AC_PATH_PROG(CT_RUN, ct_run)
 AC_PATH_PROG(ESCRIPT, escript)
 AC_PATH_PROG(XSLTPROC, xsltproc)
+AC_PATH_PROG(FOP, fop)
 AC_PROG_MKDIR_P
 AC_PROG_CC
-if test "x${XSLTPROC}" == "x"; then
-  AC_MSG_WARN([xsltproc was not found! Documentation build disabled])
-fi
 
 # Checks for libraries.
 AC_ERLANG_SUBST_ROOT_DIR
@@ -51,7 +49,14 @@ ERLANG_INSTALL_LIB_DIR_neptune="${ERLANG_INSTALL_LIB_DIR}/neptune-0.1.0"
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 
-AC_CONFIG_FILES([Makefile ebin/neptune.app])
+if test "x${XSLTPROC}" == "x"; then
+  AC_MSG_WARN([xsltproc was not found! Documentation build disabled])
+fi
+if test "x${FOP}" == "x"; then
+  AC_MSG_WARN([fop was not found! PDF Documentation build disabled])
+fi
+
+AC_CONFIG_FILES([Makefile doc/Makefile ebin/neptune.app])
 AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------

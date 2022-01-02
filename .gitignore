@@ -7,7 +7,9 @@ ebin/neptune.app
 *.tar.gz
 *.m4
 *.html
-*.xml
+doc/*.xml
+doc/neptune.fo
+doc/neptune.pdf
 man3/
 *~
 neptune.plt
