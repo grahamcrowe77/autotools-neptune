@@ -1,8 +1,7 @@
 * TODO Fix HTML Documentation
-Generate index HTML
-* TODO Tidy Up PDF Documentation
+Add index HTML
 * TODO Ensure build targets work without xsltproc and/or fop
-* TODO Separate targets for documentation builds?
+Use make conditionals
 * TODO Fix distcheck dependency
 The distcheck target works when preceded by the targets run in the order:
 - 'all'
