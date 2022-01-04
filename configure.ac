@@ -56,7 +56,7 @@ if test "x${FOP}" == "x"; then
   AC_MSG_WARN([fop was not found! PDF Documentation build disabled])
 fi
 
-AC_CONFIG_FILES([Makefile doc/Makefile ebin/neptune.app])
+AC_CONFIG_FILES([Makefile ebin/neptune.app.in doc/Makefile])
 AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------

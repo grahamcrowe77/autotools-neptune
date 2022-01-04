@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter SYSTEM "chapter.dtd">
+
+<chapter>
+  <header>
+    <copyright>
+      <year>2022</year>
+      <holder>Graham Crowe. All Rights Reserved.</holder>
+    </copyright>
+    <legalnotice>
+      Licensed under the Apache License, Version 2.0 (the "License");
+      you may not use this file except in compliance with the License.
+      You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+      Unless required by applicable law or agreed to in writing, software
+      distributed under the License is distributed on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+      See the License for the specific language governing permissions and
+      limitations under the License.
+
+    </legalnotice>
+
+    <title>Build Targets</title>
+    <p></p>
+    <prepared>Graham Crowe</prepared>
+    <responsible></responsible>
+    <docno></docno>
+    <approved></approved>
+    <checked></checked>
+    <date>2022-01-02</date>
+    <rev></rev>
+    <file>make-targets.xml</file>
+  </header>
+
+  <section>
+    <title>all</title>
+    <p>This is the default target selected when the user does not specify a
+    target. It builds the beam files, the shared library
+    containing the NIFs and the documentation. The beam files (Erlang byte
+    code) are built from the Erlang source code modules and header files. The
+    shared library containing the NIFs are Native Implemented Functions
+    written in C. The documentation takes three forms. There is a man(1) page
+    for the escript and man(3) pages per Erlang module. There are html pages
+    per Erlang Module. There is a PDF document which includes a user guide and
+    the reference manual (Erlang module documentation) rolled into one.</p>
+  </section>
+
+  <section>
+    <title>check</title>
+    <p>This runs a number of tests on the application. Firstly, static
+    analysis of the Erlang code is performed using the dialyzer
+    tool. Secondly, eunit tests are run on those modules that include eunit
+    test cases. Thirdly, common tests suites are run. Finally, some command
+    line tests run.</p>
+  </section>
+
+  <section>
+    <title>install</title>
+    <p>This installs the application according to prefix set at configure time
+    and the value of DESTDIR when building this target. By default prefix is
+    set to '/usr/local' but should typically be set to '/usr' if Erlang is
+    installed as part of the system (Linux) distribution. DESTDIR is typically
+    set to test an installation without requiring sudo access or to install to
+    a staging directory which is a common precursor to a packaging (RPM,
+    Debian, ...) step. By default source code is included as part of the
+    application. This makes sense since the installation of an application
+    should not be confused with the construction of a deployable Erlang
+    release. Such releases typically don't includes the source code.</p>
+  </section>
+
+  <section>
+    <title>installcheck</title>
+    <p>This runs the same tests as the check target but on the installed application.</p>
+  </section>
+
+  <section>
+    <title>dist</title>
+    <p>The generates a distribution source tarball. Distribution source
+    tarballs are a means of distributing applications to consumers without
+    them having to install GNU Autotools in order to build, test and install
+    this application.</p>
+  </section>
+
+  <section>
+    <title>distcheck</title>
+    <p>This generates a distribution source tarball and runs all the make
+    targets in that tarball. The purpose with this target is to provides a
+    means of testing that the distribution source tarball has been well
+    constructed, that is it is not missing any files that ought to be included
+    in the distribution and that all nuilt files are correctly cleaned as
+    expected.</p>
+  </section>
+
+</chapter>

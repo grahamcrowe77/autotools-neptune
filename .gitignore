@@ -10,6 +10,7 @@ ebin/neptune.app
 doc/*.xml
 doc/neptune.fo
 doc/neptune.pdf
+ebin/neptune.app.in
 man3/
 *~
 neptune.plt

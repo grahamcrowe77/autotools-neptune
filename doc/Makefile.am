@@ -56,7 +56,7 @@ $(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml
 $(top_builddir)/doc/neptune.pdf: $(top_builddir)/doc/neptune.fo
 	$(FOP) -fo $< -pdf $@
 
-$(top_builddir)/doc/neptune.fo: $(HTMLS)
+$(top_builddir)/doc/neptune.fo: $(HTMLS) $(top_builddir)/doc/ref_man.xml
 	$(AM_V_DOC)$(XSLTPROC)  --output neptune.fo \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
@@ -69,12 +69,16 @@ $(top_builddir)/doc/neptune.fo: $(HTMLS)
 	  --xinclude \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
+	  -path $(top_builddir)/doc \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_pdf.xsl \
 	  $(top_srcdir)/doc/book.xml > $@
 
 ######################################################################
-# Generated XMLs used for building HTML and Manual Pages
+# XMLs used for building HTML and Manual Pages
 ######################################################################
+
+$(top_builddir)/doc/ref_man.xml: $(top_srcdir)/doc/ref_man.xml.in
+	sed -e "s#@XI_MODULES@#$(XI_MODULES)#g" $< > $@
 
 XMLS = $(addprefix $(top_builddir)/, $(addsuffix .xml, $(MODULES)))
 
@@ -93,7 +97,8 @@ MOSTLYCLEANFILES = \
   $(XMLS) \
   $(HTMLS) \
   $(top_builddir)/doc/neptune.fo \
-  $(top_builddir)/doc/neptune.pdf
+  $(top_builddir)/doc/neptune.pdf \
+  $(top_builddir)/doc/ref_man.xml
 
 ######################################################################
 
@@ -105,6 +110,7 @@ EXTRA_DIST = \
   $(top_srcdir)/doc/book.xml \
   $(top_srcdir)/doc/overview.xml \
   $(top_srcdir)/doc/part.xml \
-  $(top_srcdir)/doc/ref_man.xml
+  $(top_srcdir)/doc/make-targets.xml \
+  $(top_srcdir)/doc/ref_man.xml.in
 
 ######################################################################

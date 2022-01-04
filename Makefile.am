@@ -90,13 +90,17 @@ $(top_builddir)/ebin/%.beam: $(top_srcdir)/src/%.erl
            -I$(top_srcdir)/include \
            -o $(@D) $<
 
+$(top_builddir)/ebin/neptune.app: $(top_builddir)/ebin/neptune.app.in
+	sed -e "s#@MODULES@#$(APP_MODULES)#g" $< > $@
+
 ######################################################################
 # Clean
 ######################################################################
 
 MOSTLYCLEANFILES = \
   $(BEAMS) \
-  $(top_builddir)/bin/neptune
+  $(top_builddir)/bin/neptune \
+  $(top_builddir)/ebin/neptune.app
 
 ######################################################################
 
