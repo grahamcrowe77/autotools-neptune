@@ -31,6 +31,9 @@
   </header>
   <description>
   </description>
+  <xi:include href="neptune_app.xml"/>
+  <xi:include href="neptune_sup.xml"/>
+  <xi:include href="neptune_server.xml"/>
   <xi:include href="neptune.xml"/>
   <xi:include href="neptune_nif.xml"/>
 </application>

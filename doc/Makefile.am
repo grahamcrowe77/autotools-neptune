@@ -103,7 +103,7 @@ MOSTLYCLEANFILES = \
 
 EXTRA_DIST = \
   $(top_srcdir)/doc/book.xml \
-  $(top_srcdir)/doc/introduction.xml \
+  $(top_srcdir)/doc/overview.xml \
   $(top_srcdir)/doc/part.xml \
   $(top_srcdir)/doc/ref_man.xml
 

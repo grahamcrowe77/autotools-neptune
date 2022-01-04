@@ -33,6 +33,7 @@
 
   <description></description>
 
-  <xi:include href="introduction.xml"/>
+  <xi:include href="overview.xml"/>
+  <xi:include href="make-targets.xml"/>
 </part>
 

@@ -22,37 +22,23 @@
     
     </legalnotice>
 
-    <title>Introduction</title>
-    <prepared></prepared>
+    <title>Overview</title>
+    <p>The Neptune application serves as a template for demonstrating
+    how to to build an active Erlang Application using GNU Autotools.</p>
+    <prepared>Graham Crowe</prepared>
     <responsible></responsible>
     <docno></docno>
     <approved></approved>
     <checked></checked>
     <date>2022-01-02</date>
-    <rev>PA1</rev>
-    <file>introduction.xml</file>
+    <rev></rev>
+    <file>overview.xml</file>
   </header>
-
-  <section>
-    <title>Scope</title>
-    <p>The Neptune application serves as a template for demonstrating
-    howto to build an Erlang Application using GNU Autotools.</p>
-
-    <list type="bulleted">
-      <item>all</item>
-      <item>check</item>
-      <item>install</item>
-      <item>installcheck</item>
-      <item>dist</item>
-      <item>distcheck</item>
-    </list>
-  </section>
 
   <section>
     <title>Prerequisites</title>
     <p>It is assumed that the reader is familiar with the Erlang programming
       language.</p> 
   </section>
+
 </chapter>
-
-
