@@ -91,7 +91,8 @@ $(top_builddir)/ebin/%.beam: $(top_srcdir)/src/%.erl
            -o $(@D) $<
 
 $(top_builddir)/ebin/neptune.app: $(top_builddir)/ebin/neptune.app.in
-	sed -e "s#@MODULES@#$(APP_MODULES)#g" $< > $@
+	modules=$(am__app_modules); \
+	sed -e "s#@MODULES@#$$modules#g" $< > $@
 
 ######################################################################
 # Clean

@@ -78,7 +78,8 @@ $(top_builddir)/doc/neptune.fo: $(HTMLS) $(top_builddir)/doc/ref_man.xml
 ######################################################################
 
 $(top_builddir)/doc/ref_man.xml: $(top_srcdir)/doc/ref_man.xml.in
-	sed -e "s#@XI_MODULES@#$(XI_MODULES)#g" $< > $@
+	modules=$(am__xi_modules); \
+	sed -e "s#@XI_MODULES@#$$modules#g" $< > $@
 
 XMLS = $(addprefix $(top_builddir)/, $(addsuffix .xml, $(MODULES)))
 

@@ -5,10 +5,13 @@ MODULES = \
   neptune \
   neptune_nif
 
-APP_MODULES = $(shell echo $(MODULES) | sed -e 's# \{1\}#, #g')
+am__app_modules = \
+  `echo $(MODULES) | sed -e 's/ \{1\}/, /g'`
 
-XI_FUNC = echo -n "\<xi:include href="; echo -n "\\\"$$module.xml\\\""; echo "/\>";
-XI_MODULES  = $(shell for module in $(MODULES); do $(XI_FUNC) done)
+am__xi_modules = \
+  `for module in $(MODULES); do \
+    echo -n "<xi:include href="\\"$$module.xml\\""/>"; \
+  done`
 
 ######################################################################
 # Silent builds
