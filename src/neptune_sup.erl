@@ -1,8 +1,10 @@
 %%%-------------------------------------------------------------------
 %%% @author Graham Crowe <graham.crowe@telia.com>
 %%% @copyright (C) 2022, Graham Crowe
-%%% @doc
+%%% @doc Neptune Top Supervisor
 %%%
+%%% demonstrates a trivial example of a top level supervisor,
+%%% supervising a trivial server.
 %%% @end
 %%% Created :  4 Jan 2022 by Graham Crowe <graham.crowe@telia.com>
 %%%-------------------------------------------------------------------

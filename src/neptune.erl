@@ -1,10 +1,9 @@
 %%%-------------------------------------------------------------------
 %%% @author Graham Crowe <graham.crowe@telia.com>
 %%% @copyright (C) 2022, Graham Crowe
-%%% @doc This module does nothing useful.
+%%% @doc Neptune Module
 %%%
-%%% Its purpose is to serve as an example for using GNU Autotools to
-%%% build an Erlang Application.
+%%% sole purpose is to write greetings binary string greetings to IO.
 %%% @end
 %%% Created :  4 Jan 2022 by Graham Crowe <graham.crowe@telia.com>
 %%%-------------------------------------------------------------------

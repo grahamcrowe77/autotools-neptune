@@ -1,8 +1,9 @@
 %%%-------------------------------------------------------------------
 %%% @author Graham Crowe <graham.crowe@telia.com>
 %%% @copyright (C) 2022, Graham Crowe
-%%% @doc
+%%% @doc Neptune Application Module
 %%%
+%%% demonstrates a trivial example of an application behaviour module.
 %%% @end
 %%% Created :  4 Jan 2022 by Graham Crowe <graham.crowe@telia.com>
 %%%-------------------------------------------------------------------
@@ -19,7 +20,6 @@
 %%%===================================================================
 
 %%--------------------------------------------------------------------
-%% @private
 %% @doc
 %% This function is called whenever an application is started using
 %% application:start/[1,2], and should start the processes of the
@@ -60,7 +60,6 @@ start_phase(_Phase, _StartType, _PhaseArgs) ->
     ok.
 
 %%--------------------------------------------------------------------
-%% @private
 %% @doc
 %% This function is called whenever an application has stopped. It
 %% is intended to be the opposite of Module:start/2 and should do

@@ -1,10 +1,10 @@
 %%%-------------------------------------------------------------------
 %%% @author Graham Crowe <graham.crowe@telia.com>
 %%% @copyright (C) 2022, Graham Crowe
-%%% @doc This module does nothing useful.
+%%% @doc Neptune NIF Module
 %%%
-%%% Its purpose is to serve as an example for using GNU Autotools to
-%%% build an Erlang Application with a module that uses NIFs.
+%%% demonstrates trivial examples using Native Implemented Functions
+%%% (NIFs) written in C and integrated with the Erlang Runtime System.
 %%% @end
 %%% Created :  4 Jan 2022 by Graham Crowe <graham.crowe@telia.com>
 %%%-------------------------------------------------------------------
