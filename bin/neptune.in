@@ -5,7 +5,7 @@
 -define(COMMAND_NAME, "neptune").
 
 main([Salutation]) ->
-    case neptune:main(list_to_binary(Salutation)) of
+    case neptune:write(list_to_binary(Salutation)) of
 	ok ->
 	    halt(0);
 	{error, max_salutation_length} ->
@@ -13,7 +13,7 @@ main([Salutation]) ->
 	    halt(1)
     end;
 main([]) ->
-    neptune:main();
+    neptune:write();
 main(_) ->
     usage(),
     halt(1).

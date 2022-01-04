@@ -1,11 +1,13 @@
-%% @author Graham Crowe <graham.crowe@telia.com>
-%% @copyright 2021 Graham Crowe
-%% @doc This module does nothing useful.
-%%
-%% Its purpose is to serve as an example for using GNU Autotools to
-%% build an Erlang Application.
-%% @end
-
+%%%-------------------------------------------------------------------
+%%% @author Graham Crowe <graham.crowe@telia.com>
+%%% @copyright (C) 2022, Graham Crowe
+%%% @doc This module does nothing useful.
+%%%
+%%% Its purpose is to serve as an example for using GNU Autotools to
+%%% build an Erlang Application.
+%%% @end
+%%% Created :  4 Jan 2022 by Graham Crowe <graham.crowe@telia.com>
+%%%-------------------------------------------------------------------
 -module(neptune).
 
 -include("neptune.hrl").
@@ -17,30 +19,30 @@
 
 -endif.
 
--export([main/0, main/1]).
+-export([write/0, write/1]).
 
 %% -------------------------------------------------------------------
 %% Exported functions
 %% -------------------------------------------------------------------
 %% @doc Write a default greeting to the IoDevice.
-%% @equiv main(<<"Hello">>)
+%% @equiv write(<<"Hello">>)
 %%
-%% @see main/1
+%% @see write/1
 
--spec main() -> ok.
+-spec write() -> ok.
 
-main() ->
+write() ->
     io:format("~s~n", [greeting(?DEFAULT_SALUTATION)]).
 
 %% @doc Write a user defined greeting to the IoDevice.
 %%
 
--spec main(Salutation :: binary()) -> ok | {error, Error :: atom()}.
+-spec write(Salutation :: binary()) -> ok | {error, Error :: atom()}.
 
-main(Salutation)
+write(Salutation)
   when size(Salutation) > ?MAX_SALUTATION_LENGTH ->
     {error, max_salutation_length};
-main(Salutation) ->
+write(Salutation) ->
     io:format("~s~n", [greeting(Salutation)]).
 
 %% -------------------------------------------------------------------

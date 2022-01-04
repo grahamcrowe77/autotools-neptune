@@ -1,4 +1,7 @@
 MODULES = \
+  neptune_app \
+  neptune_sup \
+  neptune_server \
   neptune \
   neptune_nif
 

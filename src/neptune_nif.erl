@@ -1,11 +1,13 @@
-%% @author Graham Crowe <graham.crowe@telia.com>
-%% @copyright 2021 Graham Crowe
-%% @doc This module does nothing useful.
-%%
-%% Its purpose is to serve as an example for using GNU Autotools to
-%% build an Erlang Application with a module that uses NIFs.
-%% @end
-
+%%%-------------------------------------------------------------------
+%%% @author Graham Crowe <graham.crowe@telia.com>
+%%% @copyright (C) 2022, Graham Crowe
+%%% @doc This module does nothing useful.
+%%%
+%%% Its purpose is to serve as an example for using GNU Autotools to
+%%% build an Erlang Application with a module that uses NIFs.
+%%% @end
+%%% Created :  4 Jan 2022 by Graham Crowe <graham.crowe@telia.com>
+%%%-------------------------------------------------------------------
 -module(neptune_nif).
 
 -ifdef(TEST).

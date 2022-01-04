@@ -2,10 +2,14 @@
  [{description, "Neptune application"},
   {vsn, "@VERSION@"},
   {modules,
-   [neptune,
+   [neptune_app,
+    neptune_sup,
+    neptune_server,
+    neptune,
     neptune_nif]},
   {registered,
-   []},
+   [neptune_sup,
+    neptune_server]},
   {applications,
    [kernel,
     stdlib]},
@@ -15,7 +19,7 @@
    ["erts-@ERLANG_LIB_VER_erts@",
     "kernel-@ERLANG_LIB_VER_kernel@"]},
   {mod,
-   {neptune,
+   {neptune_app,
     []}}
  ]
 }.
