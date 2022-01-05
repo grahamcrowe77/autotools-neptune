@@ -10,6 +10,8 @@ ebin/neptune.app
 doc/*.xml
 doc/neptune.fo
 doc/neptune.pdf
+doc/erlang.png
+doc/stylesheet.css
 ebin/neptune.app.in
 man3/
 *~

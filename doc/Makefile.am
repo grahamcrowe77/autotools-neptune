@@ -32,7 +32,17 @@ neptune_doc_DATA = \
   $(HTMLS) \
   $(top_builddir)/doc/neptune.pdf
 
-$(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml
+$(top_builddir)/doc/modules-frame.html: $(HTMLS) $(top_builddir)/doc/erlang.png $(top_builddir)/doc/stylesheet.css
+	modules=$(am__modules_frame); \
+	sed -e "s#@MODULES@#$$modules#g" $(top_srcdir)/doc/modules-frame.html.in > $@;
+
+$(top_builddir)/doc/erlang.png:
+	cp $(ERLANG_LIB_DIR_erl_docgen)/priv/images/erlang-logo.png $@
+
+$(top_builddir)/doc/stylesheet.css:
+	cp  $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css $@
+
+$(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml $(top_builddir)/doc/modules-frame.html
 	$(AM_V_DOC)$(XSLTPROC) --output $@ \
 	  --stringparam outdir $(@D) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
@@ -56,7 +66,7 @@ $(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml
 $(top_builddir)/doc/neptune.pdf: $(top_builddir)/doc/neptune.fo
 	$(FOP) -fo $< -pdf $@
 
-$(top_builddir)/doc/neptune.fo: $(HTMLS) $(top_builddir)/doc/ref_man.xml
+$(top_builddir)/doc/neptune.fo: $(top_builddir)/doc/ref_man.xml
 	$(AM_V_DOC)$(XSLTPROC)  --output neptune.fo \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
@@ -99,7 +109,10 @@ MOSTLYCLEANFILES = \
   $(HTMLS) \
   $(top_builddir)/doc/neptune.fo \
   $(top_builddir)/doc/neptune.pdf \
-  $(top_builddir)/doc/ref_man.xml
+  $(top_builddir)/doc/ref_man.xml \
+  $(top_builddir)/doc/modules-frame.html \
+  $(top_builddir)/doc/erlang.png \
+  $(top_builddir)/doc/stylesheet.css
 
 ######################################################################
 
@@ -112,6 +125,9 @@ EXTRA_DIST = \
   $(top_srcdir)/doc/overview.xml \
   $(top_srcdir)/doc/part.xml \
   $(top_srcdir)/doc/make-targets.xml \
-  $(top_srcdir)/doc/ref_man.xml.in
+  $(top_srcdir)/doc/ref_man.xml.in \
+  $(top_srcdir)/doc/modules-frame.html.in \
+  $(top_srcdir)/doc/index.html \
+  $(top_srcdir)/doc/overview-summary.html
 
 ######################################################################
