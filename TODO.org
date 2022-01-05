@@ -1,7 +1,3 @@
-* TODO Fix out of src documentation build
-XInclude error : could not load ../doc/neptune_app.xml
-Solution add following to all xsltproc calls
--path $(top_builddir)/doc \
 * TODO Improve HTML Documentation
 * TODO Ensure build targets work without xsltproc and/or fop
 Use make conditionals

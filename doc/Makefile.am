@@ -66,7 +66,7 @@ $(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml $(top_builddir)/doc/module
 $(top_builddir)/doc/neptune.pdf: $(top_builddir)/doc/neptune.fo
 	$(FOP) -fo $< -pdf $@
 
-$(top_builddir)/doc/neptune.fo: $(top_builddir)/doc/ref_man.xml
+$(top_builddir)/doc/neptune.fo: $(HTMLS) $(top_builddir)/doc/ref_man.xml
 	$(AM_V_DOC)$(XSLTPROC)  --output neptune.fo \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
