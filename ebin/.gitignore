@@ -1,0 +1,8 @@
+# Artifacts created after running:
+# ./configure
+*.app.in
+
+# Artifacts created after running:
+# make
+*.app
+*.beam

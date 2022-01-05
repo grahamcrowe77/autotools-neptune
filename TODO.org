@@ -1,5 +1,3 @@
-* TODO Cleanup .gitignore
-Clarify where/when artifacts are created and shall be ignored
 * TODO Improve HTML Documentation
 * TODO Ensure build targets work without xsltproc and/or fop
 Use make conditionals

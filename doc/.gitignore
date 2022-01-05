@@ -1,0 +1,8 @@
+# Artifacts created after running:
+# make
+*.pdf
+*.html
+# except for doc/index.html & doc/overview-summary.html
+ref_man.xml
+erlang.png
+stylesheet.css

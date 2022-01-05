@@ -1,43 +1,34 @@
-ebin/neptune.app
-*.beam
-*.la
-*.lo
-*.o
-*.so
-*.tar.gz
-*.m4
-*.html
-doc/*.xml
-doc/neptune.fo
-doc/neptune.pdf
-doc/erlang.png
-doc/stylesheet.css
-ebin/neptune.app.in
-man3/
 *~
-neptune.plt
-bin/neptune
 
-Makefile
+# Artifacts created after running:
+# ./bootstrap.sh
 Makefile.in
-m4/
+aclocal.m4
 autom4te.cache/
 build-aux/
-config.*
 configure
-libtool
-.deps/
-.libs/
-inst/
-.dirstamp
-testsuite.dir/
-testsuite.log
-ct_run.ct*/
-ct_*
-jquery*
-variables-*
+m4/
 
-bin/neptune_test
-tests/atconfig
-tests/atlocal
-tests/testsuite
+# Artifacts created after running:
+# ./configure
+Makefile
+c_src/.deps/
+config.*
+libtool
+
+# Artifacts created after running:
+# make
+.libs/
+*.lo
+*.la
+*.o
+*.fo
+man3/
+
+# Artifacts created after running:
+# make install DESTDIR=$PWD/inst && make installcheck DESTDIR=$PWD/inst
+inst/
+
+# Artifacts created after running:
+# make dist && make distcheck
+*.tar.gz
