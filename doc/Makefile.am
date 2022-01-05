@@ -42,7 +42,7 @@ $(top_builddir)/doc/erlang.png:
 $(top_builddir)/doc/stylesheet.css:
 	cp  $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css $@
 
-$(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml $(top_builddir)/doc/modules-frame.html
+$(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml
 	$(AM_V_DOC)$(XSLTPROC) --output $@ \
 	  --stringparam outdir $(@D) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
