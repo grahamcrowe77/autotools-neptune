@@ -39,13 +39,6 @@ AC_ERLANG_CHECK_LIB([erl_docgen], [],
   [AC_MSG_WARN([erl_docgen was not found! Documentation build disabled])])
 AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([neptune], [${PACKAGE_VERSION}])
 
-if test "x${prefix}" == "xNONE"; then
-  prefix=/usr/local
-fi
-exec_prefix="${prefix}"
-libdir="${exec_prefix}/lib64"
-ERLANG_INSTALL_LIB_DIR="${libdir}/erlang/lib"
-ERLANG_INSTALL_LIB_DIR_neptune="${ERLANG_INSTALL_LIB_DIR}/neptune-${PACKAGE_VERSION}"
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 
