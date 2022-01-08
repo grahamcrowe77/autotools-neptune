@@ -1,6 +1,10 @@
-* TODO Improve HTML Documentation
+* TODO Fix HTML Documentation
+** TODO modules-frame.html not compiled (from dist)
+** TODO stylesheet.css missing (from dist)
+** TODO PDF okay but could be improved
 * TODO Ensure build targets work without xsltproc and/or fop
 Use make conditionals
+* TODO Add install and installcheck without DESTDIR (after)
 * TODO Fix distcheck dependency
 The distcheck target works when preceded by the targets run in the order:
 - 'all'
@@ -11,8 +15,13 @@ The distcheck target works when preceded by the targets run in the order:
 - 'distcheck'
 However any change to that order breaks distcheck, e.g. 'all' followed by
 'distcheck' implying hidden dependency bug.
-* TODO Create an Erlang System Release example with GNU Autotools
-Using a .rel file to define a release to generate .script and .boot files
-and a self contained, minimal, deployable, cross compiled erlang system
-* TODO Create automated release workflow
 * TODO Complete non-recursive build
+** TODO Single Makefile.am
+** TODO Move boilerplate to common.mk
+** TODO Single .gitignore
+* TODO Document build methodology principles
+** TODO Pros/cons of variant build systems
+** TODO rebar3, a build, package and distribution management system rolled into one
+** TODO Conclusions (build systems and package/distribution management)
+** TODO Look into using meson as a build system
+** TODO The elusive erlang package management system
