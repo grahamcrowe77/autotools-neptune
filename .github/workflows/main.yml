@@ -28,41 +28,59 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install pre-requisites
+      - name: Check for an Erlang is installation
         run: |
           set -xv
           erl +B -noinput -eval 'io:put_chars(erlang:system_info(system_version)),halt(0).'
-          sudo apt-get update -y
-          sudo apt-get install -y xsltproc fop
           
       - name: Bootstrap
-        run: |
+        run:
           ./bootstrap.sh
           
-      - name: Configure
-        run:
+      - name: Test build without xsltproc and without fop (without documentation)
+        run: |
           ./configure --prefix=/usr
-
-      - name: Build
-        run:
           make V=1
-
-      - name: Test
-        run:
           # Use cached ./tests/neptune.plt
           make check V=1 TESTSUITEFLAGS=-v
-
-      - name: Install
-        run:
-          make install DESTDIR=$PWD/inst V=1
-
-      - name: Install Check
-        run:
-          # Use cached ./tests/neptune.plt
           sudo make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
 
-      - name: Build and test distribution tarball
+      - name: Install xsltproc
         run: |
+          sudo apt-get update -y
+          sudo apt-get install -y xsltproc
+
+      - name: Test build with xsltproc and without fop (MAN3 & HTML documentation)
+        run: |
+          make maintainer-clean
+          ./configure --prefix=/usr
+          make
+          ls man3/neptune.3   # test for presence of generated man3 documentation
+          ls doc/neptune.html # test for presence of generated html documentation
+          # Use cached ./tests/neptune.plt
+          make check V=1 TESTSUITEFLAGS=-v
+          sudo make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
+
+      - name: Install fop
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y fop
+
+      - name: Test build with xsltproc and without fop (PDF documentation)
+        run: |
+          make maintainer-clean
+          make
+          ./configure --prefix=/usr
+          ls doc/neptune.pdf # test for presence of generated pdf documentation
+          # Use cached ./tests/neptune.plt
+          make check V=1 TESTSUITEFLAGS=-v
+          sudo make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
+
+      - name: Test distribution tarball
+        run: |
+          make maintainer-clean
+          make
+          ./configure --prefix=/usr
           make dist V=1
           # Not possible to use cached ./tests/neptune.plt
           make distcheck V=1 TESTSUITEFLAGS=-v
