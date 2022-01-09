@@ -1,7 +1,3 @@
-* TODO Update workflow
-** TODO Test without xsltproc and without fop
-** TODO Test with xsltproc and without fop
-** TODO Test with xsltproc and with fop
 * TODO Fix HTML Documentation
 ** TODO modules-frame.html not compiled (from dist)
 ** TODO stylesheet.css missing (from dist)
