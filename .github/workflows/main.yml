@@ -43,7 +43,8 @@ jobs:
           make V=1
           # Use cached ./tests/neptune.plt
           make check V=1 TESTSUITEFLAGS=-v
-          sudo make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
+          make install DESTDIR=$PWD/inst V=1
+          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
 
       - name: Install xsltproc
         run: |
@@ -59,7 +60,8 @@ jobs:
           ls doc/neptune.html # test for presence of generated html documentation
           # Use cached ./tests/neptune.plt
           make check V=1 TESTSUITEFLAGS=-v
-          sudo make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
+          make install DESTDIR=$PWD/inst V=1
+          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
 
       - name: Install fop
         run: |
@@ -74,7 +76,8 @@ jobs:
           ls doc/neptune.pdf # test for presence of generated pdf documentation
           # Use cached ./tests/neptune.plt
           make check V=1 TESTSUITEFLAGS=-v
-          sudo make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
+          make install DESTDIR=$PWD/inst V=1
+          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
 
       - name: Test distribution tarball
         run: |
