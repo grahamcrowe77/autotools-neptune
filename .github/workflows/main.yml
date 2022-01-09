@@ -83,6 +83,15 @@ jobs:
         run: |
           make maintainer-clean
           ./configure --prefix=/usr
+          # TODO:
+          # The distcheck target depends upon the following targets having been run in this order
+          # This is a bug where distcheck fails after running installcheck (not check) on the
+          # generated distribution tarball if make, make check, make install and make installcheck
+          # were not run in that order before running make distcheck.
+          make
+          make check
+          make install DESTDIR=$PWD/inst
+          make installcheck DESTDIR=$PWD/inst
           make dist V=1
           # Not possible to use cached ./tests/neptune.plt
           make distcheck V=1 TESTSUITEFLAGS=-v
