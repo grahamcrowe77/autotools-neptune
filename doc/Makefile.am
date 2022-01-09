@@ -1,3 +1,5 @@
+if ERL_DOCGEN
+
 neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
 
 include ../common.mk
@@ -5,6 +7,8 @@ include ../common.mk
 ######################################################################
 # Manual Pages for Application Modules
 ######################################################################
+
+if XSLTPROC
 
 MAN3S = $(addprefix $(top_builddir)/man3/, $(addsuffix .3, $(MODULES)))
 
@@ -22,15 +26,23 @@ $(top_builddir)/man3/%.3: $(top_builddir)/doc/%.xml
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_man.xsl $<
 
+endif #XSLTPROC
+
 ######################################################################
 # HTML Pages for Application Modules
 ######################################################################
 
+if XSLTPROC
+
 HTMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .html, $(MODULES)))
 
-neptune_doc_DATA = \
-  $(HTMLS) \
-  $(top_builddir)/doc/neptune.pdf
+neptune_doc_DATA = $(HTMLS)
+
+if FOP
+
+neptune_doc_DATA += $(top_builddir)/doc/neptune.pdf
+
+endif #FOP
 
 $(top_builddir)/doc/modules-frame.html: $(HTMLS) $(top_builddir)/doc/erlang.png $(top_builddir)/doc/stylesheet.css
 	modules=$(am__modules_frame); \
@@ -59,12 +71,20 @@ $(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_html.xsl $<
 
+endif #XSLTPROC
+
 ######################################################################
 # PDF for Application
 ######################################################################
 
+if FOP
+
 $(top_builddir)/doc/neptune.pdf: $(top_builddir)/doc/neptune.fo
 	$(FOP) -fo $< -pdf $@
+
+endif #FOP
+
+if XSLTPROC
 
 $(top_builddir)/doc/neptune.fo: $(HTMLS) $(top_builddir)/doc/ref_man.xml
 	$(AM_V_DOC)$(XSLTPROC)  --output neptune.fo \
@@ -82,6 +102,8 @@ $(top_builddir)/doc/neptune.fo: $(HTMLS) $(top_builddir)/doc/ref_man.xml
 	  -path $(top_builddir)/doc \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_pdf.xsl \
 	  $(top_srcdir)/doc/book.xml > $@
+
+endif #XSLTPROC
 
 ######################################################################
 # XMLs used for building HTML and Manual Pages
@@ -131,3 +153,5 @@ EXTRA_DIST = \
   $(top_srcdir)/doc/overview-summary.html
 
 ######################################################################
+
+endif #ERL_DOCGEN

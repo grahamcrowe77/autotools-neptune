@@ -42,9 +42,14 @@ AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([neptune], [${PACKAGE_VERSION}])
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 
+AM_CONDITIONAL([ERL_DOCGEN], [test "x${ERLANG_LIB_DIR_erl_docgen}" != "xnot found"])
+
+AM_CONDITIONAL([XSLTPROC], [test "x${XSLTPROC}" != "x"])
 if test "x${XSLTPROC}" == "x"; then
   AC_MSG_WARN([xsltproc was not found! Documentation build disabled])
 fi
+
+AM_CONDITIONAL([FOP], [test "x${FOP}" != "x"])
 if test "x${FOP}" == "x"; then
   AC_MSG_WARN([fop was not found! PDF Documentation build disabled])
 fi

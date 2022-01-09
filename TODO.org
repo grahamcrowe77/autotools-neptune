@@ -1,9 +1,12 @@
+* TODO Update workflow
+** TODO Test without xsltproc and without fop
+** TODO Test with xsltproc and without fop
+** TODO Test with xsltproc and with fop
 * TODO Fix HTML Documentation
 ** TODO modules-frame.html not compiled (from dist)
 ** TODO stylesheet.css missing (from dist)
 ** TODO PDF okay but could be improved
-* TODO Ensure build targets work without xsltproc and/or fop
-Use make conditionals
+** TODO error : xmlAddEntity: invalid redeclaration of predefined entity
 * TODO Add install and installcheck without DESTDIR (after)
 * TODO Fix distcheck dependency
 The distcheck target works when preceded by the targets run in the order:
