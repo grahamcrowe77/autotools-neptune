@@ -72,6 +72,7 @@ jobs:
         run: |
           make mostlyclean
           ./configure --prefix=/usr
+          make
           ls doc/neptune.pdf # test for presence of generated pdf documentation
           # Use cached ./tests/neptune.plt
           make check V=1 TESTSUITEFLAGS=-v
