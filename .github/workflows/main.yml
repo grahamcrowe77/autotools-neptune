@@ -53,7 +53,7 @@ jobs:
 
       - name: Test build with xsltproc and without fop (MAN3 & HTML documentation)
         run: |
-          make maintainer-clean
+          make mostlyclean
           ./configure --prefix=/usr
           make
           ls man3/neptune.3   # test for presence of generated man3 documentation
@@ -70,8 +70,7 @@ jobs:
 
       - name: Test build with xsltproc and without fop (PDF documentation)
         run: |
-          make maintainer-clean
-          make
+          make mostlyclean
           ./configure --prefix=/usr
           ls doc/neptune.pdf # test for presence of generated pdf documentation
           # Use cached ./tests/neptune.plt
@@ -82,7 +81,6 @@ jobs:
       - name: Test distribution tarball
         run: |
           make maintainer-clean
-          make
           ./configure --prefix=/usr
           make dist V=1
           # Not possible to use cached ./tests/neptune.plt
