@@ -59,9 +59,9 @@ $(top_builddir)/doc/erlang.png:
 	cp $(ERLANG_LIB_DIR_erl_docgen)/priv/images/erlang-logo.png $@
 
 $(top_builddir)/doc/stylesheet.css:
-	cp  $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css $@
+	cp $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css $@
 
-$(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml
+$(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml $(top_builddir)/doc/stylesheet.css
 	$(AM_V_DOC)$(XSLTPROC) --output $@ \
 	  --stringparam outdir $(@D) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
@@ -71,8 +71,7 @@ $(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-	  --stringparam stylesheet \
-	    $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css \
+	  --stringparam stylesheet $(top_builddir)/doc/stylesheet.css \
 	  --stringparam winprefix Erlang \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
