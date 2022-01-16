@@ -1,7 +1,7 @@
-* TODO Fix HTML Documentation
-** TODO modules-frame.html not compiled (from dist)
-** TODO stylesheet.css missing (from dist)
-** TODO PDF okay but could be improved
+* TODO Improve Documentation
+** TODO Replace edoc modules-frame.html with Erlang/OTP app style
+** TODO Include link to PDF, user guide and ref manual, as Erlang/OTP app style
+** TODO Ensure PDF quality is as it should be
 ** TODO error : xmlAddEntity: invalid redeclaration of predefined entity
 * TODO Add install and installcheck without DESTDIR (after)
 * TODO Fix distcheck dependency
