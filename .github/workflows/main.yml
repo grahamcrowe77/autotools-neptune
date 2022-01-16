@@ -95,3 +95,11 @@ jobs:
           make dist V=1
           # Not possible to use cached ./tests/neptune.plt
           make distcheck V=1 TESTSUITEFLAGS=-v
+
+      - name: Test install and installcheck (without DESTDIR)
+        run: |
+          make mostlyclean
+          make
+          sudo make install
+          make installcheck
+          make maintainer-clean
