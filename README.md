@@ -32,6 +32,10 @@ make install DESTDIR=$PWD/inst
 make installcheck DESTDIR=$PWD/inst
 make dist
 make distcheck
+make mostlyclean
+make
+sudo make install
+make installcheck
 make maintainer-clean
 ```
 
