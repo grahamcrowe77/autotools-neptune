@@ -36,7 +36,14 @@ if XSLTPROC
 
 HTMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .html, $(MODULES)))
 
-neptune_doc_DATA = $(HTMLS)
+HTML_EXTRAS = \
+  $(top_builddir)/doc/erlang.png \
+  $(top_builddir)/doc/stylesheet.css
+
+neptune_doc_DATA = \
+  $(HTMLS) \
+  $(top_builddir)/doc/modules-frame.html \
+  $(HTML_EXTRAS)
 
 if FOP
 
@@ -44,7 +51,7 @@ neptune_doc_DATA += $(top_builddir)/doc/neptune.pdf
 
 endif #FOP
 
-$(top_builddir)/doc/modules-frame.html: $(HTMLS) $(top_builddir)/doc/erlang.png $(top_builddir)/doc/stylesheet.css
+$(top_builddir)/doc/modules-frame.html: $(HTMLS) $(HTML_EXTRAS)
 	modules=$(am__modules_frame); \
 	sed -e "s#@MODULES@#$$modules#g" $(top_srcdir)/doc/modules-frame.html.in > $@;
 
