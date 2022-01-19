@@ -2,7 +2,12 @@
 # make
 *.pdf
 *.html
-# except for doc/index.html & doc/overview-summary.html
+neptune.xml
+neptune_app.xml
+neptune_nif.xml
+neptune_server.xml
+neptune_sup.xml
+book.xml
 ref_man.xml
 erlang.png
 stylesheet.css

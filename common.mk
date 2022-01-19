@@ -10,14 +10,7 @@ am__app_modules = \
 
 am__xi_modules = \
   `for module in $(MODULES); do \
-    echo -n "<xi:include href=\\"$$module.xml\\"/>"; \
-  done`
-
-am__modules_frame = \
-  `for module in $(MODULES); do \
-    echo -n "<tr><td><a href=\\"$$module.html\\""; \
-    echo -n " target=\"overviewFrame\""; \
-    echo -n " class=\"module\">$$module</a></td></tr>"; \
+    echo -n "<xi:include href=\\"$(top_builddir)/doc/$$module.xml\\"/>"; \
   done`
 
 ######################################################################

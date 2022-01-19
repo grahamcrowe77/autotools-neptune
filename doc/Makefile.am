@@ -35,14 +35,19 @@ endif #XSLTPROC
 if XSLTPROC
 
 HTMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .html, $(MODULES)))
+HTMLS += \
+  $(top_builddir)/doc/overview.html \
+  $(top_builddir)/doc/make-targets.html \
+  $(top_builddir)/doc/users_guide.html
+
 
 HTML_EXTRAS = \
-  $(top_builddir)/doc/erlang.png \
+  $(top_srcdir)/doc/neptune.jpg \
   $(top_builddir)/doc/stylesheet.css
 
 neptune_doc_DATA = \
+  $(top_builddir)/doc/index.html \
   $(HTMLS) \
-  $(top_builddir)/doc/modules-frame.html \
   $(HTML_EXTRAS)
 
 if FOP
@@ -51,29 +56,26 @@ neptune_doc_DATA += $(top_builddir)/doc/neptune.pdf
 
 endif #FOP
 
-$(top_builddir)/doc/modules-frame.html: $(HTMLS) $(HTML_EXTRAS)
-	modules=$(am__modules_frame); \
-	sed -e "s#@MODULES@#$$modules#g" $(top_srcdir)/doc/modules-frame.html.in > $@
-
-$(top_builddir)/doc/erlang.png:
-	cp $(ERLANG_LIB_DIR_erl_docgen)/priv/images/erlang-logo.png $@
-
 $(top_builddir)/doc/stylesheet.css:
 	cp $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css $@
 
-$(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml
+$(HTMLS): $(top_builddir)/doc/index.html
+
+$(top_builddir)/doc/index.html: $(top_builddir)/doc/book.xml $(XMLS)
 	$(AM_V_DOC)$(XSLTPROC) --output $@ \
 	  --stringparam outdir $(@D) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam topdocdir $(@D) \
 	  --stringparam pdfdir $(@D) \
+	  --stringparam pdfname neptune \
 	  --xinclude \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
 	  --stringparam stylesheet stylesheet.css \
 	  --stringparam winprefix Erlang \
-          --stringparam logo erlang.png \
+          --stringparam logo neptune.jpg \
+	  --stringparam extra_front_page_info "" \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_html.xsl $<
@@ -93,14 +95,14 @@ endif #FOP
 
 if XSLTPROC
 
-$(top_builddir)/doc/neptune.fo: $(HTMLS) $(top_builddir)/doc/ref_man.xml
+$(top_builddir)/doc/neptune.fo: $(HTMLS) $(XMLS)
 	$(AM_V_DOC)$(XSLTPROC) \
 	  --output $(@F) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-          --stringparam logo erlang.png \
+          --stringparam logo neptune.jpg \
 	  --stringparam pdfcolor "#960003" \
 	  --stringparam extra_front_page_info "$(PACKAGE_NAME)" \
 	  --xinclude \
@@ -116,11 +118,19 @@ endif #XSLTPROC
 # XMLs used for building HTML and Manual Pages
 ######################################################################
 
+XMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .xml, $(MODULES)))
+
 $(top_builddir)/doc/ref_man.xml: $(top_srcdir)/doc/ref_man.xml.in
 	modules=$(am__xi_modules); \
-	sed -e "s#@XI_MODULES@#$$modules#g" $< > $@
+	$(SED) -e "s#@XI_MODULES@#$$modules#g" $< > $@
 
-XMLS = $(addprefix $(top_builddir)/, $(addsuffix .xml, $(MODULES)))
+XMLS += $(top_builddir)/doc/ref_man.xml
+
+$(top_builddir)/doc/book.xml: $(top_srcdir)/doc/book.xml.in
+	$(SED) \
+	  -e "s#@XI_PART@#$(top_srcdir)/doc/part.xml#g" \
+	  -e "s#@XI_REF_MAN@#$(top_builddir)/doc/ref_man.xml#g" \
+	  $< > $@
 
 $(top_builddir)/doc/%.xml: $(top_srcdir)/src/%.erl
 	$(AM_V_DOC)$(ESCRIPT) \
@@ -136,11 +146,11 @@ MOSTLYCLEANFILES = \
   $(MAN3S) \
   $(XMLS) \
   $(HTMLS) \
+  $(top_builddir)/doc/index.html \
   $(top_builddir)/doc/neptune.fo \
   $(top_builddir)/doc/neptune.pdf \
   $(top_builddir)/doc/ref_man.xml \
-  $(top_builddir)/doc/modules-frame.html \
-  $(top_builddir)/doc/erlang.png \
+  $(top_builddir)/doc/book.xml \
   $(top_builddir)/doc/stylesheet.css
 
 ######################################################################
@@ -150,14 +160,12 @@ MOSTLYCLEANFILES = \
 ######################################################################
 
 EXTRA_DIST = \
-  $(top_srcdir)/doc/book.xml \
   $(top_srcdir)/doc/overview.xml \
   $(top_srcdir)/doc/part.xml \
   $(top_srcdir)/doc/make-targets.xml \
   $(top_srcdir)/doc/ref_man.xml.in \
-  $(top_srcdir)/doc/modules-frame.html.in \
-  $(top_srcdir)/doc/index.html \
-  $(top_srcdir)/doc/overview-summary.html
+  $(top_srcdir)/doc/book.xml.in \
+  $(top_srcdir)/doc/neptune.jpg
 
 ######################################################################
 

@@ -1,7 +1,13 @@
+* TODO Document build methodology principles
+Using new documentation system (XMLs and type/specs)
+** TODO Merge neptune man page into one (see dialyzer example)
+** TODO Pros/cons of variant build systems
+** TODO rebar3, a build, package and distribution management system rolled into one
+** TODO Conclusions (build systems and package/distribution management)
+** TODO Look into using meson as a build system
+** TODO The elusive erlang package management system
 * TODO Improve Documentation
-** TODO Replace edoc modules-frame.html with Erlang/OTP app style
-** TODO Include link to PDF, user guide and ref manual, as Erlang/OTP app style
-** TODO Ensure PDF quality is as it should be
+** TODO Fix missing logo from PDF
 ** TODO error : xmlAddEntity: invalid redeclaration of predefined entity
 * TODO Fix distcheck dependency
 The distcheck target works when preceded by the targets run in the order:
@@ -17,9 +23,3 @@ However any change to that order breaks distcheck, e.g. 'all' followed by
 ** TODO Single Makefile.am
 ** TODO Move boilerplate to common.mk
 ** TODO Single .gitignore
-* TODO Document build methodology principles
-** TODO Pros/cons of variant build systems
-** TODO rebar3, a build, package and distribution management system rolled into one
-** TODO Conclusions (build systems and package/distribution management)
-** TODO Look into using meson as a build system
-** TODO The elusive erlang package management system
