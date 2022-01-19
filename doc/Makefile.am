@@ -53,7 +53,7 @@ endif #FOP
 
 $(top_builddir)/doc/modules-frame.html: $(HTMLS) $(HTML_EXTRAS)
 	modules=$(am__modules_frame); \
-	sed -e "s#@MODULES@#$$modules#g" $(top_srcdir)/doc/modules-frame.html.in > $@;
+	sed -e "s#@MODULES@#$$modules#g" $(top_srcdir)/doc/modules-frame.html.in > $@
 
 $(top_builddir)/doc/erlang.png:
 	cp $(ERLANG_LIB_DIR_erl_docgen)/priv/images/erlang-logo.png $@
@@ -61,7 +61,7 @@ $(top_builddir)/doc/erlang.png:
 $(top_builddir)/doc/stylesheet.css:
 	cp $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css $@
 
-$(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml $(top_builddir)/doc/stylesheet.css
+$(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml
 	$(AM_V_DOC)$(XSLTPROC) --output $@ \
 	  --stringparam outdir $(@D) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
@@ -71,8 +71,9 @@ $(top_builddir)/doc/%.html: $(top_builddir)/doc/%.xml $(top_builddir)/doc/styles
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-	  --stringparam stylesheet $(top_builddir)/doc/stylesheet.css \
+	  --stringparam stylesheet stylesheet.css \
 	  --stringparam winprefix Erlang \
+          --stringparam logo erlang.png \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_html.xsl $<
@@ -93,13 +94,13 @@ endif #FOP
 if XSLTPROC
 
 $(top_builddir)/doc/neptune.fo: $(HTMLS) $(top_builddir)/doc/ref_man.xml
-	$(AM_V_DOC)$(XSLTPROC)  --output neptune.fo \
+	$(AM_V_DOC)$(XSLTPROC) \
+	  --output $(@F) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-	  --stringparam logo \
-	    $(ERLANG_LIB_DIR_erl_docgen)/priv/images/erlang-logo.png \
+          --stringparam logo erlang.png \
 	  --stringparam pdfcolor "#960003" \
 	  --stringparam extra_front_page_info "$(PACKAGE_NAME)" \
 	  --xinclude \
