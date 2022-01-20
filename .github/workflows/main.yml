@@ -68,7 +68,7 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y fop
 
-      - name: Test build with xsltproc and without fop (PDF documentation)
+      - name: Test build with xsltproc and with fop (PDF documentation)
         run: |
           make mostlyclean
           ./configure --prefix=/usr
