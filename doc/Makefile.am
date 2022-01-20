@@ -72,9 +72,9 @@ $(top_builddir)/doc/index.html: $(top_builddir)/doc/book.xml $(XMLS)
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-	  --stringparam stylesheet stylesheet.css \
+	  --stringparam stylesheet $(top_srcdir)/doc/stylesheet.css \
 	  --stringparam winprefix Erlang \
-          --stringparam logo neptune.jpg \
+	  --stringparam logo $(top_srcdir)/doc/neptune.jpg \
 	  --stringparam extra_front_page_info "" \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
@@ -102,7 +102,7 @@ $(top_builddir)/doc/neptune.fo: $(HTMLS) $(XMLS)
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-          --stringparam logo neptune.jpg \
+	  --stringparam logo $(top_srcdir)/doc/neptune.jpg \
 	  --stringparam pdfcolor "#960003" \
 	  --stringparam extra_front_page_info "$(PACKAGE_NAME)" \
 	  --xinclude \
