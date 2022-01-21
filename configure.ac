@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([neptune], [0.7.0], [graham.crowe@telia.com])
+AC_INIT([neptune], [0.8.0], [graham.crowe@telia.com])
 
 modules=`echo \
 neptune_app \
