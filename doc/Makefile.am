@@ -5,17 +5,6 @@ if ERL_DOCGEN
 neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
 
 ######################################################################
-# Silent builds
-######################################################################
-
-AM_V_DOC = $(am__v_DOC_@AM_V@)
-am__v_DOC_ = $(am__v_DOC_@AM_DEFAULT_V@)
-am__v_DOC_0 = @echo "  GENDOC  " $@;
-am__v_DOC_1 = 
-
-######################################################################
-
-######################################################################
 # Manual Pages for Application Modules
 ######################################################################
 
@@ -27,7 +16,7 @@ man3_MANS = \
   $(MAN3S)
 
 $(top_builddir)/man3/%.3: $(top_builddir)/doc/%.xml
-	$(AM_V_DOC)$(XSLTPROC) --output $@ \
+	$(AM_V_GEN)$(XSLTPROC) --output $@ \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
@@ -35,7 +24,7 @@ $(top_builddir)/man3/%.3: $(top_builddir)/doc/%.xml
 	  --xinclude \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
-          $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_man.xsl $<
+          $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_man.xsl $< 2> /dev/null
 
 endif #XSLTPROC
 
@@ -67,12 +56,12 @@ neptune_doc_DATA += $(top_builddir)/doc/neptune.pdf
 endif #FOP
 
 $(top_builddir)/doc/stylesheet.css:
-	cp $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css $@
+	$(AM_V_GEN)cp $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css $@
 
 $(HTMLS): $(top_builddir)/doc/index.html
 
 $(top_builddir)/doc/index.html: $(top_builddir)/doc/book.xml $(XMLS)
-	$(AM_V_DOC)$(XSLTPROC) --output $@ \
+	$(AM_V_GEN)$(XSLTPROC) --output $@ \
 	  --stringparam outdir $(@D) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam topdocdir $(@D) \
@@ -88,7 +77,7 @@ $(top_builddir)/doc/index.html: $(top_builddir)/doc/book.xml $(XMLS)
 	  --stringparam extra_front_page_info "" \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
-          $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_html.xsl $<
+          $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_html.xsl $< 2> /dev/null
 
 endif #XSLTPROC
 
@@ -99,15 +88,15 @@ endif #XSLTPROC
 if FOP
 
 $(top_builddir)/doc/neptune.pdf: $(top_builddir)/doc/neptune.fo
-	$(FOP) -fo $< -pdf $@
+	$(AM_V_GEN)$(FOP) -fo $< -pdf $@ 2> /dev/null
 
 endif #FOP
 
 if XSLTPROC
 
 $(top_builddir)/doc/neptune.fo: $(HTMLS) $(XMLS)
-	$(AM_V_DOC)$(XSLTPROC) \
-	  --output $(@F) \
+	$(AM_V_GEN)$(XSLTPROC) \
+	  --output $@ \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
@@ -120,7 +109,7 @@ $(top_builddir)/doc/neptune.fo: $(HTMLS) $(XMLS)
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
 	  -path $(top_builddir)/doc \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_pdf.xsl \
-	  $(top_srcdir)/doc/book.xml > $@
+	  $(top_srcdir)/doc/book.xml 2> /dev/null
 
 endif #XSLTPROC
 
@@ -131,17 +120,18 @@ endif #XSLTPROC
 XMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .xml, @MODULES@))
 
 $(top_builddir)/doc/ref_man.xml: $(top_builddir)/doc/ref_man.xml.in
-	$(SED) -e "s#@TOP_BUILDDIR@#$(top_builddir)#g" $< > $@
+	$(AM_V_GEN)$(SED) \
+	  -e "s#@TOP_BUILDDIR@#$(top_builddir)#g" $< > $@
 
 XMLS += $(top_builddir)/doc/ref_man.xml
 
 $(top_builddir)/doc/book.xml: $(top_srcdir)/doc/book.xml.in
-	$(SED) \
+	$(AM_V_GEN)$(SED) \
 	  -e "s#@TOP_BUILDDIR@#$(top_builddir)#g" \
 	  -e "s#@TOP_SRCDIR@#$(top_srcdir)#g" $< > $@
 
 $(top_builddir)/doc/%.xml: $(top_srcdir)/src/%.erl
-	$(AM_V_DOC)$(ESCRIPT) \
+	$(AM_V_GEN)$(ESCRIPT) \
 	  $(ERLANG_LIB_DIR_erl_docgen)/priv/bin/xml_from_edoc.escript $<
 
 ######################################################################
@@ -157,7 +147,6 @@ MOSTLYCLEANFILES = \
   $(top_builddir)/doc/index.html \
   $(top_builddir)/doc/neptune.fo \
   $(top_builddir)/doc/neptune.pdf \
-  $(top_builddir)/doc/ref_man.xml.in \
   $(top_builddir)/doc/ref_man.xml \
   $(top_builddir)/doc/book.xml \
   $(top_builddir)/doc/stylesheet.css

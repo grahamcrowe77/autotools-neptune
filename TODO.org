@@ -6,9 +6,13 @@ Using new documentation system (XMLs and type/specs)
 ** TODO Conclusions (build systems and package/distribution management)
 ** TODO Look into using meson as a build system
 ** TODO The elusive erlang package management system
-* TODO Improve Documentation
-** TODO Fix missing logo from PDF
+* TODO Refactor Makefiles
+** TODO When to use srcdir and top_srcdir, builddir and top_builddir
 ** TODO error : xmlAddEntity: invalid redeclaration of predefined entity
+* TODO Fix HTML Documentation
+** TODO Expand All and Contract All not working as expected
+* TODO Fix PDF Documentation
+** TODO Fix missing logo from PDF
 * TODO Fix distcheck dependency
 The distcheck target works when preceded by the targets run in the order:
 - 'all'
