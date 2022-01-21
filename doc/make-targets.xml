@@ -35,48 +35,80 @@
   </header>
 
   <section>
-    <title>all</title>
-    <p>This is the default target selected when the user does not specify a
-    target. It builds the beam files, the shared library
-    containing the NIFs and the documentation. The beam files (Erlang byte
-    code) are built from the Erlang source code modules and header files. The
-    shared library containing the NIFs are Native Implemented Functions
-    written in C. The documentation takes three forms. There is a man(1) page
-    for the escript and man(3) pages per Erlang module. There are html pages
-    per Erlang Module. There is a PDF document which includes a user guide and
-    the reference manual (Erlang module documentation) rolled into one.</p>
+    <title>Configure</title>
+    <pre>
+      $ <input>./configure --prefix=/usr</input>
+    </pre>
+    <p>This checks to see if the build environment provides the build time
+    dependencies, e.g. tools and libraries. It also provides for configuration
+    of the makefiles through the enabling or disabling of features, selecting
+    libraries to link with and adjusting system directories by setting prefix,
+    libdir and so on.</p>
   </section>
 
   <section>
-    <title>check</title>
+    <title>Build</title>
+    <pre>
+      $ <input>make</input>
+    </pre>
+    <p>This is the default target selected when the user does not specify a
+    target. It builds the beam files, the shared library containing the
+    <em>NIFs</em> and the documentation. The beam files (Erlang byte code) are
+    built from the Erlang source code modules and header files. The shared
+    library containing the <em>NIFs</em> are Native Implemented Functions
+    written in <c>C</c>. The documentation takes three forms. There is a
+    <em>man(1)</em> page for the escript and <em>man(3)</em> pages per Erlang
+    module. There are html pages per Erlang Module. There is a <em>PDF</em>
+    document which includes a user guide and the reference manual (Erlang
+    module documentation) rolled into one.</p>
+  </section>
+
+  <section>
+    <title>Test</title>
+    <pre>
+      $ <input>make check</input>
+    </pre>
     <p>This runs a number of tests on the application. Firstly, static
-    analysis of the Erlang code is performed using the dialyzer
+    analysis of the Erlang code is performed using the <em>dialyzer</em>
     tool. Secondly, eunit tests are run on those modules that include eunit
     test cases. Thirdly, common tests suites are run. Finally, some command
     line tests run.</p>
   </section>
 
   <section>
-    <title>install</title>
+    <title>Installation</title>
+    <pre>
+      $ <input>sudo make install</input>
+      $ <input>make install DESTDIR=$HOME</input>
+    </pre>
     <p>This installs the application according to prefix set at configure time
-    and the value of DESTDIR when building this target. By default prefix is
-    set to '/usr/local' but should typically be set to '/usr' if Erlang is
-    installed as part of the system (Linux) distribution. DESTDIR is typically
-    set to test an installation without requiring sudo access or to install to
-    a staging directory which is a common precursor to a packaging (RPM,
-    Debian, ...) step. By default source code is included as part of the
-    application. This makes sense since the installation of an application
-    should not be confused with the construction of a deployable Erlang
-    release. Such releases typically don't includes the source code.</p>
+    and the value of <c>DESTDIR</c> when building this target. By default
+    prefix is set to <c>/usr/local</c> but should typically be set to
+    <c>/usr</c> if Erlang is installed as part of the system (Linux)
+    distribution. <c>DESTDIR</c> is typically set to test an installation
+    without requiring sudo access or to install to a staging directory which
+    is a common precursor to a packaging (RPM, Debian, ...) step. By default
+    source code is included as part of the application. This makes sense since
+    the installation of an application should not be confused with the
+    construction of a deployable Erlang release. Such releases typically don't
+    includes the source code.</p>
   </section>
 
   <section>
-    <title>installcheck</title>
-    <p>This runs the same tests as the check target but on the installed application.</p>
+    <title>Installation Test</title>
+    <pre>
+      $ <input>sudo make installcheck</input>
+      $ <input>make installcheck DESTDIR=$HOME</input>
+    </pre>
+    <p>This runs the same tests as the check target but on the installed
+    application.</p>
   </section>
 
   <section>
-    <title>dist</title>
+    <title>Distribution</title>
+    <pre>
+      $ <input>make dist</input>
+    </pre>
     <p>The generates a distribution source tarball. Distribution source
     tarballs are a means of distributing applications to consumers without
     them having to install GNU Autotools in order to build, test and install
@@ -84,7 +116,10 @@
   </section>
 
   <section>
-    <title>distcheck</title>
+    <title>Distribution Test</title>
+    <pre>
+      $ <input>make distcheck</input>
+    </pre>
     <p>This generates a distribution source tarball and runs all the make
     targets in that tarball. The purpose with this target is to provides a
     means of testing that the distribution source tarball has been well
