@@ -1,3 +1,5 @@
+* TODO Investigate why module inference solution fails distcheck at github
+This is most likely a portability issue with find. Consider another solution.
 * TODO Document build methodology principles
 Using new documentation system (XMLs and type/specs)
 ** TODO Merge neptune man page into one (see dialyzer example)
