@@ -1,13 +1,6 @@
 AC_PREREQ([2.69])
 AC_INIT([neptune], [0.8.0], [graham.crowe@telia.com])
 
-modules=`echo \
-neptune_app \
-neptune_sup \
-neptune_server \
-neptune \
-neptune_nif`
-
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/neptune.erl])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
@@ -51,14 +44,18 @@ AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([neptune], [${PACKAGE_VERSION}])
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 
-comma_separated_modules=`for module in ${modules}; do \
+mods=`find src -type f -name *.erl -exec basename {} .erl \;`
+modules=`for module in ${mods}; do \
+  echo -n "$module "; \
+done | sed 's/.$//'`
+AC_SUBST([MODULES], [${modules}])
+
+comma_separated_modules=`for module in ${mods}; do \
   echo -n "$module,"; \
 done | sed 's/.$//'`
 AC_SUBST([COMMA_SEPARATED_MODULES], [${comma_separated_modules}])
 
-AC_SUBST([MODULES], [${modules}])
-
-xi_modules=`for module in ${modules}; do \
+xi_modules=`for module in ${mods}; do \
   echo -n "<xi:include href=\\"@TOP_BUILDDIR@/doc/$module.xml\\"/>"; \
 done`
 AC_SUBST([XI_MODULES], [${xi_modules}])
