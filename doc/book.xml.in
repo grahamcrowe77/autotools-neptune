@@ -36,10 +36,10 @@
     <contents level="2"></contents>
   </preamble>
   <parts>
-    <xi:include href="@XI_PART@"/>
+    <xi:include href="@TOP_SRCDIR@/doc/part.xml"/>
   </parts>
   <applications>
-    <xi:include href="@XI_REF_MAN@"/>
+    <xi:include href="@TOP_BUILDDIR@/doc/ref_man.xml"/>
   </applications>
   <listofterms></listofterms>
   <index></index>

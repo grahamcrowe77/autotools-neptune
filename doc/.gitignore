@@ -9,5 +9,6 @@ neptune_server.xml
 neptune_sup.xml
 book.xml
 ref_man.xml
+ref_man.xml.in
 erlang.png
 stylesheet.css

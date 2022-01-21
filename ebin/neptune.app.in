@@ -2,7 +2,7 @@
  [{description, "Neptune application"},
   {vsn, "@VERSION@"},
   {modules,
-   [@MODULES@]},
+   [@COMMA_SEPARATED_MODULES@]},
   {registered,
    [neptune_sup,
     neptune_server]},

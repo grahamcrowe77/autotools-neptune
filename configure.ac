@@ -1,5 +1,13 @@
 AC_PREREQ([2.69])
 AC_INIT([neptune], [0.7.0], [graham.crowe@telia.com])
+
+modules=`echo \
+neptune_app \
+neptune_sup \
+neptune_server \
+neptune \
+neptune_nif`
+
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/neptune.erl])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
@@ -43,6 +51,18 @@ AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([neptune], [${PACKAGE_VERSION}])
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 
+comma_separated_modules=`for module in ${modules}; do \
+  echo -n "$module,"; \
+done | sed 's/.$//'`
+AC_SUBST([COMMA_SEPARATED_MODULES], [${comma_separated_modules}])
+
+AC_SUBST([MODULES], [${modules}])
+
+xi_modules=`for module in ${modules}; do \
+  echo -n "<xi:include href=\\"@TOP_BUILDDIR@/doc/$module.xml\\"/>"; \
+done`
+AC_SUBST([XI_MODULES], [${xi_modules}])
+
 AM_CONDITIONAL([ERL_DOCGEN], [test "x${ERLANG_LIB_DIR_erl_docgen}" != "xnot found"])
 
 AM_CONDITIONAL([XSLTPROC], [test "x${XSLTPROC}" != "x"])
@@ -55,7 +75,7 @@ if test "x${FOP}" == "x"; then
   AC_MSG_WARN([fop was not found! PDF Documentation build disabled])
 fi
 
-AC_CONFIG_FILES([Makefile ebin/neptune.app.in doc/Makefile])
+AC_CONFIG_FILES([Makefile ebin/neptune.app doc/Makefile doc/ref_man.xml.in])
 AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------

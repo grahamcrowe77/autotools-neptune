@@ -1,8 +1,19 @@
+ACLOCAL_AMFLAGS = -I m4
+
 if ERL_DOCGEN
 
 neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
 
-include ../common.mk
+######################################################################
+# Silent builds
+######################################################################
+
+AM_V_DOC = $(am__v_DOC_@AM_V@)
+am__v_DOC_ = $(am__v_DOC_@AM_DEFAULT_V@)
+am__v_DOC_0 = @echo "  GENDOC  " $@;
+am__v_DOC_1 = 
+
+######################################################################
 
 ######################################################################
 # Manual Pages for Application Modules
@@ -10,7 +21,7 @@ include ../common.mk
 
 if XSLTPROC
 
-MAN3S = $(addprefix $(top_builddir)/man3/, $(addsuffix .3, $(MODULES)))
+MAN3S = $(addprefix $(top_builddir)/man3/, $(addsuffix .3, @MODULES@))
 
 man3_MANS = \
   $(MAN3S)
@@ -34,12 +45,11 @@ endif #XSLTPROC
 
 if XSLTPROC
 
-HTMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .html, $(MODULES)))
+HTMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .html, @MODULES@))
 HTMLS += \
   $(top_builddir)/doc/overview.html \
   $(top_builddir)/doc/make-targets.html \
   $(top_builddir)/doc/users_guide.html
-
 
 HTML_EXTRAS = \
   $(top_srcdir)/doc/neptune.jpg \
@@ -118,19 +128,17 @@ endif #XSLTPROC
 # XMLs used for building HTML and Manual Pages
 ######################################################################
 
-XMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .xml, $(MODULES)))
+XMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .xml, @MODULES@))
 
-$(top_builddir)/doc/ref_man.xml: $(top_srcdir)/doc/ref_man.xml.in
-	modules=$(am__xi_modules); \
-	$(SED) -e "s#@XI_MODULES@#$$modules#g" $< > $@
+$(top_builddir)/doc/ref_man.xml: $(top_builddir)/doc/ref_man.xml.in
+	$(SED) -e "s#@TOP_BUILDDIR@#$(top_builddir)#g" $< > $@
 
 XMLS += $(top_builddir)/doc/ref_man.xml
 
 $(top_builddir)/doc/book.xml: $(top_srcdir)/doc/book.xml.in
 	$(SED) \
-	  -e "s#@XI_PART@#$(top_srcdir)/doc/part.xml#g" \
-	  -e "s#@XI_REF_MAN@#$(top_builddir)/doc/ref_man.xml#g" \
-	  $< > $@
+	  -e "s#@TOP_BUILDDIR@#$(top_builddir)#g" \
+	  -e "s#@TOP_SRCDIR@#$(top_srcdir)#g" $< > $@
 
 $(top_builddir)/doc/%.xml: $(top_srcdir)/src/%.erl
 	$(AM_V_DOC)$(ESCRIPT) \
@@ -149,6 +157,7 @@ MOSTLYCLEANFILES = \
   $(top_builddir)/doc/index.html \
   $(top_builddir)/doc/neptune.fo \
   $(top_builddir)/doc/neptune.pdf \
+  $(top_builddir)/doc/ref_man.xml.in \
   $(top_builddir)/doc/ref_man.xml \
   $(top_builddir)/doc/book.xml \
   $(top_builddir)/doc/stylesheet.css
@@ -163,7 +172,7 @@ EXTRA_DIST = \
   $(top_srcdir)/doc/overview.xml \
   $(top_srcdir)/doc/part.xml \
   $(top_srcdir)/doc/make-targets.xml \
-  $(top_srcdir)/doc/ref_man.xml.in \
+  $(top_srcdir)/doc/ref_man.xml.in.in \
   $(top_srcdir)/doc/book.xml.in \
   $(top_srcdir)/doc/neptune.jpg
 

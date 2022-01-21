@@ -3,6 +3,17 @@ ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = . doc tests
 
 ######################################################################
+# Silent builds
+######################################################################
+
+AM_V_ERLC = $(am__v_ERLC_@AM_V@)
+am__v_ERLC_ = $(am__v_ERLC_@AM_DEFAULT_V@)
+am__v_ERLC_0 = @echo "  ERLC    " $@;
+am__v_ERLC_1 = 
+
+######################################################################
+
+######################################################################
 # Application Structure
 ######################################################################
 
@@ -10,15 +21,6 @@ neptune_srcdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/src
 neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
 neptune_incdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/include
 neptune_privdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/priv
-
-include common.mk
-
-######################################################################
-
-######################################################################
-# Silent builds
-######################################################################
-
 
 ######################################################################
 
@@ -70,8 +72,8 @@ dist_man1_MANS = \
 # Application Build
 ######################################################################
 
-SOURCES = $(addprefix $(top_srcdir)/src/, $(addsuffix .erl, $(MODULES)))
-BEAMS   = $(addprefix $(top_builddir)/ebin/, $(addsuffix .beam, $(MODULES)))
+SOURCES = $(addprefix $(top_srcdir)/src/, $(addsuffix .erl, @MODULES@))
+BEAMS   = $(addprefix $(top_builddir)/ebin/, $(addsuffix .beam, @MODULES@))
 
 dist_neptune_src_DATA = \
   $(neptune_priv_headers) \
@@ -90,9 +92,9 @@ $(top_builddir)/ebin/%.beam: $(top_srcdir)/src/%.erl
            -I$(top_srcdir)/include \
            -o $(@D) $<
 
-$(top_builddir)/ebin/neptune.app: $(top_builddir)/ebin/neptune.app.in
-	modules=$(am__app_modules); \
-	sed -e "s#@MODULES@#$$modules#g" $< > $@
+# $(top_builddir)/ebin/neptune.app: $(top_builddir)/ebin/neptune.app.in
+# 	modules=$(am__app_modules); \
+# 	sed -e "s#@MODULES@#$$modules#g" $< > $@
 
 ######################################################################
 # Clean
