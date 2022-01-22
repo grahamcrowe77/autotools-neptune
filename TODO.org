@@ -1,4 +1,7 @@
-* TODO Create an M4 macro for erlang module inference code
+* TODO MacOS Portability
+On MacOS share libraries are named .dylib instead .so.
+Add a make conditional to add a symbolic link from .so to .dylib
+if the target system appears to be a MacOS
 * TODO Document build methodology principles
 Using new documentation system (XMLs and type/specs)
 ** TODO Merge neptune man page into one (see dialyzer example)
@@ -9,7 +12,6 @@ Using new documentation system (XMLs and type/specs)
 ** TODO The elusive erlang package management system
 * TODO Refactor Makefiles
 ** TODO When to use srcdir and top_srcdir, builddir and top_builddir
-** TODO error : xmlAddEntity: invalid redeclaration of predefined entity
 * TODO Fix HTML Documentation
 ** TODO Expand All and Contract All not working as expected
 * TODO Fix PDF Documentation

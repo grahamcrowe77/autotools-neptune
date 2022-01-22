@@ -43,25 +43,8 @@ AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([neptune], [${PACKAGE_VERSION}])
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 
-erlang_source_files=`ls -1 ${srcdir}/src/*.erl`
-mods=`for file in ${erlang_source_files}; do \
-  basename $file .erl; \
-done`
-
-modules=`for module in ${mods}; do \
-  printf "%s "  $module; \
-done | sed 's/.$//'`
-AC_SUBST([MODULES], [${modules}])
-
-comma_separated_modules=`for module in ${mods}; do \
-  printf "%s,"  $module; \
-done | sed 's/.$//'`
-AC_SUBST([COMMA_SEPARATED_MODULES], [${comma_separated_modules}])
-
-xi_modules=`for module in ${mods}; do \
-  printf "<xi:include href=\\"@TOP_BUILDDIR@/doc/%s.xml\\"/>" $module; \
-done`
-AC_SUBST([XI_MODULES], [${xi_modules}])
+# Infer Erlang source code modules
+AC_ERLANG_MODULES
 
 AM_CONDITIONAL([ERL_DOCGEN], [test "x${ERLANG_LIB_DIR_erl_docgen}" != "xnot found"])
 
@@ -87,7 +70,7 @@ Compiler: '${ERLC} ${ERLCFLAGS}'
 
 Now type 'make @<:@<target>@:>@'
   where the optional argument <target> is:
-    all                       - build all binaries
+    all                       - build all binaries and documentation
     check @<:@TESTSUITEFLAGS=-v@:>@ - run all tests @<:@verbose@:>@
     install                   - install everything
     installcheck              - test installation
