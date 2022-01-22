@@ -50,6 +50,16 @@ libneptune_nif_la_CFLAGS = -I@ERLANG_ROOT_DIR@/usr/include
 libneptune_nif_la_SOURCES = \
   $(top_srcdir)/c_src/neptune.c
 
+if APPLE
+
+neptune_priv_DATA = \
+  .libs/libneptune_nif.so
+
+.libs/libneptune_nif.so: .libs/libneptune_nif.dylib
+	(cd $(@D) && $(LN_S) $(<F) $(@F))
+
+endif #APPLE
+
 ######################################################################
 
 ######################################################################
@@ -103,6 +113,12 @@ MOSTLYCLEANFILES = \
   $(top_builddir)/bin/neptune \
   $(top_builddir)/ebin/neptune.app
 
+if APPLE
+
+MOSTLYCLEANFILES += .libs/libneptune_nif.so
+
+endif #APPLE
+
 ######################################################################
 
 ######################################################################
@@ -110,6 +126,7 @@ MOSTLYCLEANFILES = \
 ######################################################################
 
 EXTRA_DIST = \
+  $(top_srcdir)/bootstrap.sh \
   $(top_builddir)/bin/neptune.in
 
 ######################################################################

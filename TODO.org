@@ -1,7 +1,3 @@
-* TODO MacOS Portability
-On MacOS share libraries are named .dylib instead .so.
-Add a make conditional to add a symbolic link from .so to .dylib
-if the target system appears to be a MacOS
 * TODO Document build methodology principles
 Using new documentation system (XMLs and type/specs)
 ** TODO Merge neptune man page into one (see dialyzer example)

@@ -1,15 +1,18 @@
 # AC_ERLANG_MODULES
 # -----------------
+# Infer the list of Erlang source modules to support the
+# 'all' target (build of binaries and documentation).
 AC_DEFUN([AC_ERLANG_MODULES],
 [AC_REQUIRE([AC_ERLANG_NEED_ERL])[]dnl
 AC_ERLANG_SRC_MODS
 AC_ERLANG_MODS
 AC_ERLANG_COMMA_SEPARATED_MODS
-AC_ERLANG_XI_MODS])
+AC_ERLANG_XI_MODS
+])
 
 # AC_ERLANG_SRC_MODS
 # --------------
-# Return a list of Erlang source modules
+# Create a list of Erlang source modules (without .erl extension).
 AC_DEFUN([AC_ERLANG_SRC_MODS],
 [erlang_source_files=`ls -1 ${srcdir}/src/*.erl`
 mods=`for file in ${erlang_source_files}; do \
@@ -19,8 +22,8 @@ done`
 
 # AC_ERLANG_MODS
 # --------------
-# Convert a list of Erlang source modules to a space separated list of modules.
-# This is used to populate modules in the makefiles
+# Provide a space separated list of Erlang source modules.
+# This is used to populate @MODULES@ in the makefiles.
 AC_DEFUN([AC_ERLANG_MODS],
 [modules=`for module in ${mods}; do \
   printf "%s "  $module; \
@@ -30,8 +33,8 @@ AC_SUBST([MODULES], [${modules}])
 
 # AC_ERLANG_COMMA_SEPARATED_MODULES
 # ---------------------------------
-# Convert a list of Erlang source modules to a comma separated list of modules.
-# This used to populate modules in the .app file
+# Provide a list of comma separated Erlang source modules.
+# This used to populate modules in the .app file.
 AC_DEFUN([AC_ERLANG_COMMA_SEPARATED_MODS],
 [comma_separated_modules=`for module in ${mods}; do \
   printf "%s,"  $module; \
@@ -41,11 +44,43 @@ AC_SUBST([COMMA_SEPARATED_MODULES], [${comma_separated_modules}])
 
 # AC_ERLANG_XI_MODS
 # -----------------
-# Convert a list of Erlang source modules to a list of XML xi elements.
+# Provide a list of XML xi elements for Erlang source modules.
 # This is used to populate the reference manual documentation.
 AC_DEFUN([AC_ERLANG_XI_MODS],
 [xi_modules=`for module in ${mods}; do \
   printf "<xi:include href=\\"@TOP_BUILDDIR@/doc/%s.xml\\"/>" $module; \
 done`
 AC_SUBST([XI_MODULES], [${xi_modules}])
+])
+
+# AC_ERLANG_TESTSOURCES
+# -------------------
+# Infer autotests to support the 'check' target which runs
+# autotests, including dialyzer eunit, common and blackbox
+# tests.
+AC_DEFUN([AC_ERLANG_TESTSOURCES],
+[AC_REQUIRE([AC_ERLANG_NEED_ERL])[]dnl
+AC_ERLANG_AT_FILES
+AC_ERLANG_AT_MODULES
+])
+
+# AC_ERLANG_AT_FILES
+# ------------------
+# Create a list ot autotest files (with .at extension).
+AC_DEFUN([AC_ERLANG_AT_FILES],
+[autotest_source_files=`ls -1 ${srcdir}/tests/*.at`
+at_files=`for file in ${autotest_source_files}; do \
+  basename $file; \
+done`
+])
+
+# AC_ERLANG_AT_MODULES
+# ----------------------
+# Provide a list of space separated list of autotest files.
+# This is used to populate @TESTSOURCES@ in the makefiles
+AC_DEFUN([AC_ERLANG_AT_MODULES],
+[modules=`for file in ${at_files}; do \
+  printf "%s "  $file; \
+done | sed 's/.$//'`
+AC_SUBST([TESTSOURCES], [${modules}])
 ])

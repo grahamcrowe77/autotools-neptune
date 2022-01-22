@@ -22,6 +22,7 @@ AC_PATH_PROG(FOP, fop)
 AC_PATH_PROG(SED, sed)
 AC_PROG_MKDIR_P
 AC_PROG_CC
+AC_PROG_LN_S
 
 # Checks for libraries.
 AC_ERLANG_SUBST_ROOT_DIR
@@ -45,6 +46,15 @@ AC_SUBST([neptune_ebindir])
 
 # Infer Erlang source code modules
 AC_ERLANG_MODULES
+
+# Infer autotest modules
+AC_ERLANG_TESTSOURCES
+
+if test "x${build_vendor}" == "xapple"; then
+  AC_MSG_NOTICE([Build target is Apple])
+  APPLE=true
+fi
+AM_CONDITIONAL([APPLE], [test "x${APPLE}" != "x"])
 
 AM_CONDITIONAL([ERL_DOCGEN], [test "x${ERLANG_LIB_DIR_erl_docgen}" != "xnot found"])
 

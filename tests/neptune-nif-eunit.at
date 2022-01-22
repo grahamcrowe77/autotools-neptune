@@ -1,4 +1,4 @@
-AT_SETUP([neptune_nif-eunit])
+AT_SETUP([neptune-nif-eunit])
 AT_KEYWORDS([eunit])
 COMPILE_EUNIT(["${abs_top_srcdir}/src/neptune_nif.erl"])
 AT_CHECK_EUNIT([neptune_nif_testsuite], [{module, neptune_nif}],

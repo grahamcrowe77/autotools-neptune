@@ -3,20 +3,12 @@ ACLOCAL_AMFLAGS = -I m4
 ######################################################################
 # Autotest testcases
 ######################################################################
-TESTCASES = \
-  neptune-dialyzer.at \
-  neptune-eunit.at \
-  neptune-default.at \
-  neptune-argument.at
+
+TESTSOURCES = @TESTSOURCES@
 
 ######################################################################
 
 TESTSUITE = $(srcdir)/testsuite
-
-TESTSOURCES = \
-  $(srcdir)/local.at \
-  $(srcdir)/testsuite.at \
-  $(addprefix $(srcdir)/, $(TESTCASES))
 
 AUTOM4TE = $(SHELL) $(top_srcdir)/build-aux/missing --run autom4te
 AUTOTEST = $(AUTOM4TE) --language=autotest
@@ -31,13 +23,8 @@ DIALYZER_APPS = \
   compiler \
   crypto
 
-AM_V_DIALYZER = $(am__v_DIALYZER_@AM_V@)
-am__v_DIALYZER_ = $(am__v_DIALYZER_@AM_DEFAULT_V@)
-am__v_DIALYZER_0 = @echo "  DIALYZER" $@;
-am__v_DIALYZER_1 = 
-
 neptune.plt:
-	$(AM_V_DIALYZER)$(DIALYZER) --build_plt --output_plt $@ \
+	$(AM_V_GEN)$(DIALYZER) --build_plt --output_plt $@ \
           --apps $(DIALYZER_APPS)
 
 ######################################################################
@@ -83,9 +70,7 @@ CLEANFILES = \
   neptune.plt
 
 EXTRA_DIST = \
-  testsuite.at \
-  local.at \
   atconfig \
   package.m4 \
-  $(TESTCASES) \
+  $(TESTSOURCES) \
   $(TESTSUITE)
