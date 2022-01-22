@@ -27,8 +27,8 @@ AC_PROG_CC
 AC_ERLANG_SUBST_ROOT_DIR
 AC_ERLANG_SUBST_ERTS_VER
 erlang_erts_maj_ver=`echo $ERLANG_ERTS_VER | cut -d'.' -f1`
-if test ${erlang_erts_maj_ver} -lt 10; then
-  AC_MSG_ERROR([Erlang/OTP version must >= OTP-22.0!])
+if test ${erlang_erts_maj_ver} -lt 11; then
+  AC_MSG_ERROR([Erlang/OTP version must >= OTP-23.0!])
 fi
 AC_ERLANG_CHECK_LIB([erts], [],
   [AC_MSG_ERROR([erts was not found!])])

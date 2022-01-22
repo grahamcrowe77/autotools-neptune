@@ -1,4 +1,3 @@
-* TODO Update OTP/ERTS version dependency, atom_to_binary/1
 * TODO Create an M4 macro for erlang module inference code
 * TODO Document build methodology principles
 Using new documentation system (XMLs and type/specs)
