@@ -1,5 +1,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
+MODULES = @MODULES@
+
 SUBDIRS = . doc tests
 
 ######################################################################
@@ -72,8 +74,8 @@ dist_man1_MANS = \
 # Application Build
 ######################################################################
 
-SOURCES = $(addprefix $(top_srcdir)/src/, $(addsuffix .erl, @MODULES@))
-BEAMS   = $(addprefix $(top_builddir)/ebin/, $(addsuffix .beam, @MODULES@))
+SOURCES = $(addprefix $(top_srcdir)/src/, $(addsuffix .erl, $(MODULES)))
+BEAMS   = $(addprefix $(top_builddir)/ebin/, $(addsuffix .beam, $(MODULES)))
 
 dist_neptune_src_DATA = \
   $(neptune_priv_headers) \
@@ -91,10 +93,6 @@ $(top_builddir)/ebin/%.beam: $(top_srcdir)/src/%.erl
            -I$(top_srcdir)/src \
            -I$(top_srcdir)/include \
            -o $(@D) $<
-
-# $(top_builddir)/ebin/neptune.app: $(top_builddir)/ebin/neptune.app.in
-# 	modules=$(am__app_modules); \
-# 	sed -e "s#@MODULES@#$$modules#g" $< > $@
 
 ######################################################################
 # Clean

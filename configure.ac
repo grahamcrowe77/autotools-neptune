@@ -49,17 +49,17 @@ mods=`for file in ${erlang_source_files}; do \
 done`
 
 modules=`for module in ${mods}; do \
-  echo -n "$module "; \
+  printf "%s "  $module; \
 done | sed 's/.$//'`
 AC_SUBST([MODULES], [${modules}])
 
 comma_separated_modules=`for module in ${mods}; do \
-  echo -n "$module,"; \
+  printf "%s,"  $module; \
 done | sed 's/.$//'`
 AC_SUBST([COMMA_SEPARATED_MODULES], [${comma_separated_modules}])
 
 xi_modules=`for module in ${mods}; do \
-  echo -n "<xi:include href=\\"@TOP_BUILDDIR@/doc/$module.xml\\"/>"; \
+  printf "<xi:include href=\\"@TOP_BUILDDIR@/doc/%s.xml\\"/>" $module; \
 done`
 AC_SUBST([XI_MODULES], [${xi_modules}])
 

@@ -1,5 +1,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
+MODULES = @MODULES@
+
 if ERL_DOCGEN
 
 neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
@@ -10,7 +12,7 @@ neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
 
 if XSLTPROC
 
-MAN3S = $(addprefix $(top_builddir)/man3/, $(addsuffix .3, @MODULES@))
+MAN3S = $(addprefix $(top_builddir)/man3/, $(addsuffix .3, $(MODULES)))
 
 man3_MANS = \
   $(MAN3S)
@@ -34,7 +36,7 @@ endif #XSLTPROC
 
 if XSLTPROC
 
-HTMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .html, @MODULES@))
+HTMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .html, $(MODULES)))
 HTMLS += \
   $(top_builddir)/doc/overview.html \
   $(top_builddir)/doc/make-targets.html \
@@ -117,7 +119,7 @@ endif #XSLTPROC
 # XMLs used for building HTML and Manual Pages
 ######################################################################
 
-XMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .xml, @MODULES@))
+XMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .xml, $(MODULES)))
 
 $(top_builddir)/doc/ref_man.xml: $(top_builddir)/doc/ref_man.xml.in
 	$(AM_V_GEN)$(SED) \
