@@ -34,8 +34,9 @@ dist_bin_SCRIPTS = \
   $(top_builddir)/bin/neptune
 
 $(top_builddir)/bin/neptune: $(top_srcdir)/bin/neptune.in
-	$(MKDIR_P) $(@D)
-	sed -e s#NEPTUNE_EBINDIR#$(DESTDIR)$(neptune_ebindir)#g $< > $@
+	$(AM_V_GEN)$(SED) \
+	  -e "s#%NEPTUNE_EBINDIR%#$(DESTDIR)$(neptune_ebindir)#g" \
+	  -e "s#%PACKAGE_VERSION%#$(PACKAGE_VERSION)#g" $< > $@
 	chmod +x $@
 
 ######################################################################
@@ -68,15 +69,6 @@ endif #APPLE
 
 dist_neptune_inc_DATA = \
   $(top_srcdir)/include/neptune.hrl
-
-######################################################################
-
-######################################################################
-# Manual Pages for Application Escripts
-######################################################################
-
-dist_man1_MANS = \
-  $(top_srcdir)/man1/neptune.1
 
 ######################################################################
 

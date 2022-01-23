@@ -1,13 +1,13 @@
 %%%-------------------------------------------------------------------
 %%% @author Graham Crowe <graham.crowe@telia.com>
 %%% @copyright (C) 2022, Graham Crowe
-%%% @doc Neptune Module
+%%% @doc Neptune IO Module
 %%%
 %%% sole purpose is to write greetings binary string greetings to IO.
 %%% @end
 %%% Created :  4 Jan 2022 by Graham Crowe <graham.crowe@telia.com>
 %%%-------------------------------------------------------------------
--module(neptune).
+-module(neptune_io).
 
 -include("neptune.hrl").
 -include("neptune_limits.hrl").
@@ -55,7 +55,7 @@ write(Salutation) ->
 -spec greeting(Salutation :: binary()) -> binary().
 
 greeting(Salutation) ->
-    Place = atom_to_binary(?MODULE),
+    Place = atom_to_binary(neptune),
     <<Salutation/binary, " from ", Place/binary, "!">>.
 
 %% -------------------------------------------------------------------

@@ -1,4 +1,3 @@
-AT_BANNER([Blackbox tests])
 AT_SETUP([neptune-default])
 AT_KEYWORDS([blackbox])
 NEPTUNE_TEST

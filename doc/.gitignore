@@ -2,7 +2,7 @@
 # make
 *.pdf
 *.html
-neptune.xml
+neptune_io.xml
 neptune_app.xml
 neptune_nif.xml
 neptune_server.xml

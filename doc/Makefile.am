@@ -2,6 +2,8 @@ ACLOCAL_AMFLAGS = -I m4
 
 MODULES = @MODULES@
 
+ESCRIPTS = neptune
+
 if ERL_DOCGEN
 
 neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
@@ -11,6 +13,22 @@ neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
 ######################################################################
 
 if XSLTPROC
+
+MAN1S = $(addprefix $(top_builddir)/man1/, $(addsuffix .1, $(ESCRIPTS)))
+
+man1_MANS = \
+  $(MAN1S)
+
+$(top_builddir)/man1/%.1: $(top_srcdir)/doc/%.xml
+	$(AM_V_GEN)$(XSLTPROC) --output $@ \
+	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
+	  --stringparam gendate "`date +"%B %e, %Y"`" \
+	  --stringparam appname $(PACKAGE_NAME) \
+	  --stringparam appver $(PACKAGE_VERSION) \
+	  --xinclude \
+	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
+	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
+          $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_man.xsl $< 2> /dev/null
 
 MAN3S = $(addprefix $(top_builddir)/man3/, $(addsuffix .3, $(MODULES)))
 
@@ -143,6 +161,7 @@ $(top_builddir)/doc/%.xml: $(top_srcdir)/src/%.erl
 ######################################################################
 
 MOSTLYCLEANFILES = \
+  $(MAN1S) \
   $(MAN3S) \
   $(XMLS) \
   $(HTMLS) \
@@ -160,6 +179,7 @@ MOSTLYCLEANFILES = \
 ######################################################################
 
 EXTRA_DIST = \
+  $(top_srcdir)/doc/neptune.xml \
   $(top_srcdir)/doc/overview.xml \
   $(top_srcdir)/doc/part.xml \
   $(top_srcdir)/doc/make-targets.xml \

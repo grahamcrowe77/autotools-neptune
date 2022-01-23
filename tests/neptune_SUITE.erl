@@ -11,14 +11,14 @@ all() ->
      application].
 
 write0(_) ->
-    ok = neptune:write().
+    ok = neptune_io:write().
 
 write1(_) ->
-    ok = neptune:write(?INFORMAL_SALUTATION),
-    ok = neptune:write(<<"How are you">>),
+    ok = neptune_io:write(?INFORMAL_SALUTATION),
+    ok = neptune_io:write(<<"How are you">>),
     LongString = lists:duplicate($a, ?MAX_SALUTATION_LENGTH + 1),
     LongGreeting = list_to_binary(LongString),
-    {error, max_salutation_length} = neptune:write(LongGreeting),
+    {error, max_salutation_length} = neptune_io:write(LongGreeting),
     ok.
 
 application(_) ->

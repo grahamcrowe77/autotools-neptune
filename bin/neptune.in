@@ -1,11 +1,13 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
-%%! -pa NEPTUNE_EBINDIR
+%%! -pa %NEPTUNE_EBINDIR%
 
 -define(COMMAND_NAME, "neptune").
 
-main([Salutation]) ->
-    case neptune:write(list_to_binary(Salutation)) of
+main(["--version"]) ->
+    io:format("~s ~s~n", [?COMMAND_NAME, "%PACKAGE_VERSION%"]);
+main(["--salutation", Salutation]) ->
+    case neptune_io:write(list_to_binary(Salutation)) of
 	ok ->
 	    halt(0);
 	{error, max_salutation_length} ->
@@ -13,7 +15,7 @@ main([Salutation]) ->
 	    halt(1)
     end;
 main([]) ->
-    neptune:write();
+    neptune_io:write();
 main(_) ->
     usage(),
     halt(1).

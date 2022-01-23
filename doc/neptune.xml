@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE erlref SYSTEM "erlref.dtd">
+
+<erlref>
+  <header>
+    <title>neptune</title>
+    <prepared></prepared>
+    <responsible></responsible>
+    <docno>1</docno>
+    <approved></approved>
+    <checked></checked>
+    <date></date>
+    <rev>A</rev>
+  <file>neptune.xml</file></header>
+  <module>neptune</module>
+  <modulesummary>neptune command</modulesummary>
+  <description>
+    <p>neptune is a tool whose sole purpose is to write greetings binary
+    string greetings to IO.</p>
+  </description>
+  <section>
+    <marker id="command_line"></marker>
+    <title>Using neptune</title>
+    <p>neptune prints a default salutation and exit if no arguments are
+    supplied.</p>
+    <p><em>Exit status:</em></p>
+      <taglist>
+        <tag><c>0</c></tag>
+        <item>
+          <p>Processed successfully.</p>
+        </item>
+        <tag><c>1</c></tag>
+        <item>
+          <p>An error occurred</p>
+        </item>
+      </taglist>
+      <code type="none">neptune [--version] [--salutation Salutation]</code>
+      <p><em>Options:</em></p>
+      <taglist>
+        <tag><c>--version</c></tag>
+        <item>
+          <p>Print the neptune version and exit.</p>
+        </item>
+        <tag><c>--salutation Salutation</c></tag>
+        <item>
+          <p>Print the salutation and exit.</p>
+        </item>
+      </taglist>
+  </section>
+  <authors>
+    <aname>Graham Crowe</aname>
+    <email>graham.crowe@telia.com</email>
+  </authors>
+</erlref>

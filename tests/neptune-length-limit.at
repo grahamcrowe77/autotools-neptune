@@ -1,7 +1,7 @@
 AT_SETUP([neptune-length-limit])
 AT_KEYWORDS([blackbox])
 NEPTUNE_TEST
-AT_CHECK_UNQUOTED([neptune "Thousands of greetings and overall joy"],[1],
+AT_CHECK_UNQUOTED([neptune --salutation "Thousands of greetings and overall joy"],[1],
                   [ERROR: Salutation length limit exceeded
 ])
 NEPTUNE_CLEANUP

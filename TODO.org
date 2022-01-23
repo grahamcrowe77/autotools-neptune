@@ -1,7 +1,3 @@
-* TODO Rename neptune.erl neptune_io.erl
-To avoid namespace collision with neptune escript to
-allow for a generated man page for the command and
-include it in the HTML and PDF documentation.
 * TODO Refactor Makefiles
 ** TODO Improve comments for consistent look with explanations
 ** TODO When to use srcdir and top_srcdir, builddir and top_builddir

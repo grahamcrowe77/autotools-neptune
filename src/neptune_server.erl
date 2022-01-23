@@ -56,7 +56,7 @@ start_link() ->
 	  ignore.
 init([]) ->
     process_flag(trap_exit, true),
-    ok = neptune:write(),
+    ok = neptune_io:write(),
     {ok, #state{count = 1}, 5000}.
 
 %%--------------------------------------------------------------------
@@ -106,9 +106,9 @@ handle_cast(_Request, State) ->
 handle_info(timeout, #state{count = Count}=State) ->
     ok = case Count rem 2 of
 	     0 ->
-		 neptune:write();
+		 neptune_io:write();
 	     1 ->
-		 neptune:write(<<"Hi there">>)
+		 neptune_io:write(<<"Hi there">>)
 	 end,
     {noreply, State#state{count = Count + 1}, 5000};
 handle_info(_Info, State) ->
