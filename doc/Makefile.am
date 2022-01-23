@@ -16,7 +16,7 @@ MAN1S = $(addprefix $(top_builddir)/man1/, $(addsuffix .1, $(ESCRIPTS)))
 man1_MANS = \
   $(MAN1S)
 
-$(top_builddir)/man1/%.1: $(top_srcdir)/doc/%.xml
+$(top_builddir)/man1/%.1: $(srcdir)/%.xml
 	$(AM_V_GEN)$(XSLTPROC) --output $@ \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
@@ -35,7 +35,7 @@ MAN3S = $(addprefix $(top_builddir)/man3/, $(addsuffix .3, $(MODULES)))
 man3_MANS = \
   $(MAN3S)
 
-$(top_builddir)/man3/%.3: $(top_builddir)/doc/%.xml
+$(top_builddir)/man3/%.3: $(builddir)/%.xml
 	$(AM_V_GEN)$(XSLTPROC) --output $@ \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
@@ -51,31 +51,32 @@ if XSLTPROC
 # --------------------------------------
 # html pages
 # --------------------------------------
-HTMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .html, $(MODULES)))
+HTMLS = $(addprefix $(builddir)/, $(addsuffix .html, $(MODULES)))
 HTMLS += \
-  $(top_builddir)/doc/overview.html \
-  $(top_builddir)/doc/make-targets.html \
-  $(top_builddir)/doc/users_guide.html
+  $(builddir)/neptune.html \
+  $(builddir)/overview.html \
+  $(builddir)/make-targets.html \
+  $(builddir)/users_guide.html
 
 HTML_EXTRAS = \
-  $(top_srcdir)/doc/neptune.jpg \
-  $(top_builddir)/doc/stylesheet.css
+  $(srcdir)/neptune.jpg \
+  $(builddir)/stylesheet.css
 
 neptune_doc_DATA = \
-  $(top_builddir)/doc/index.html \
+  $(builddir)/index.html \
   $(HTMLS) \
   $(HTML_EXTRAS)
 
 if FOP
-neptune_doc_DATA += $(top_builddir)/doc/neptune.pdf
+neptune_doc_DATA += $(builddir)/neptune.pdf
 endif #FOP
 
-$(top_builddir)/doc/stylesheet.css:
+$(builddir)/stylesheet.css:
 	$(AM_V_GEN)cp $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css $@
 
-$(HTMLS): $(top_builddir)/doc/index.html
+$(HTMLS): $(builddir)/index.html
 
-$(top_builddir)/doc/index.html: $(top_builddir)/doc/book.xml $(XMLS)
+$(builddir)/index.html: $(builddir)/book.xml $(XMLS)
 	$(AM_V_GEN)$(XSLTPROC) --output $@ \
 	  --stringparam outdir $(@D) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
@@ -86,9 +87,9 @@ $(top_builddir)/doc/index.html: $(top_builddir)/doc/book.xml $(XMLS)
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-	  --stringparam stylesheet $(top_srcdir)/doc/stylesheet.css \
+	  --stringparam stylesheet $(srcdir)/stylesheet.css \
 	  --stringparam winprefix Erlang \
-	  --stringparam logo $(top_srcdir)/doc/neptune.jpg \
+	  --stringparam logo $(srcdir)/neptune.jpg \
 	  --stringparam extra_front_page_info "" \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
@@ -99,47 +100,48 @@ if FOP
 # --------------------------------------
 # pdf pages
 # --------------------------------------
-$(top_builddir)/doc/neptune.pdf: $(top_builddir)/doc/neptune.fo
+$(builddir)/neptune.pdf: $(builddir)/neptune.fo
 	$(AM_V_GEN)$(FOP) -fo $< -pdf $@ 2> /dev/null
 
 endif #FOP
 if XSLTPROC
 
-$(top_builddir)/doc/neptune.fo: $(HTMLS) $(XMLS)
+$(builddir)/neptune.fo: $(HTMLS) $(XMLS)
 	$(AM_V_GEN)$(XSLTPROC) \
 	  --output $@ \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-	  --stringparam logo $(top_srcdir)/doc/neptune.jpg \
+	  --stringparam logo $(srcdir)/neptune.jpg \
 	  --stringparam pdfcolor "#960003" \
 	  --stringparam extra_front_page_info "$(PACKAGE_NAME)" \
 	  --xinclude \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
-	  -path $(top_builddir)/doc \
+	  -path $(builddir)/doc \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_pdf.xsl \
-	  $(top_srcdir)/doc/book.xml 2> /dev/null
+	  $(builddir)/book.xml 2> /dev/null
 endif #XSLTPROC
 
 # --------------------------------------
 # Generated xml files
 # --------------------------------------
-XMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .xml, $(MODULES)))
+XMLS = $(addprefix $(builddir)/, $(addsuffix .xml, $(MODULES)))
 
-$(top_builddir)/doc/ref_man.xml: $(top_builddir)/doc/ref_man.xml.in
-	$(AM_V_GEN)$(SED) \
-	  -e "s#@TOP_BUILDDIR@#$(top_builddir)#g" $< > $@
-
-XMLS += $(top_builddir)/doc/ref_man.xml
-
-$(top_builddir)/doc/book.xml: $(top_srcdir)/doc/book.xml.in
+$(builddir)/ref_man.xml: $(builddir)/ref_man.xml.in
 	$(AM_V_GEN)$(SED) \
 	  -e "s#@TOP_BUILDDIR@#$(top_builddir)#g" \
 	  -e "s#@TOP_SRCDIR@#$(top_srcdir)#g" $< > $@
 
-$(top_builddir)/doc/%.xml: $(top_srcdir)/src/%.erl
+XMLS += $(builddir)/ref_man.xml
+
+$(builddir)/book.xml: $(srcdir)/book.xml.in
+	$(AM_V_GEN)$(SED) \
+	  -e "s#@TOP_BUILDDIR@#$(top_builddir)#g" \
+	  -e "s#@TOP_SRCDIR@#$(top_srcdir)#g" $< > $@
+
+$(builddir)/%.xml: $(top_srcdir)/src/%.erl
 	$(AM_V_GEN)$(ESCRIPT) \
 	  $(ERLANG_LIB_DIR_erl_docgen)/priv/bin/xml_from_edoc.escript $<
 
@@ -151,22 +153,22 @@ MOSTLYCLEANFILES = \
   $(MAN3S) \
   $(XMLS) \
   $(HTMLS) \
-  $(top_builddir)/doc/index.html \
-  $(top_builddir)/doc/neptune.fo \
-  $(top_builddir)/doc/neptune.pdf \
-  $(top_builddir)/doc/ref_man.xml \
-  $(top_builddir)/doc/book.xml \
-  $(top_builddir)/doc/stylesheet.css
+  $(builddir)/index.html \
+  $(builddir)/neptune.fo \
+  $(builddir)/neptune.pdf \
+  $(builddir)/ref_man.xml \
+  $(builddir)/book.xml \
+  $(builddir)/stylesheet.css
 
 # --------------------------------------
 # Distribution
 # --------------------------------------
 EXTRA_DIST = \
-  $(top_srcdir)/doc/neptune.xml \
-  $(top_srcdir)/doc/overview.xml \
-  $(top_srcdir)/doc/part.xml \
-  $(top_srcdir)/doc/make-targets.xml \
-  $(top_srcdir)/doc/ref_man.xml.in.in \
-  $(top_srcdir)/doc/book.xml.in \
-  $(top_srcdir)/doc/neptune.jpg
+  $(srcdir)/neptune.xml \
+  $(srcdir)/overview.xml \
+  $(srcdir)/part.xml \
+  $(srcdir)/make-targets.xml \
+  $(srcdir)/ref_man.xml.in.in \
+  $(srcdir)/book.xml.in \
+  $(srcdir)/neptune.jpg
 endif #ERL_DOCGEN

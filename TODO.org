@@ -1,5 +1,7 @@
-* TODO Refactor Makefiles
-** TODO When to use srcdir and top_srcdir, builddir and top_builddir
+* TODO Complete non-recursive build
+** TODO Single Makefile.am
+** TODO Move boilerplate to common.mk
+** TODO Single .gitignore
 * TODO Create tools for generating template repos
 ** neptune-app
 ** neptune-rel
@@ -26,7 +28,3 @@ The distcheck target works when preceded by the targets run in the order:
 - 'distcheck'
 However any change to that order breaks distcheck, e.g. 'all' followed by
 'distcheck' implying hidden dependency bug.
-* TODO Complete non-recursive build
-** TODO Single Makefile.am
-** TODO Move boilerplate to common.mk
-** TODO Single .gitignore

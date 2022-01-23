@@ -31,6 +31,6 @@
   </header>
   <description>
   </description>
-  <xi:include href="neptune.xml"/>@XI_MODULES@
+  <xi:include href="@TOP_SRCDIR@/doc/neptune.xml"/>@XI_MODULES@
 </application>
 

@@ -17,9 +17,9 @@ neptune_privdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/priv
 # --------------------------------------
 # Escripts
 # --------------------------------------
-dist_bin_SCRIPTS = $(addprefix $(top_builddir)/bin/, $(ESCRIPTS))
+dist_bin_SCRIPTS = $(addprefix $(builddir)/bin/, $(ESCRIPTS))
 
-$(top_builddir)/bin/neptune: $(top_srcdir)/bin/neptune.in
+$(builddir)/bin/neptune: $(srcdir)/bin/neptune.in
 	$(MKDIR_P) $(@D)
 	$(AM_V_GEN)$(SED) \
 	  -e "s#%NEPTUNE_EBINDIR%#$(DESTDIR)$(neptune_ebindir)#g" \
@@ -33,7 +33,7 @@ neptune_priv_LTLIBRARIES = libneptune_nif.la
 libneptune_nif_la_CFLAGS = -I@ERLANG_ROOT_DIR@/usr/include
 
 libneptune_nif_la_SOURCES = \
-  $(top_srcdir)/c_src/neptune.c
+  $(srcdir)/c_src/neptune.c
 
 if APPLE
 neptune_priv_DATA = \
@@ -47,7 +47,7 @@ endif #APPLE
 # Public Erlang Header Files
 # --------------------------------------
 dist_neptune_inc_DATA = \
-  $(top_srcdir)/include/neptune.hrl
+  $(srcdir)/include/neptune.hrl
 
 # --------------------------------------
 # Build beam files
@@ -57,24 +57,24 @@ am__v_ERLC_ = $(am__v_ERLC_@AM_DEFAULT_V@)
 am__v_ERLC_0 = @echo "  ERLC    " $@;
 am__v_ERLC_1 = 
 
-SOURCES = $(addprefix $(top_srcdir)/src/, $(addsuffix .erl, $(MODULES)))
-BEAMS   = $(addprefix $(top_builddir)/ebin/, $(addsuffix .beam, $(MODULES)))
+SOURCES = $(addprefix $(srcdir)/src/, $(addsuffix .erl, $(MODULES)))
+BEAMS   = $(addprefix $(builddir)/ebin/, $(addsuffix .beam, $(MODULES)))
 
 dist_neptune_src_DATA = \
   $(neptune_priv_headers) \
   $(SOURCES)
 
 neptune_priv_headers = \
-  $(top_srcdir)/src/neptune_limits.hrl
+  $(srcdir)/src/neptune_limits.hrl
 
 neptune_ebin_DATA = \
-  $(top_builddir)/ebin/neptune.app \
+  $(builddir)/ebin/neptune.app \
   $(BEAMS)
 
-$(top_builddir)/ebin/%.beam: $(top_srcdir)/src/%.erl
+$(builddir)/ebin/%.beam: $(srcdir)/src/%.erl
 	$(AM_V_ERLC)$(ERLC) $(ERLCFLAGS) \
-           -I$(top_srcdir)/src \
-           -I$(top_srcdir)/include \
+           -I$(srcdir)/src \
+           -I$(srcdir)/include \
            -o $(@D) $<
 
 # --------------------------------------
@@ -82,8 +82,8 @@ $(top_builddir)/ebin/%.beam: $(top_srcdir)/src/%.erl
 # --------------------------------------
 MOSTLYCLEANFILES = \
   $(BEAMS) \
-  $(top_builddir)/bin/neptune \
-  $(top_builddir)/ebin/neptune.app
+  $(builddir)/bin/neptune \
+  $(builddir)/ebin/neptune.app
 
 if APPLE
 MOSTLYCLEANFILES += .libs/libneptune_nif.so
@@ -93,5 +93,5 @@ endif #APPLE
 # Distribution
 # --------------------------------------
 EXTRA_DIST = \
-  $(top_srcdir)/bootstrap.sh \
-  $(top_builddir)/bin/neptune.in
+  $(srcdir)/bootstrap.sh \
+  $(builddir)/bin/neptune.in
