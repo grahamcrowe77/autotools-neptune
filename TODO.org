@@ -1,3 +1,14 @@
+* TODO Rename neptune.erl neptune_io.erl
+To avoid namespace collision with neptune escript to
+allow for a generated man page for the command and
+include it in the HTML and PDF documentation.
+* TODO Refactor Makefiles
+** TODO Improve comments for consistent look with explanations
+** TODO When to use srcdir and top_srcdir, builddir and top_builddir
+* TODO Create tools for generating template repos
+** neptune-app
+** neptune-rel
+** Build methodology and tools documented
 * TODO Document build methodology principles
 Using new documentation system (XMLs and type/specs)
 ** TODO Merge neptune man page into one (see dialyzer example)
@@ -6,8 +17,6 @@ Using new documentation system (XMLs and type/specs)
 ** TODO Conclusions (build systems and package/distribution management)
 ** TODO Look into using meson as a build system
 ** TODO The elusive erlang package management system
-* TODO Refactor Makefiles
-** TODO When to use srcdir and top_srcdir, builddir and top_builddir
 * TODO Fix HTML Documentation
 ** TODO Expand All and Contract All not working as expected
 * TODO Fix PDF Documentation
