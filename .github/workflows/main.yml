@@ -56,8 +56,9 @@ jobs:
           make mostlyclean
           ./configure --prefix=/usr
           make
-          ls man3/neptune.3   # test for presence of generated man3 documentation
-          ls doc/neptune.html # test for presence of generated html documentation
+          ls man1/neptune.1  # test for presence of generated man1 documentation
+          ls man3/neptune*.3 # test for presence of generated man3 documentation
+          ls doc/*.html      # test for presence of generated html documentation
           # Use cached ./tests/neptune.plt
           make check V=1 TESTSUITEFLAGS=-v
           make install DESTDIR=$PWD/inst V=1
