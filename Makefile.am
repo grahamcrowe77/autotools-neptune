@@ -2,49 +2,33 @@ ACLOCAL_AMFLAGS = -I m4
 
 MODULES = @MODULES@
 
+ESCRIPTS = neptune
+
 SUBDIRS = . doc tests
 
-######################################################################
-# Silent builds
-######################################################################
-
-AM_V_ERLC = $(am__v_ERLC_@AM_V@)
-am__v_ERLC_ = $(am__v_ERLC_@AM_DEFAULT_V@)
-am__v_ERLC_0 = @echo "  ERLC    " $@;
-am__v_ERLC_1 = 
-
-######################################################################
-
-######################################################################
-# Application Structure
-######################################################################
-
+# --------------------------------------
+# Directory Structure
+# --------------------------------------
 neptune_srcdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/src
 neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
 neptune_incdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/include
 neptune_privdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/priv
 
-######################################################################
-
-######################################################################
-# Application Escripts
-######################################################################
-
-dist_bin_SCRIPTS = \
-  $(top_builddir)/bin/neptune
+# --------------------------------------
+# Escripts
+# --------------------------------------
+dist_bin_SCRIPTS = $(addprefix $(top_builddir)/bin/, $(ESCRIPTS))
 
 $(top_builddir)/bin/neptune: $(top_srcdir)/bin/neptune.in
+	$(MKDIR_P) $(@D)
 	$(AM_V_GEN)$(SED) \
 	  -e "s#%NEPTUNE_EBINDIR%#$(DESTDIR)$(neptune_ebindir)#g" \
 	  -e "s#%PACKAGE_VERSION%#$(PACKAGE_VERSION)#g" $< > $@
 	chmod +x $@
 
-######################################################################
-
-######################################################################
-# Application NIF
-######################################################################
-
+# --------------------------------------
+# NIF
+# --------------------------------------
 neptune_priv_LTLIBRARIES = libneptune_nif.la
 libneptune_nif_la_CFLAGS = -I@ERLANG_ROOT_DIR@/usr/include
 
@@ -52,29 +36,26 @@ libneptune_nif_la_SOURCES = \
   $(top_srcdir)/c_src/neptune.c
 
 if APPLE
-
 neptune_priv_DATA = \
   .libs/libneptune_nif.so
 
 .libs/libneptune_nif.so: .libs/libneptune_nif.dylib
 	(cd $(@D) && $(LN_S) $(<F) $(@F))
-
 endif #APPLE
 
-######################################################################
-
-######################################################################
-# Application Public Erlang Header Files
-######################################################################
-
+# --------------------------------------
+# Public Erlang Header Files
+# --------------------------------------
 dist_neptune_inc_DATA = \
   $(top_srcdir)/include/neptune.hrl
 
-######################################################################
-
-######################################################################
-# Application Build
-######################################################################
+# --------------------------------------
+# Build beam files
+# --------------------------------------
+AM_V_ERLC = $(am__v_ERLC_@AM_V@)
+am__v_ERLC_ = $(am__v_ERLC_@AM_DEFAULT_V@)
+am__v_ERLC_0 = @echo "  ERLC    " $@;
+am__v_ERLC_1 = 
 
 SOURCES = $(addprefix $(top_srcdir)/src/, $(addsuffix .erl, $(MODULES)))
 BEAMS   = $(addprefix $(top_builddir)/ebin/, $(addsuffix .beam, $(MODULES)))
@@ -96,29 +77,21 @@ $(top_builddir)/ebin/%.beam: $(top_srcdir)/src/%.erl
            -I$(top_srcdir)/include \
            -o $(@D) $<
 
-######################################################################
+# --------------------------------------
 # Clean
-######################################################################
-
+# --------------------------------------
 MOSTLYCLEANFILES = \
   $(BEAMS) \
   $(top_builddir)/bin/neptune \
   $(top_builddir)/ebin/neptune.app
 
 if APPLE
-
 MOSTLYCLEANFILES += .libs/libneptune_nif.so
-
 endif #APPLE
 
-######################################################################
-
-######################################################################
+# --------------------------------------
 # Distribution
-######################################################################
-
+# --------------------------------------
 EXTRA_DIST = \
   $(top_srcdir)/bootstrap.sh \
   $(top_builddir)/bin/neptune.in
-
-######################################################################

@@ -1,21 +1,15 @@
 ACLOCAL_AMFLAGS = -I m4
 
-######################################################################
-# Autotest testcases
-######################################################################
-
 TESTSOURCES = @TESTSOURCES@
-
-######################################################################
 
 TESTSUITE = $(srcdir)/testsuite
 
 AUTOM4TE = $(SHELL) $(top_srcdir)/build-aux/missing --run autom4te
 AUTOTEST = $(AUTOM4TE) --language=autotest
 
-######################################################################
-# Static Analysis (Dialyzer)
-######################################################################
+# --------------------------------------
+# Dialyzer PLT
+# --------------------------------------
 DIALYZER_APPS = \
   erts \
   kernel \
@@ -27,8 +21,9 @@ neptune.plt:
 	$(AM_V_GEN)$(DIALYZER) --build_plt --output_plt $@ \
           --apps $(DIALYZER_APPS)
 
-######################################################################
-
+# --------------------------------------
+# Autotests
+# --------------------------------------
 check-local: atconfig atlocal $(TESTSUITE) neptune.plt
 	$(SHELL) '$(TESTSUITE)' $(TESTSUITEFLAGS)
 
@@ -62,6 +57,9 @@ $(TESTSUITE): $(TESTSOURCES) $(srcdir)/package.m4
 	$(AM_V_GEN) $(AUTOTEST) -I '$(srcdir)' \
           -o $@.tmp $@.at; mv $@.tmp $@
 
+# --------------------------------------
+# Clean
+# --------------------------------------
 MOSTLYCLEANFILES = \
   $(addsuffix .beam, $(test_modules)) \
   $(neptune_ebin_DATA)
@@ -69,6 +67,9 @@ MOSTLYCLEANFILES = \
 CLEANFILES = \
   neptune.plt
 
+# --------------------------------------
+# Distribution
+# --------------------------------------
 EXTRA_DIST = \
   atconfig \
   package.m4 \

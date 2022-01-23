@@ -5,15 +5,12 @@ MODULES = @MODULES@
 ESCRIPTS = neptune
 
 if ERL_DOCGEN
-
 neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
 
-######################################################################
-# Manual Pages for Application Modules
-######################################################################
-
 if XSLTPROC
-
+# --------------------------------------
+# man1 pages
+# --------------------------------------
 MAN1S = $(addprefix $(top_builddir)/man1/, $(addsuffix .1, $(ESCRIPTS)))
 
 man1_MANS = \
@@ -30,6 +27,9 @@ $(top_builddir)/man1/%.1: $(top_srcdir)/doc/%.xml
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_man.xsl $< 2> /dev/null
 
+# --------------------------------------
+# man3 pages
+# --------------------------------------
 MAN3S = $(addprefix $(top_builddir)/man3/, $(addsuffix .3, $(MODULES)))
 
 man3_MANS = \
@@ -45,15 +45,12 @@ $(top_builddir)/man3/%.3: $(top_builddir)/doc/%.xml
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_man.xsl $< 2> /dev/null
-
 endif #XSLTPROC
 
-######################################################################
-# HTML Pages for Application Modules
-######################################################################
-
 if XSLTPROC
-
+# --------------------------------------
+# html pages
+# --------------------------------------
 HTMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .html, $(MODULES)))
 HTMLS += \
   $(top_builddir)/doc/overview.html \
@@ -70,9 +67,7 @@ neptune_doc_DATA = \
   $(HTML_EXTRAS)
 
 if FOP
-
 neptune_doc_DATA += $(top_builddir)/doc/neptune.pdf
-
 endif #FOP
 
 $(top_builddir)/doc/stylesheet.css:
@@ -98,20 +93,16 @@ $(top_builddir)/doc/index.html: $(top_builddir)/doc/book.xml $(XMLS)
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_html.xsl $< 2> /dev/null
-
 endif #XSLTPROC
 
-######################################################################
-# PDF for Application
-######################################################################
-
 if FOP
-
+# --------------------------------------
+# pdf pages
+# --------------------------------------
 $(top_builddir)/doc/neptune.pdf: $(top_builddir)/doc/neptune.fo
 	$(AM_V_GEN)$(FOP) -fo $< -pdf $@ 2> /dev/null
 
 endif #FOP
-
 if XSLTPROC
 
 $(top_builddir)/doc/neptune.fo: $(HTMLS) $(XMLS)
@@ -130,13 +121,11 @@ $(top_builddir)/doc/neptune.fo: $(HTMLS) $(XMLS)
 	  -path $(top_builddir)/doc \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_pdf.xsl \
 	  $(top_srcdir)/doc/book.xml 2> /dev/null
-
 endif #XSLTPROC
 
-######################################################################
-# XMLs used for building HTML and Manual Pages
-######################################################################
-
+# --------------------------------------
+# Generated xml files
+# --------------------------------------
 XMLS = $(addprefix $(top_builddir)/doc/, $(addsuffix .xml, $(MODULES)))
 
 $(top_builddir)/doc/ref_man.xml: $(top_builddir)/doc/ref_man.xml.in
@@ -154,12 +143,9 @@ $(top_builddir)/doc/%.xml: $(top_srcdir)/src/%.erl
 	$(AM_V_GEN)$(ESCRIPT) \
 	  $(ERLANG_LIB_DIR_erl_docgen)/priv/bin/xml_from_edoc.escript $<
 
-######################################################################
-
-######################################################################
+# --------------------------------------
 # Clean
-######################################################################
-
+# --------------------------------------
 MOSTLYCLEANFILES = \
   $(MAN1S) \
   $(MAN3S) \
@@ -172,12 +158,9 @@ MOSTLYCLEANFILES = \
   $(top_builddir)/doc/book.xml \
   $(top_builddir)/doc/stylesheet.css
 
-######################################################################
-
-######################################################################
+# --------------------------------------
 # Distribution
-######################################################################
-
+# --------------------------------------
 EXTRA_DIST = \
   $(top_srcdir)/doc/neptune.xml \
   $(top_srcdir)/doc/overview.xml \
@@ -186,7 +169,4 @@ EXTRA_DIST = \
   $(top_srcdir)/doc/ref_man.xml.in.in \
   $(top_srcdir)/doc/book.xml.in \
   $(top_srcdir)/doc/neptune.jpg
-
-######################################################################
-
 endif #ERL_DOCGEN
