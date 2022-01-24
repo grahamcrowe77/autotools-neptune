@@ -2,7 +2,7 @@ AC_PREREQ([2.69])
 AC_INIT([neptune], [0.9.0], [graham.crowe@telia.com])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/neptune_app.erl])
-AM_INIT_AUTOMAKE([foreign subdir-objects])
+AM_INIT_AUTOMAKE([foreign])
 AM_SILENT_RULES([yes])
 LT_PREREQ([2.4.6])
 LT_INIT

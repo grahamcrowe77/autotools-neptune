@@ -12,7 +12,7 @@ m4/*.m4
 # Artifacts created after running:
 # ./configure
 Makefile
-c_src/.deps/
+.deps/
 config.*
 libtool
 doc/ref_man.xml.in
