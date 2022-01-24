@@ -23,10 +23,10 @@ jobs:
         with:
           path: ./tests/neptune.plt
           key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          #restore-keys: |
+          #  ${{ runner.os }}-build-${{ env.cache-name }}
+          #  ${{ runner.os }}-build-
+          #  ${{ runner.os }}-
 
       - name: Check for an Erlang is installation
         run: |
