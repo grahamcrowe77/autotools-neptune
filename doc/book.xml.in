@@ -39,7 +39,7 @@
     <xi:include href="@TOP_SRCDIR@/doc/part.xml"/>
   </parts>
   <applications>
-    <xi:include href="@TOP_BUILDDIR@/doc/ref_man.xml"/>
+    <xi:include href="@TOP_BUILDDIR@/ref_man.xml"/>
   </applications>
   <listofterms></listofterms>
   <index></index>

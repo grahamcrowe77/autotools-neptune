@@ -48,7 +48,7 @@ AC_SUBST([COMMA_SEPARATED_MODULES], [${comma_separated_modules}])
 # This is used to populate the reference manual documentation.
 AC_DEFUN([AC_ERLANG_XI_MODS],
 [xi_modules=`for module in ${mods}; do \
-  printf "<xi:include href=\\"@TOP_BUILDDIR@/doc/%s.xml\\"/>" $module; \
+  printf "<xi:include href=\\"@TOP_BUILDDIR@/%s.xml\\"/>" $module; \
 done`
 AC_SUBST([XI_MODULES], [${xi_modules}])
 ])
@@ -60,27 +60,27 @@ AC_SUBST([XI_MODULES], [${xi_modules}])
 # tests.
 AC_DEFUN([AC_ERLANG_TESTSOURCES],
 [AC_REQUIRE([AC_ERLANG_NEED_ERL])[]dnl
+AC_ERLANG_AT_FILELIST
 AC_ERLANG_AT_FILES
-AC_ERLANG_AT_MODULES
 ])
 
-# AC_ERLANG_AT_FILES
-# ------------------
+# AC_ERLANG_AT_FILELIST
+# ---------------------
 # Create a list ot autotest files (with .at extension).
-AC_DEFUN([AC_ERLANG_AT_FILES],
+AC_DEFUN([AC_ERLANG_AT_FILELIST],
 [autotest_source_files=`ls -1 ${srcdir}/tests/*.at`
-at_files=`for file in ${autotest_source_files}; do \
+at_filelist=`for file in ${autotest_source_files}; do \
   basename $file; \
 done`
 ])
 
-# AC_ERLANG_AT_MODULES
-# ----------------------
+# AC_ERLANG_AT_FILES
+# ------------------
 # Provide a list of space separated list of autotest files.
-# This is used to populate @TESTSOURCES@ in the makefiles
-AC_DEFUN([AC_ERLANG_AT_MODULES],
-[modules=`for file in ${at_files}; do \
+# This is used to populate @ATFILES@ in the makefiles
+AC_DEFUN([AC_ERLANG_AT_FILES],
+[at_files=`for file in ${at_filelist}; do \
   printf "%s "  $file; \
 done | sed 's/.$//'`
-AC_SUBST([TESTSOURCES], [${modules}])
+AC_SUBST([ATFILES], [${at_files}])
 ])

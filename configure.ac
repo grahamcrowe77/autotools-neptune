@@ -9,7 +9,6 @@ LT_INIT
 
 AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_TESTDIR([tests])
-AC_CONFIG_FILES([tests/Makefile tests/atlocal])
 
 # Checks for programs.
 AC_ERLANG_NEED_ERL
@@ -68,7 +67,7 @@ if test "x${FOP}" == "x"; then
   AC_MSG_WARN([fop was not found! PDF Documentation build disabled])
 fi
 
-AC_CONFIG_FILES([Makefile ebin/neptune.app doc/Makefile doc/ref_man.xml.in])
+AC_CONFIG_FILES([Makefile ebin/neptune.app tests/atlocal doc/ref_man.xml.in])
 AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------

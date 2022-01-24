@@ -1,7 +1,4 @@
-* TODO Complete non-recursive build
-** TODO Single Makefile.am
-** TODO Move boilerplate to common.mk
-** TODO Single .gitignore
+* TODO Single .gitignore
 * TODO Create tools for generating template repos
 ** neptune-app
 ** neptune-rel
