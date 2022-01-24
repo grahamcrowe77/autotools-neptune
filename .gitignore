@@ -7,6 +7,7 @@ aclocal.m4
 autom4te.cache/
 build-aux/
 configure
+m4/*.m4
 
 # Artifacts created after running:
 # ./configure
@@ -14,6 +15,10 @@ Makefile
 c_src/.deps/
 config.*
 libtool
+doc/ref_man.xml.in
+ebin/neptune.app
+tests/atconfig
+tests/atlocal
 
 # Artifacts created after running:
 # make
@@ -24,6 +29,21 @@ libtool
 *.fo
 man1/
 man3/
+bin/neptune
+ebin/*.beam
+c_src/.dirstamp
+doc/*.xml
+doc/*.html
+doc/neptune.pdf
+doc/*.css
+
+# Artifacts created after running:
+# make check
+tests/neptune.plt
+tests/*.beam
+tests/*.m4
+tests/testsuite
+tests/testsuite*
 
 # Artifacts created after running:
 # make install DESTDIR=$PWD/inst && make installcheck DESTDIR=$PWD/inst
@@ -31,4 +51,4 @@ inst/
 
 # Artifacts created after running:
 # make dist && make distcheck
-*.tar.gz
+neptune*.tar.gz
