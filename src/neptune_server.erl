@@ -12,14 +12,21 @@
 
 -behaviour(gen_server).
 
+-ifdef(TEST).
+
+-include_lib("eunit/include/eunit.hrl").
+
+-endif.
+
 %% API
--export([start_link/0]).
+-export([start_link/0, version/0, message/1]).
 
 %% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
 	 terminate/2, code_change/3, format_status/2]).
 
 -define(SERVER, ?MODULE).
+-define(TIMEOUT, 5000).
 
 -record(state, {count :: integer()}).
 
@@ -39,6 +46,24 @@
 start_link() ->
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
+%%--------------------------------------------------------------------
+%% @doc
+%% Return the application version
+%% @end
+%%--------------------------------------------------------------------
+-spec version() -> {ok, string()}.
+version() ->
+    gen_server:call(?SERVER, version).
+
+%%--------------------------------------------------------------------
+%% @doc
+%% Construct a message
+%% @end
+%%--------------------------------------------------------------------
+-spec message({Type :: atom(), Number :: integer()}) -> {ok, string()}.
+message({Type, Number}) ->
+    gen_server:call(?SERVER, {Type, Number}).
+
 %%%===================================================================
 %%% gen_server callbacks
 %%%===================================================================
@@ -56,8 +81,7 @@ start_link() ->
 	  ignore.
 init([]) ->
     process_flag(trap_exit, true),
-    ok = neptune_io:write(),
-    {ok, #state{count = 1}, 5000}.
+    {ok, #state{count = 0}, ?TIMEOUT}.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -74,9 +98,13 @@ init([]) ->
 	  {noreply, NewState :: term(), hibernate} |
 	  {stop, Reason :: term(), Reply :: term(), NewState :: term()} |
 	  {stop, Reason :: term(), NewState :: term()}.
-handle_call(_Request, _From, State) ->
-    Reply = ok,
-    {reply, Reply, State}.
+handle_call(version, _From, State) ->
+    {ok, Application} = application:get_application(),
+    Reply = application:get_env(Application, version),
+    {reply, Reply, State, ?TIMEOUT};
+handle_call({square, Integer}, _From, State) ->
+    Reply = {ok, message(square, Integer)},
+    {reply, Reply, State, ?TIMEOUT}.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -104,13 +132,10 @@ handle_cast(_Request, State) ->
 	  {noreply, NewState :: term(), hibernate} |
 	  {stop, Reason :: normal | term(), NewState :: term()}.
 handle_info(timeout, #state{count = Count}=State) ->
-    ok = case Count rem 2 of
-	     0 ->
-		 neptune_io:write();
-	     1 ->
-		 neptune_io:write(<<"Hi there">>)
-	 end,
-    {noreply, State#state{count = Count + 1}, 5000};
+    Integer = (Count rem 10) + 1,
+    Message = message(square, Integer),
+    ok = io:format("~s~n", [Message]),
+    {noreply, State#state{count = Count + 1}, ?TIMEOUT};
 handle_info(_Info, State) ->
     {noreply, State}.
 
@@ -157,3 +182,16 @@ format_status(_Opt, Status) ->
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
+-spec message(Type :: atom(), Integer :: integer()) -> io_lib:chars().
+message(square, Integer)
+  when is_integer(Integer) ->
+    {ok, Application} = application:get_application(),
+    Place = atom_to_binary(Application),
+    Greeting = <<"Hello from ", Place/binary, "!">>,
+    Squared = neptune_nif:square(Integer),
+    io_lib:format("~s ~p squared is ~p.~n", [Greeting, Integer, Squared]);
+message(square, Value) ->
+    {ok, Application} = application:get_application(),
+    Place = atom_to_binary(Application),
+    Greeting = <<"Hello from ", Place/binary, "!">>,
+    io_lib:format("~s ~p is not an integer!~n", [Greeting, Value]).

@@ -189,7 +189,6 @@ HTMLS = $(addprefix $(builddir)/doc/, $(addsuffix .html, $(MODULES)))
 HTMLS += \
   $(builddir)/doc/neptune.html \
   $(builddir)/doc/overview.html \
-  $(builddir)/doc/make-targets.html \
   $(builddir)/doc/users_guide.html
 
 HTML_EXTRAS = \
@@ -328,7 +327,6 @@ EXTRA_DIST += \
   $(srcdir)/doc/neptune.xml \
   $(srcdir)/doc/overview.xml \
   $(srcdir)/doc/part.xml \
-  $(srcdir)/doc/make-targets.xml \
   $(srcdir)/doc/ref_man.xml.in.in \
   $(srcdir)/doc/book.xml.in \
   $(srcdir)/doc/neptune.jpg

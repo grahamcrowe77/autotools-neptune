@@ -3,8 +3,8 @@
 %%% @copyright (C) 2022, Graham Crowe
 %%% @doc Neptune NIF Module
 %%%
-%%% demonstrates trivial examples using Native Implemented Functions
-%%% (NIFs) written in C and integrated with the Erlang Runtime System.
+%%% demonstrates a trivial example using a Native Implemented Function
+%%% (NIF) written in C and integrated with the Erlang Runtime System.
 %%% @end
 %%% Created :  4 Jan 2022 by Graham Crowe <graham.crowe@telia.com>
 %%%-------------------------------------------------------------------
@@ -18,7 +18,7 @@
 
 -on_load(init/0).
 
--export([double_up/1, square/1]).
+-export([square/1]).
 
 %% -------------------------------------------------------------------
 %% On load functions
@@ -34,7 +34,7 @@ init() ->
 		      BeamPath = code:where_is_file("neptune_nif.beam"),
 		      BeamDir = filename:dirname(BeamPath),
 		      AppDir = filename:dirname(BeamDir),
-		      filename:join(AppDir, ".libs");
+		      filename:join(AppDir, "priv");
 		  Dir ->
 		      Dir
 	      end,
@@ -45,15 +45,6 @@ init() ->
 
 %% -------------------------------------------------------------------
 %% Exported functions
-%% -------------------------------------------------------------------
-%% @doc Double an integer.
-%%
-
--spec double_up(integer()) -> integer().
-
-double_up(_X) ->
-    exit(nif_library_not_loaded).
-
 %% -------------------------------------------------------------------
 %% @doc Square an integer.
 %%
@@ -69,10 +60,6 @@ square(_Y) ->
 %% Internal eunit tests
 %% -------------------------------------------------------------------
 -ifdef(TEST).
-
-double_up_test_() ->
-    [?_assertMatch(6,  double_up(3)),
-     ?_assertMatch(12, double_up(6))].
 
 square_test_() ->
     [?_assertMatch(9,  square(3)),

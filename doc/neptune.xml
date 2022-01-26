@@ -21,8 +21,8 @@
   <section>
     <marker id="command_line"></marker>
     <title>Using neptune</title>
-    <p>neptune prints a default salutation and exit if no arguments are
-    supplied.</p>
+    <p>neptune takes an integer and returns a greeting from neptune returning
+    the square of the integer supplied.</p>
     <p><em>Exit status:</em></p>
       <taglist>
         <tag><c>0</c></tag>
@@ -34,16 +34,17 @@
           <p>An error occurred</p>
         </item>
       </taglist>
-      <code type="none">neptune [--version] [--salutation Salutation]</code>
+      <code type="none">neptune [--version] [--square Integer]</code>
       <p><em>Options:</em></p>
       <taglist>
         <tag><c>--version</c></tag>
         <item>
           <p>Print the neptune version and exit.</p>
         </item>
-        <tag><c>--salutation Salutation</c></tag>
+        <tag><c>--square Integer</c></tag>
         <item>
-          <p>Print the salutation and exit.</p>
+          <p>Calculate the square of the integer and return that information
+	  as a greeting from neptune.</p>
         </item>
       </taglist>
   </section>

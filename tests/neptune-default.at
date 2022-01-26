@@ -1,8 +1,0 @@
-AT_SETUP([neptune-default])
-AT_KEYWORDS([blackbox])
-NEPTUNE_TEST
-AT_CHECK_UNQUOTED([neptune],,
-                  [Hello from neptune!
-])
-NEPTUNE_CLEANUP
-AT_CLEANUP

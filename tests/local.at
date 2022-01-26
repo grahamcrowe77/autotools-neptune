@@ -11,10 +11,12 @@ export dialyzer_runcmd="${DIALYZER} \
 m4_define([COMPILE_EUNIT], [[set -x
 mkdir -pv ${abs_top_builddir}/src
 ${ERLC} -DTEST -I${abs_top_srcdir}/include -o ${abs_top_builddir}/src $1
+cd ${abs_top_builddir} && ln -s .libs priv && cd -
 ]]).
 
 m4_define([EUNIT_CLEANUP], [[set -x
 rm ${abs_top_builddir}/src/$1.beam
+rm priv
 ]]).
 
 m4_define([NEPTUNE_TEST], [[set -x

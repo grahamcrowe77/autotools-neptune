@@ -1,3 +1,4 @@
+AT_BANNER([Eunit Tests])
 AT_SETUP([neptune_nif-eunit])
 AT_KEYWORDS([eunit])
 COMPILE_EUNIT(["${abs_top_srcdir}/src/neptune_nif.erl"])

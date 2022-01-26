@@ -5,22 +5,22 @@
 -define(COMMAND_NAME, "neptune").
 
 main(["--version"]) ->
-    io:format("~s ~s~n", [?COMMAND_NAME, "%PACKAGE_VERSION%"]);
-main(["--salutation", Salutation]) ->
-    case neptune_io:write(list_to_binary(Salutation)) of
-	ok ->
-	    halt(0);
-	{error, max_salutation_length} ->
-	    io:format("ERROR: Salutation length limit exceeded~n"),
-	    halt(1)
-    end;
-main([]) ->
-    neptune_io:write();
+    ok = application:start(neptune),
+    {ok, Version} = neptune_server:version(),
+    ok = io:format("~s ~s~n", [?COMMAND_NAME, Version]);
+main(["--square", Number]) ->
+    ok = application:start(neptune),
+    case string:to_integer(Number) of
+	{error, _} ->
+	    {ok, Message} = neptune_server:message({square, Number});
+	{Integer, _Rest} ->
+	    {ok, Message} = neptune_server:message({square, Integer})
+    end,
+    ok = io:format("~s", [Message]);
 main(_) ->
     usage(),
     halt(1).
 
 usage() ->
-    io:format("~s [salutation]~n", [?COMMAND_NAME]),
+    io:format("~s [--square Number]~n", [?COMMAND_NAME]),
     io:format("see manual page for ~s(1) for more details~n", [?COMMAND_NAME]).
-
