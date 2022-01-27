@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       #- name: Cache node modules
       #  uses: actions/cache@v2
       #  env:
@@ -36,7 +36,7 @@ jobs:
 #      - name: Bootstrap
 #        run:
 #          ./bootstrap.sh
-          
+
 #      - name: Test build without xsltproc and without fop (without documentation)
 #        run: |
 #          ./configure --prefix=/usr
