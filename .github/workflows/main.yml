@@ -33,35 +33,35 @@ jobs:
           set -xv
           erl +B -noinput -eval 'io:put_chars(erlang:system_info(system_version)),halt(0).'
           
-      - name: Bootstrap
-        run:
-          ./bootstrap.sh
+#      - name: Bootstrap
+#        run:
+#          ./bootstrap.sh
           
-      - name: Test build without xsltproc and without fop (without documentation)
-        run: |
-          ./configure --prefix=/usr
-          make V=1
-          # Use cached ./tests/neptune.plt
-          make check V=1 TESTSUITEFLAGS=-v
-          make install DESTDIR=$PWD/inst V=1
-          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
+#      - name: Test build without xsltproc and without fop (without documentation)
+#        run: |
+#          ./configure --prefix=/usr
+#          make V=1
+#          # Use cached ./tests/neptune.plt
+#          make check V=1 TESTSUITEFLAGS=-v
+#          make install DESTDIR=$PWD/inst V=1
+#          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
 
       - name: Install xsltproc
         run: |
           sudo apt-get update -y
           sudo apt-get install -y xsltproc
 
-      - name: Test build with xsltproc and without fop (MAN3 & HTML documentation)
-        run: |
-          make mostlyclean
-          ./configure --prefix=/usr
-          make
-          ls man1/neptune.1  # test for presence of generated man1 documentation
-          ls man3/neptune*.3 # test for presence of generated man3 documentation
-          ls doc/*.html      # test for presence of generated html documentation
-          # Use cached ./tests/neptune.plt
-          make check V=1 TESTSUITEFLAGS=-v
-          make install DESTDIR=$PWD/inst V=1
+#      - name: Test build with xsltproc and without fop (MAN3 & HTML documentation)
+#        run: |
+#          make mostlyclean
+#          ./configure --prefix=/usr
+#          make
+#          ls man1/neptune.1  # test for presence of generated man1 documentation
+#          ls man3/neptune*.3 # test for presence of generated man3 documentation
+#          ls doc/*.html      # test for presence of generated html documentation
+#          # Use cached ./tests/neptune.plt
+#          make check V=1 TESTSUITEFLAGS=-v
+#          make install DESTDIR=$PWD/inst V=1
           make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
 
       - name: Install fop
@@ -69,38 +69,38 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y fop
 
-      - name: Test build with xsltproc and with fop (PDF documentation)
-        run: |
-          make mostlyclean
-          ./configure --prefix=/usr
-          make
-          ls doc/neptune.pdf # test for presence of generated pdf documentation
-          # Use cached ./tests/neptune.plt
-          make check V=1 TESTSUITEFLAGS=-v
-          make install DESTDIR=$PWD/inst V=1
-          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
+#      - name: Test build with xsltproc and with fop (PDF documentation)
+#        run: |
+#          make mostlyclean
+#          ./configure --prefix=/usr
+#          make
+#          ls doc/neptune.pdf # test for presence of generated pdf documentation
+#          # Use cached ./tests/neptune.plt
+#          make check V=1 TESTSUITEFLAGS=-v
+#          make install DESTDIR=$PWD/inst V=1
+#          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
 
-      - name: Test distribution tarball
-        run: |
-          make maintainer-clean
-          ./configure --prefix=/usr
-          # TODO:
-          # The distcheck target depends upon the following targets having been run in this order
-          # This is a bug where distcheck fails after running installcheck (not check) on the
-          # generated distribution tarball if make, make check, make install and make installcheck
-          # were not run in that order before running make distcheck.
-          make
-          make check
-          make install DESTDIR=$PWD/inst
-          make installcheck DESTDIR=$PWD/inst
-          make dist V=1
-          # Not possible to use cached ./tests/neptune.plt
-          make distcheck V=1 TESTSUITEFLAGS=-v
+#      - name: Test distribution tarball
+#        run: |
+#          make maintainer-clean
+#          ./configure --prefix=/usr
+#          # TODO:
+#          # The distcheck target depends upon the following targets having been run in this order
+#          # This is a bug where distcheck fails after running installcheck (not check) on the
+#          # generated distribution tarball if make, make check, make install and make installcheck
+#          # were not run in that order before running make distcheck.
+#          make
+#          make check
+#          make install DESTDIR=$PWD/inst
+#          make installcheck DESTDIR=$PWD/inst
+#          make dist V=1
+#          # Not possible to use cached ./tests/neptune.plt
+#          make distcheck V=1 TESTSUITEFLAGS=-v
 
-      - name: Test install and installcheck (without DESTDIR)
-        run: |
-          make mostlyclean
-          make
-          sudo make install
-          make installcheck
-          make maintainer-clean
+#      - name: Test install and installcheck (without DESTDIR)
+#        run: |
+#          make mostlyclean
+#          make
+#          sudo make install
+#          make installcheck
+#          make maintainer-clean
