@@ -122,7 +122,7 @@ $(builddir)/tests/atconfig: $(builddir)/config.status
 
 $(builddir)/tests/package.m4: $(srcdir)/configure.ac
 	$(AM_V_GEN) :;{ \
-          echo '# Signature pf the current package.' && \
+          echo '# Signature of the current package.' && \
           echo 'm4_define([AT_PACKAGE_NAME], [$(PACKAGE_NAME)])' && \
           echo 'm4_define([AT_PACKAGE_TARNAME], [$(PACKAGE_TARNAME)])' && \
           echo 'm4_define([AT_PACKAGE_VERSION], [$(PACKAGE_VERSION)])' && \

@@ -1,0 +1,8 @@
+AT_INIT
+AT_COLOR_TESTS
+
+m4_define([NEPTUNE_TEST], [[set -x
+if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
+  PATH=${abs_top_builddir}/bin:${PATH} export PATH
+fi
+]]).

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE chapter SYSTEM "chapter.dtd">
+<!DOCTYPE book SYSTEM "book.dtd">
 
-<chapter>
-  <header>
+<book xmlns:xi="http://www.w3.org/2001/XInclude">
+  <header titlestyle="normal">
     <copyright>
       <year>2022</year>
       <holder>Graham Crowe. All Rights Reserved.</holder>
@@ -22,21 +22,25 @@
     
     </legalnotice>
 
-    <title>Introduction</title>
-    <prepared>Graham Crowe</prepared>
-    <responsible></responsible>
-    <docno></docno>
-    <approved></approved>
-    <checked></checked>
-    <date>2022-01-02</date>
-    <rev></rev>
-    <file>overview.xml</file>
-  </header>
-
-  <section>
     <title>Neptune</title>
-    <p>Neptune is a tool for craeting a skeleton erlang application or
-    release.</p>
-  </section>
-
-  </chapter>
+    <prepared>Graham Crowe</prepared>
+    <docno></docno>
+    <date>2022-01-27</date>
+    <rev>0.1.0</rev>
+    <file>book.xml</file>
+  </header>
+  <insidecover>
+  </insidecover>
+  <pagetext>NEPTUNE</pagetext>
+  <preamble>
+    <contents level="2"></contents>
+  </preamble>
+  <parts>
+    <xi:include href="part.xml"/>
+  </parts>
+  <applications>
+    <xi:include href="ref_man.xml"/>
+  </applications>
+  <listofterms></listofterms>
+  <index></index>
+</book>

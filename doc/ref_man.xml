@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE chapter SYSTEM "chapter.dtd">
+<!DOCTYPE application SYSTEM "application.dtd">
 
-<chapter>
+<application xmlns:xi="http://www.w3.org/2001/XInclude">
   <header>
     <copyright>
       <year>2022</year>
@@ -19,24 +19,18 @@
       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
       See the License for the specific language governing permissions and
       limitations under the License.
-    
+
     </legalnotice>
 
-    <title>Introduction</title>
+    <title>Neptune Reference Manual</title>
     <prepared>Graham Crowe</prepared>
-    <responsible></responsible>
     <docno></docno>
-    <approved></approved>
-    <checked></checked>
-    <date>2022-01-02</date>
-    <rev></rev>
-    <file>overview.xml</file>
+    <date>2022-01-27</date>
+    <rev>0.1.0</rev>
+    <file>neptune.xml</file>
   </header>
+  <description>
+  </description>
+  <xi:include href="neptune.xml"/>
+</application>
 
-  <section>
-    <title>Neptune</title>
-    <p>Neptune is a tool for craeting a skeleton erlang application or
-    release.</p>
-  </section>
-
-  </chapter>
