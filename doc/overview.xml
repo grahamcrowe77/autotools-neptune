@@ -34,8 +34,78 @@
   </header>
 
   <section>
-    <title>Neptune</title>
-    <p>Neptune is an application template</p>
+    <title>What is Neptune?</title>
+    <p>The Neptune application serves as a template for demonstrating
+    how to to build an active Erlang Application using GNU Autotools.</p>
   </section>
 
+  <section>
+    <title>Why use GNU Autotools?</title>
+    <p>Building source code for single project without and reuse is relatively
+    straightforward since the developer(s) only need concern themselves with a
+    single build environment and typically a single target. However if the
+    intention is to distribute source code for reuse the build system must
+    work for multiple build environments and targets. This is a non trivial
+    problem. It has been the principle goal of the GNU project to facilitate
+    source code reuse and the project has had years of experience in solving
+    these problems. This has resulted in the GNU Build System (Autotools)
+    which consists of <em>Autoconf</em>, <em>Automake</em> and
+    <em>Libtool</em>.</p>
+    <p>Autotools provides portability in all senses such that source code can
+    be built for any target, given the appropriate build environment,
+    including cross compilation. Erlang source code compiles to byte code that
+    runs on a Virtual Machine, thus solving most portability problems, but
+    Erlang provides for variant possibilities to integrate with source code
+    written in <em>C</em>, in particular by writing <em>NIFs</em> (Native
+    Implemented Functions). This code requires a build system that provides for
+    portability, without making assumptions about the target CPU
+    architecture. Using a build system like GNU Autotools simplifies that task
+    immensely.</p>
+  </section>
+
+  <section>
+    <title>Build Systems versus Package Management Systems</title>
+    <p>GNU Autotools is a build system that adheres to the standard configure,
+    build and install pattern as in:
+    <pre>
+      $ <input>./configure --prefix=/usr</input>
+      $ <input>make</input>
+      $ <input>sudo make install</input>
+    </pre>
+   The configure step checks that the build environment
+    provides for build tools, programs and libraries needed to compile the
+    source code and can also provide flexbility to enable or disable
+    particular features or select libraries to link with etc... The build step
+    produces the compiled code. The installation step then installs the built
+    code, configuration files and documentation on the system assuming the
+    installer has write access.</p>
+    <p>A Package Management System provides for the means of packaging and
+    distributing pre-built software components. That means that the packages
+    must be compatible with the target machines system, e.g. a particular
+    Linux Distro. A lot of Erlang application source code does not have tight
+    dependencies to the underlying system and instead only has dependencies to
+    Erlang/OTP libraries. However Erlang application source code with
+    dependencies to non Erlang/OTP libraries becomes gradually hard to build
+    and install. This becomes harder still for Erlang applications with native
+    code such as <em>NIFs</em>, and even harder when the target machine is
+    <em>x86_64</em>.</p>
+    <p>The intention of this template application is to demonstrate that it is
+    possible and practical to use GNU Autotools as a build system for
+    Erlang/OTP applications.</p>
+  </section>
+
+  <section>
+    <title>What does Neptune demonstrate?</title>
+    <p>The code is intentionally trivial and does nothing interesting. Neptune
+    is an active Erlang/OTP application in that it has a top level supervisor
+    supervising a <em>gen_server</em>. It includes one module with
+    <em>NIFs</em>. It uses dialyzer to perform static tests. It has a number
+    of eunit tests and some common tests. These tests are run using make
+    target check. It provides for documentation in the form of man pages, html
+    and pdf using the Erlang/OTP <em>erl_docgen</em> tools. It supports a
+    standard installation typically under Erlang lib directory for the
+    system. It supports the provisioning of a distribution tarball even if
+    distributed version control systems like git render that technique
+    somewhat obselete.</p>
+  </section>
   </chapter>
