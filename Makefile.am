@@ -67,7 +67,7 @@ dist_neptune_src_DATA = \
   $(SOURCES)
 
 neptune_priv_headers = \
-  $(srcdir)/src/neptune_limits.hrl
+  $(srcdir)/src/neptune_priv.hrl
 
 neptune_ebin_DATA = \
   $(builddir)/ebin/neptune.app \

@@ -18,6 +18,9 @@
 
 -endif.
 
+-include("neptune.hrl").
+-include("neptune_priv.hrl").
+
 %% API
 -export([start_link/0, version/0, message/1]).
 

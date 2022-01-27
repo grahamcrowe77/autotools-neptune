@@ -1,7 +1,7 @@
 -module(neptune_SUITE).
 
 -include("neptune.hrl").
--include("neptune_limits.hrl").
+-include("neptune_priv.hrl").
 
 -compile(export_all).
 
@@ -10,14 +10,6 @@ all() ->
      version,
      square_integer,
      square_string].
-
-write1(_) ->
-    ok = neptune_io:write(?INFORMAL_SALUTATION),
-    ok = neptune_io:write(<<"How are you">>),
-    LongString = lists:duplicate($a, ?MAX_SALUTATION_LENGTH + 1),
-    LongGreeting = list_to_binary(LongString),
-    {error, max_salutation_length} = neptune_io:write(LongGreeting),
-    ok.
 
 application(_) ->
     false = lists:keyfind(neptune, 1, application:which_applications()),
