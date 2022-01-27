@@ -16,17 +16,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      #- name: Cache node modules
-      #  uses: actions/cache@v2
-      #  env:
-      #    cache-name: cache-plt
-      #  with:
-      #    path: ./tests/neptune.plt
-      #    key: ${{ runner.os }}-build-${{ env.cache-name }}
-          #restore-keys: |
-          #  ${{ runner.os }}-build-${{ env.cache-name }}
-          #  ${{ runner.os }}-build-
-          #  ${{ runner.os }}-
+#      - name: Cache node modules
+#        uses: actions/cache@v2
+#        env:
+#          cache-name: cache-plt
+#        with:
+#          path: ./tests/neptune.plt
+#          key: ${{ runner.os }}-build-${{ env.cache-name }}
+#          restore-keys: |
+#            ${{ runner.os }}-build-${{ env.cache-name }}
+#            ${{ runner.os }}-build-
+#            ${{ runner.os }}-
 
       - name: Check for an Erlang is installation
         run: |
@@ -62,7 +62,7 @@ jobs:
 #          # Use cached ./tests/neptune.plt
 #          make check V=1 TESTSUITEFLAGS=-v
 #          make install DESTDIR=$PWD/inst V=1
-          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
+#          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
 
       - name: Install fop
         run: |
