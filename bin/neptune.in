@@ -4,12 +4,26 @@
 
 -define(COMMAND_NAME, "neptune").
 
-main(["--version"]) ->
-    ok = io:format("~s ~s~n", [?COMMAND_NAME, "%PACKAGE_VERSION%"]);
-main(_) ->
-    usage(),
-    halt(1).
+main(CmdLine) ->
+    Args = neptune_args:parse(CmdLine),
+    case Args of
+	#{help := null} ->
+	    ok = usage(),
+	    halt(0);
+	#{version := null} ->
+	    ok = version(),
+	    halt(0);
+	#{} ->
+	    ok = usage(),
+	    halt(1);
+	_ ->
+	    %% Place holder for processing the command
+	    ok
+    end.
 
 usage() ->
-    io:format("~s [--version]~n", [?COMMAND_NAME]),
-    io:format("see manual page for ~s(1) for more details~n", [?COMMAND_NAME]).
+    ok = io:format("~s [--version]~n", [?COMMAND_NAME]),
+    ok = io:format("see manual page for ~s(1) for more details~n", [?COMMAND_NAME]).
+
+version() ->
+    ok = io:format("~s ~s~n", [?COMMAND_NAME, "%PACKAGE_VERSION%"]).
