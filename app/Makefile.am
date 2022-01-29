@@ -1,6 +1,8 @@
 ACLOCAL_AMFLAGS = -I m4
 
-ESCRIPTS = neptune
+MODULES = @MODULES@
+
+ESCRIPTS = %LC_PACKAGE_NAME%
 
 ATFILES = @ATFILES@
 
@@ -9,27 +11,45 @@ TESTSUITE = $(builddir)/tests/testsuite
 # --------------------------------------
 # Directory Structure
 # --------------------------------------
-neptune_srcdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/src
-neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
-neptune_incdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/include
+%LC_PACKAGE_NAME%_srcdir=$(ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%)/src
+%LC_PACKAGE_NAME%_ebindir=$(ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%)/ebin
+%LC_PACKAGE_NAME%_incdir=$(ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%)/include
+%LC_PACKAGE_NAME%_privdir=$(ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%)/priv
 
 # --------------------------------------
 # Escripts
 # --------------------------------------
 dist_bin_SCRIPTS = $(addprefix $(builddir)/bin/, $(ESCRIPTS))
 
-$(builddir)/bin/neptune: $(srcdir)/bin/neptune.in
+$(builddir)/bin/%LC_PACKAGE_NAME%: $(srcdir)/bin/%LC_PACKAGE_NAME%.in
 	@$(MKDIR_P) $(@D)
 	$(AM_V_GEN)$(SED) \
-	  -e "s#%NEPTUNE_EBINDIR%#$(DESTDIR)$(neptune_ebindir)#g" \
+	  -e "s#%%LC_PACKAGE_NAME%_EBINDIR%#$(DESTDIR)$(%LC_PACKAGE_NAME%_ebindir)#g" \
 	  -e "s#%PACKAGE_VERSION%#$(PACKAGE_VERSION)#g" $< > $@
 	@chmod +x $@
 
 # --------------------------------------
+# NIF
+# --------------------------------------
+%LC_PACKAGE_NAME%_priv_LTLIBRARIES = lib%LC_PACKAGE_NAME%_nif.la
+lib%LC_PACKAGE_NAME%_nif_la_CFLAGS = -I@ERLANG_ROOT_DIR@/usr/include
+
+lib%LC_PACKAGE_NAME%_nif_la_SOURCES = \
+  $(srcdir)/c_src/%LC_PACKAGE_NAME%.c
+
+if APPLE
+%LC_PACKAGE_NAME%_priv_DATA = \
+  .libs/lib%LC_PACKAGE_NAME%_nif.so
+
+.libs/lib%LC_PACKAGE_NAME%_nif.so: .libs/lib%LC_PACKAGE_NAME%_nif.dylib
+	(cd $(@D) && $(LN_S) $(<F) $(@F))
+endif #APPLE
+
+# --------------------------------------
 # Public Erlang Header Files
 # --------------------------------------
-dist_neptune_inc_DATA = \
-  $(srcdir)/include/neptune.hrl
+dist_%LC_PACKAGE_NAME%_inc_DATA = \
+  $(srcdir)/include/%LC_PACKAGE_NAME%.hrl
 
 # --------------------------------------
 # Build beam files
@@ -42,14 +62,15 @@ am__v_ERLC_1 =
 SOURCES = $(addprefix $(srcdir)/src/, $(addsuffix .erl, $(MODULES)))
 BEAMS   = $(addprefix $(builddir)/ebin/, $(addsuffix .beam, $(MODULES)))
 
-dist_neptune_src_DATA = \
-  $(neptune_priv_headers) \
+dist_%LC_PACKAGE_NAME%_src_DATA = \
+  $(%LC_PACKAGE_NAME%_priv_headers) \
   $(SOURCES)
 
-neptune_priv_headers =
+%LC_PACKAGE_NAME%_priv_headers = \
+  $(srcdir)/src/%LC_PACKAGE_NAME%_priv.hrl
 
-neptune_ebin_DATA = \
-  $(builddir)/ebin/neptune.app \
+%LC_PACKAGE_NAME%_ebin_DATA = \
+  $(builddir)/ebin/%LC_PACKAGE_NAME%.app \
   $(BEAMS)
 
 $(builddir)/ebin/%.beam: $(srcdir)/src/%.erl
@@ -68,7 +89,7 @@ DIALYZER_APPS = \
   compiler \
   crypto
 
-$(builddir)/tests/neptune.plt:
+$(builddir)/tests/%LC_PACKAGE_NAME%.plt:
 	$(AM_V_GEN)$(DIALYZER) --build_plt --output_plt $@ \
           --apps $(DIALYZER_APPS)
 
@@ -81,16 +102,16 @@ AUTOM4TE = $(SHELL) $(srcdir)/build-aux/missing --run autom4te
 
 AUTOTEST = $(AUTOM4TE) --language=autotest
 
-check-local: $(builddir)/tests/atconfig $(builddir)/tests/atlocal $(TESTSUITE) $(builddir)/tests/neptune.plt
+check-local: $(builddir)/tests/atconfig $(builddir)/tests/atlocal $(TESTSUITE) $(builddir)/tests/%LC_PACKAGE_NAME%.plt
 	cd $(builddir)/tests && $(SHELL) testsuite $(TESTSUITEFLAGS)
 
-installcheck-local: $(builddir)/tests/atconfig $(builddir)/tests/atlocal $(TESTSUITE) $(builddir)/tests/neptune.plt
+installcheck-local: $(builddir)/tests/atconfig $(builddir)/tests/atlocal $(TESTSUITE)
 	cd $(builddir)/tests && $(SHELL) testsuite \
            'AUTOTEST_PATH=$(DESTDIR)$(bindir)' \
            $(TESTSUITEFLAGS)
 
 uninstall-local:
-	rm -f  $(DESTDIR)$(bindir)/neptune_test
+	rm -f  $(DESTDIR)$(bindir)/%LC_PACKAGE_NAME%_test
 
 clean-local:
 	test ! -f '$(TESTSUITE)' || (cd $(builddir)/tests && $(SHELL) testsuite --clean)
@@ -115,48 +136,10 @@ $(TESTSUITE): $(TESTSOURCES) $(builddir)/tests/package.m4
 	  -o $@.tmp $(top_srcdir)/tests/$(@F).at; mv $@.tmp $@
 
 # --------------------------------------
-# Templates
-# --------------------------------------
-neptune_sysconfdir = $(sysconfdir)/neptune
-neptune_app_sysconfdir = $(neptune_sysconfdir)/app
-neptune_rel_sysconfdir = $(neptune_sysconfdir)/rel
-
-neptune_app_sysconf_DATA = \
-  app/Makefile.am \
-  app/README.md \
-  app/bin/name.in \
-  app/bootstrap.sh \
-  app/c_src/name.c \
-  app/configure.ac \
-  app/doc/book.xml.in \
-  app/doc/name.xml \
-  app/doc/overview.xml \
-  app/doc/part.xml \
-  app/doc/ref_man.xml.in.in \
-  app/ebin/name.app.in \
-  app/include/name.hrl \
-  app/m4/erlang-app.m4 \
-  app/src/name_app.erl \
-  app/src/name_nif.erl \
-  app/src/name_priv.hrl \
-  app/src/name_server.erl \
-  app/src/name_sup.erl \
-  app/tests/atlocal.in \
-  app/tests/local.at \
-  app/tests/name-ct.at \
-  app/tests/name-dialyzer.at \
-  app/tests/name-error.at \
-  app/tests/name-square.at \
-  app/tests/name-version.at \
-  app/tests/name_SUITE.erl \
-  app/tests/name_nif-eunit.at \
-  app/tests/testsuite.at \
-  app/.gitignore
-
-# --------------------------------------
 # Documentation
 # --------------------------------------
 if ERL_DOCGEN
+%LC_PACKAGE_NAME%_docdir=$(ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%)/doc
 
 if XSLTPROC
 # --------------------------------------
@@ -204,21 +187,21 @@ if XSLTPROC
 # --------------------------------------
 HTMLS = $(addprefix $(builddir)/doc/, $(addsuffix .html, $(MODULES)))
 HTMLS += \
-  $(builddir)/doc/neptune.html \
+  $(builddir)/doc/%LC_PACKAGE_NAME%.html \
   $(builddir)/doc/overview.html \
   $(builddir)/doc/users_guide.html
 
 HTML_EXTRAS = \
-  $(srcdir)/doc/neptune.jpg \
+  $(srcdir)/doc/%LC_PACKAGE_NAME%.jpg \
   $(builddir)/doc/stylesheet.css
 
-pkgdata_DATA = \
+%LC_PACKAGE_NAME%_doc_DATA = \
   $(builddir)/doc/index.html \
   $(HTMLS) \
   $(HTML_EXTRAS)
 
 if FOP
-pkgdata_DATA += $(builddir)/doc/neptune.pdf
+%LC_PACKAGE_NAME%_doc_DATA += $(builddir)/doc/%LC_PACKAGE_NAME%.pdf
 endif #FOP
 
 $(builddir)/doc/stylesheet.css:
@@ -232,14 +215,14 @@ $(builddir)/doc/index.html: $(builddir)/doc/book.xml $(XMLS)
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam topdocdir . \
 	  --stringparam pdfdir . \
-	  --stringparam pdfname neptune \
+	  --stringparam pdfname %LC_PACKAGE_NAME% \
 	  --xinclude \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
 	  --stringparam stylesheet ./stylesheet.css \
 	  --stringparam winprefix Erlang \
-	  --stringparam logo ./neptune.jpg \
+	  --stringparam logo ./%LC_PACKAGE_NAME%.jpg \
 	  --stringparam extra_front_page_info "" \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
@@ -251,20 +234,20 @@ if FOP
 # --------------------------------------
 # pdf pages
 # --------------------------------------
-$(builddir)/doc/neptune.pdf: $(builddir)/doc/neptune.fo
+$(builddir)/doc/%LC_PACKAGE_NAME%.pdf: $(builddir)/doc/%LC_PACKAGE_NAME%.fo
 	$(AM_V_GEN)$(FOP) -fo $< -pdf $@ 2> /dev/null
 
 endif #FOP
 if XSLTPROC
 
-$(builddir)/doc/neptune.fo: $(HTMLS) $(XMLS)
+$(builddir)/doc/%LC_PACKAGE_NAME%.fo: $(HTMLS) $(XMLS)
 	$(AM_V_GEN)$(XSLTPROC) \
 	  --output $@ \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-	  --stringparam logo $(top_srcdir)/doc/neptune.jpg \
+	  --stringparam logo $(top_srcdir)/doc/%LC_PACKAGE_NAME%.jpg \
 	  --stringparam pdfcolor "#960003" \
 	  --stringparam extra_front_page_info "$(PACKAGE_NAME)" \
 	  --xinclude \
@@ -283,27 +266,32 @@ XMLS = $(addprefix $(builddir)/doc/, $(addsuffix .xml, $(MODULES)))
 
 $(builddir)/doc/ref_man.xml: $(builddir)/doc/ref_man.xml.in
 	$(AM_V_GEN)$(SED) \
+	  -e "s#@TOP_BUILDDIR@#$(top_builddir)#g" \
 	  -e "s#@TOP_SRCDIR@#$(top_srcdir)#g" $< > $@
 
 XMLS += $(builddir)/doc/ref_man.xml
+
+$(builddir)/doc/book.xml: $(srcdir)/doc/book.xml.in
+	$(AM_V_GEN)$(SED) \
+	  -e "s#@TOP_BUILDDIR@#$(top_builddir)#g" \
+	  -e "s#@TOP_SRCDIR@#$(top_srcdir)#g" $< > $@
 
 $(builddir)/doc/%.xml: $(srcdir)/src/%.erl
 	$(AM_V_GEN)$(ESCRIPT) \
 	  $(ERLANG_LIB_DIR_erl_docgen)/priv/bin/xml_from_edoc.escript $<
 	@mv $(builddir)/$(@F) $@
-
 endif #ERL_DOCGEN
 
 # --------------------------------------
 # Clean
 # --------------------------------------
 CLEANFILES = \
-  $(builddir)/tests/neptune.plt
+  $(builddir)/tests/%LC_PACKAGE_NAME%.plt
 
 MOSTLYCLEANFILES = \
   $(BEAMS) \
-  $(builddir)/bin/neptune \
-  $(builddir)/ebin/neptune.app
+  $(builddir)/bin/%LC_PACKAGE_NAME% \
+  $(builddir)/ebin/%LC_PACKAGE_NAME%.app
 
 if ERL_DOCGEN
 MOSTLYCLEANFILES += \
@@ -312,28 +300,33 @@ MOSTLYCLEANFILES += \
   $(XMLS) \
   $(HTMLS) \
   $(builddir)/doc/index.html \
-  $(builddir)/doc/neptune.fo \
-  $(builddir)/doc/neptune.pdf \
+  $(builddir)/doc/%LC_PACKAGE_NAME%.fo \
+  $(builddir)/doc/%LC_PACKAGE_NAME%.pdf \
   $(builddir)/doc/ref_man.xml \
+  $(builddir)/doc/book.xml \
   $(builddir)/doc/stylesheet.css
 endif #ERL_DOCGEN
+
+if APPLE
+MOSTLYCLEANFILES += .libs/lib%LC_PACKAGE_NAME%_nif.so
+endif #APPLE
 
 # --------------------------------------
 # Distribution
 # --------------------------------------
 EXTRA_DIST = \
   $(srcdir)/bootstrap.sh \
-  $(builddir)/bin/neptune.in \
+  $(builddir)/bin/%LC_PACKAGE_NAME%.in \
   $(builddir)/tests/atconfig \
   $(builddir)/tests/package.m4 \
   $(TESTSOURCES)
 
 if ERL_DOCGEN
 EXTRA_DIST += \
-  $(srcdir)/doc/neptune.xml \
+  $(srcdir)/doc/%LC_PACKAGE_NAME%.xml \
   $(srcdir)/doc/overview.xml \
   $(srcdir)/doc/part.xml \
   $(srcdir)/doc/ref_man.xml.in.in \
-  $(srcdir)/doc/book.xml \
-  $(srcdir)/doc/neptune.jpg
+  $(srcdir)/doc/book.xml.in \
+  $(srcdir)/doc/%LC_PACKAGE_NAME%.jpg
 endif #ERL_DOCGEN

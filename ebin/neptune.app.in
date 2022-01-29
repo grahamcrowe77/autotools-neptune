@@ -1,0 +1,17 @@
+{application, @PACKAGE@,
+ [{description, "Neptune tool"},
+  {vsn, "@VERSION@"},
+  {modules,
+   [@COMMA_SEPARATED_MODULES@]},
+  {registered,
+   []},
+  {applications,
+   [kernel,
+    stdlib]},
+  {env,
+   [{version, "@VERSION@"}]},
+  {runtime_dependencies,
+   ["erts-@ERLANG_LIB_VER_erts@",
+    "kernel-@ERLANG_LIB_VER_kernel@"]}
+ ]
+}.

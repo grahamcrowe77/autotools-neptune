@@ -1,0 +1,8 @@
+AT_BANNER([Eunit Tests])
+AT_SETUP([%LC_PACKAGE_NAME%_nif-eunit])
+AT_KEYWORDS([eunit])
+COMPILE_EUNIT(["${abs_top_srcdir}/src/%LC_PACKAGE_NAME%_nif.erl"])
+AT_CHECK_EUNIT([%LC_PACKAGE_NAME%_nif_testsuite], [{module, %LC_PACKAGE_NAME%_nif}],
+  [-pa "${abs_top_builddir}/src"])
+EUNIT_CLEANUP([%LC_PACKAGE_NAME%_nif])
+AT_CLEANUP

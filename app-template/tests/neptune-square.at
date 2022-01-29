@@ -1,8 +1,0 @@
-AT_SETUP([neptune-square])
-AT_KEYWORDS([blackbox])
-NEPTUNE_TEST
-AT_CHECK_UNQUOTED([neptune --square 6],,
-                  [Hello from neptune! 6 squared is 36.
-])
-NEPTUNE_CLEANUP
-AT_CLEANUP

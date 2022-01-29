@@ -1,0 +1,8 @@
+AT_SETUP([%LC_PACKAGE_NAME%-square])
+AT_KEYWORDS([blackbox])
+APP_TEST_SETUP
+AT_CHECK_UNQUOTED([%LC_PACKAGE_NAME% --square 6],,
+                  [Hello from %LC_PACKAGE_NAME%! 6 squared is 36.
+])
+APP_TEST_CLEANUP
+AT_CLEANUP

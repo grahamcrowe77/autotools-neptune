@@ -1,0 +1,9 @@
+AT_BANNER([Blackbox tests])
+AT_SETUP([%LC_PACKAGE_NAME%-version])
+AT_KEYWORDS([blackbox])
+APP_TEST_SETUP
+AT_CHECK_UNQUOTED([%LC_PACKAGE_NAME% --version],,
+                  [%LC_PACKAGE_NAME% ${PACKAGE_VERSION}
+])
+APP_TEST_CLEANUP
+AT_CLEANUP

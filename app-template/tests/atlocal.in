@@ -1,5 +1,0 @@
-DIALYZER=@DIALYZER@
-CT_RUN=@CT_RUN@
-PACKAGE_VERSION=@PACKAGE_VERSION@
-prefix=@prefix@
-neptune_ebindir=@neptune_ebindir@

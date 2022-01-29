@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE erlref SYSTEM "erlref.dtd">
+
+<erlref>
+  <header>
+    <title>%PACKAGE_NAME%</title>
+    <prepared></prepared>
+    <responsible></responsible>
+    <docno>1</docno>
+    <approved></approved>
+    <checked></checked>
+    <date>%DATE%</date>
+    <rev>%PACKAGE_VERSION%</rev>
+  <file>%PACKAGE_NAME%.xml</file></header>
+  <module>%PACKAGE_NAME%</module>
+  <modulesummary>%PACKAGE_NAME% command</modulesummary>
+  <description>
+    <p>%PACKAGE_NAME% is a tool whose sole purpose is to write greetings binary
+    string greetings to IO.</p>
+  </description>
+  <section>
+    <marker id="command_line"></marker>
+    <title>Using %PACKAGE_NAME%</title>
+    <p>%PACKAGE_NAME% takes an integer and returns a greeting from neptune returning
+    the square of the integer supplied.</p>
+    <p><em>Exit status:</em></p>
+      <taglist>
+        <tag><c>0</c></tag>
+        <item>
+          <p>Processed successfully.</p>
+        </item>
+        <tag><c>1</c></tag>
+        <item>
+          <p>An error occurred</p>
+        </item>
+      </taglist>
+      <code type="none">%PACKAGE_NAME% [--version] [--square Integer]</code>
+      <p><em>Options:</em></p>
+      <taglist>
+        <tag><c>--version</c></tag>
+        <item>
+          <p>Print the %PACKAGE_NAME% version and exit.</p>
+        </item>
+        <tag><c>--square Integer</c></tag>
+        <item>
+          <p>Calculate the square of the integer and return that information
+	  as a greeting from neptune.</p>
+        </item>
+      </taglist>
+  </section>
+  <authors>
+    <aname>%AUTHOR%</aname>
+    <email>%EMAIL%</email>
+  </authors>
+</erlref>

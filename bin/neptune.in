@@ -1,10 +1,11 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
+%%! -pa %NEPTUNE_EBINDIR%
 
 -define(COMMAND_NAME, "neptune").
 
 main(["--version"]) ->
-    ok = io:format("~s ~s~n", [?COMMAND_NAME, "@PACKAGE_VERSION@"]);
+    ok = io:format("~s ~s~n", [?COMMAND_NAME, "%PACKAGE_VERSION%"]);
 main(_) ->
     usage(),
     halt(1).

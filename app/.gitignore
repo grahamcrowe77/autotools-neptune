@@ -7,14 +7,16 @@ aclocal.m4
 autom4te.cache/
 build-aux/
 configure
+m4/*.m4
 
 # Artifacts created after running:
 # ./configure
 Makefile
-bin/neptune
+.deps/
 config.*
+libtool
 doc/ref_man.xml.in
-ebin/neptune.app
+ebin/%PACKAGE_NAME%.app
 tests/atconfig
 tests/atlocal
 
@@ -27,17 +29,17 @@ tests/atlocal
 *.fo
 man1/
 man3/
-bin/neptune
+bin/%PACKAGE_NAME%
 ebin/*.beam
 c_src/.dirstamp
 doc/*.xml
 doc/*.html
-doc/neptune.pdf
+doc/%PACKAGE_NAME%.pdf
 doc/*.css
 
 # Artifacts created after running:
 # make check
-tests/neptune.plt
+tests/%PACKAGE_NAME%.plt
 tests/*.beam
 tests/*.m4
 tests/testsuite
@@ -49,4 +51,4 @@ inst/
 
 # Artifacts created after running:
 # make dist && make distcheck
-neptune*.tar.gz
+%PACKAGE_NAME%*.tar.gz

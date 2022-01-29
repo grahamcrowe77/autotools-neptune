@@ -1,1 +1,2 @@
+m4_include([neptune-dialyzer.at])
 m4_include([neptune-version.at])

@@ -1,0 +1,6 @@
+m4_include([%LC_PACKAGE_NAME%-dialyzer.at])
+m4_include([%LC_PACKAGE_NAME%_nif-eunit.at])
+m4_include([%LC_PACKAGE_NAME%-ct.at])
+m4_include([%LC_PACKAGE_NAME%-version.at])
+m4_include([%LC_PACKAGE_NAME%-square.at])
+m4_include([%LC_PACKAGE_NAME%-error.at])

@@ -1,8 +1,0 @@
-AT_BANNER([Common tests])
-AT_SETUP([neptune-ct])
-AT_KEYWORDS([ct])
-NEPTUNE_TEST
-CT_RUN
-AT_CHECK([${ct_runcmd}],[0],[ignore])
-NEPTUNE_CLEANUP
-AT_CLEANUP

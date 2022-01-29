@@ -1,0 +1,26 @@
+#!/usr/bin/env escript
+%% -*- erlang -*-
+%%! -pa %%LC_PACKAGE_NAME%_EBINDIR%
+
+-define(COMMAND_NAME, "%LC_PACKAGE_NAME%").
+
+main(["--version"]) ->
+    ok = application:start(%LC_PACKAGE_NAME%),
+    {ok, Version} = %LC_PACKAGE_NAME%_server:version(),
+    ok = io:format("~s ~s~n", [?COMMAND_NAME, Version]);
+main(["--square", Number]) ->
+    ok = application:start(%LC_PACKAGE_NAME%),
+    case string:to_integer(Number) of
+	{error, _} ->
+	    {ok, Message} = %LC_PACKAGE_NAME%_server:message({square, Number});
+	{Integer, _Rest} ->
+	    {ok, Message} = %LC_PACKAGE_NAME%_server:message({square, Integer})
+    end,
+    ok = io:format("~s", [Message]);
+main(_) ->
+    usage(),
+    halt(1).
+
+usage() ->
+    io:format("~s [--square Number]~n", [?COMMAND_NAME]),
+    io:format("see manual page for ~s(1) for more details~n", [?COMMAND_NAME]).
