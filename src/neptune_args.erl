@@ -1,11 +1,11 @@
 %%%-------------------------------------------------------------------
 %%% @author Graham Crowe <graham.crowe@telia.com>
-%%% @copyright (C) %YEAR%, %CAP_AUTHOR%
+%%% @copyright (C) 2022, Graham Crowe
 %%% @doc Neptune arguments
 %%%
 %%% parses the command line arguments returning an erlang map.
 %%% @end
-%%% Created :  %DATE% by Graham Crowe <graham.crowe@telia.com>
+%%% Created :  29 Jan 2022 by Graham Crowe <graham.crowe@telia.com>
 %%%-------------------------------------------------------------------
 -module(neptune_args).
 
@@ -51,9 +51,12 @@ tuples_to_map(Tuples) ->
 tuples_to_map([], Map) ->
     Map;
 tuples_to_map([{option_name, OptName}, {value, Value} | T], Map) ->
-    tuples_to_map(T, Map#{OptName => Value});
+    tuples_to_map(T, Map#{OptName => list_to_binary(Value)});
 tuples_to_map([{option_name, OptName} | T], Map) ->
     tuples_to_map(T, Map#{OptName => null});
+%% Ignore values without option names except the last argument
+tuples_to_map([{value, Value}], Map) ->
+    Map#{name => list_to_binary(Value)};
 tuples_to_map([_|T], Map) ->
     tuples_to_map(T, Map).
 
@@ -67,14 +70,31 @@ square_test_() ->
 	#{version := null},
 	parse(["--version"])),
      ?_assertMatch(
-	#{author := "John Doe",
-	  version := null},
-	parse(["--author","John Doe","--version"])),
+	#{help := null},
+	parse(["--help"])),
      ?_assertMatch(
-	#{author := "John Doe",
-	  email := "john.doe@neptune.org",
-	  version := null},
-	parse(["--author","John Doe","--version","--email","john.doe@neptune.org"]))
+	#{author := <<"John Doe">>,
+	  name := <<"myapp">>},
+	parse(["--author", "John Doe",
+	       "myapp"])),
+     ?_assertMatch(
+	#{author := <<"John Doe">>,
+	  email := <<"john.doe@neptune.org">>,
+	  type := <<"application">>,
+	  name := <<"myapp">>},
+	parse(["--author", "John Doe",
+	       "--email", "john.doe@neptune.org",
+	       "--type", "application",
+	       "myapp"])),
+     ?_assertMatch(
+	#{author := <<"John Doe">>,
+	  email := <<"john.doe@neptune.org">>,
+	  type := <<"release">>,
+	  name := <<"myrel">>},
+	parse(["--author", "John Doe",
+	       "--email", "john.doe@neptune.org",
+	       "--type", "release",
+	       "myrel"]))
 ].
 
 -endif.

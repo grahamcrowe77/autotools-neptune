@@ -13,17 +13,33 @@ main(CmdLine) ->
 	#{version := null} ->
 	    ok = version(),
 	    halt(0);
+	#{release := null} ->
+	    case neptune_rel:create(Args) of
+		ok ->
+		    halt(0);
+		{error, Reason} ->
+		    ok = reason(Reason),
+		    halt(1)
+	    end;
 	#{} ->
-	    ok = usage(),
-	    halt(1);
-	_ ->
-	    %% Place holder for processing the command
-	    ok
+	    case neptune_app:create(Args) of
+		ok ->
+		    halt(0);
+		{error, Reason} ->
+		    ok = reason(Reason),
+		    halt(1)
+	    end
     end.
 
 usage() ->
     ok = io:format("~s [--version]~n", [?COMMAND_NAME]),
-    ok = io:format("see manual page for ~s(1) for more details~n", [?COMMAND_NAME]).
+    Format = "see manual page for ~s(1) for more details~n",
+    ok = io:format(Format, [?COMMAND_NAME]).
 
 version() ->
     ok = io:format("~s ~s~n", [?COMMAND_NAME, "%PACKAGE_VERSION%"]).
+
+reason(Reason) ->
+    Format = "Failed to create because ~s~n",
+    ok = io:format(Format, [Reason]),
+    ok = usage().
