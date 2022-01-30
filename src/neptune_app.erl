@@ -92,7 +92,10 @@ substitute_dir_values(DirContent, Substitutions) ->
 		  substitute_file_values(FilePath, Content, Substitutions);
 	     (#{directory := SubDir, content := SubDirContent}) ->
 		  #{directory => SubDir,
-		    content => substitute_dir_values(SubDirContent, Substitutions)}
+		    content =>
+			substitute_dir_values(
+			  SubDirContent,
+			  Substitutions)}
 	  end,
     lists:map(Fun, DirContent).
 
@@ -105,8 +108,27 @@ substitute_file_values(FilePath, Content, Substitutions) ->
     NewContent = lists:foldl(Fun, Content, Substitutions),
     #{file => FilePath, content => NewContent}.
 
-rename_files(Tree, _Pars) ->
-    Tree.
+rename_files(Tree, #{name := Name}) ->
+    Dir = maps:get(directory, Tree),
+    Content = maps:get(content, Tree),
+    NewContent = rename_dir_values(Content, Name),
+    #{directory => Dir, content => NewContent}.
+
+rename_dir_values(DirContent, Name) ->
+    Fun = fun(#{file := FilePath, content := Content}) ->
+		  #{file =>
+			re:replace(
+			  FilePath, <<"name">>, Name,
+			  [{return, binary}]),
+		    content => Content};
+	     (#{directory := SubDir, content := SubDirContent}) ->
+		  #{directory => SubDir,
+		    content =>
+			rename_dir_values(
+			  SubDirContent,
+			  Name)}
+	  end,
+    lists:map(Fun, DirContent).
 
 write_app_structure(Tree, _Pars) ->
     Tree.
