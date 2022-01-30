@@ -3,25 +3,25 @@
 
 <erlref>
   <header>
-    <title>%PACKAGE_NAME%</title>
-    <prepared></prepared>
+    <title>%TC_PACKAGE_NAME%</title>
+    <prepared>%AUTHOR%</prepared>
     <responsible></responsible>
     <docno>1</docno>
     <approved></approved>
     <checked></checked>
     <date>%DATE%</date>
     <rev>%PACKAGE_VERSION%</rev>
-  <file>%PACKAGE_NAME%.xml</file></header>
-  <module>%PACKAGE_NAME%</module>
+  <file>%LC_PACKAGE_NAME%.xml</file></header>
+  <module>%LC_PACKAGE_NAME%</module>
   <modulesummary>%PACKAGE_NAME% command</modulesummary>
   <description>
-    <p>%PACKAGE_NAME% is a tool whose sole purpose is to write greetings binary
+    <p>%LC_PACKAGE_NAME% is a tool whose sole purpose is to write greetings binary
     string greetings to IO.</p>
   </description>
   <section>
     <marker id="command_line"></marker>
-    <title>Using %PACKAGE_NAME%</title>
-    <p>%PACKAGE_NAME% takes an integer and returns a greeting from neptune returning
+    <title>Using %TC_PACKAGE_NAME%</title>
+    <p>%TC_PACKAGE_NAME% takes an integer and returns a greeting from neptune returning
     the square of the integer supplied.</p>
     <p><em>Exit status:</em></p>
       <taglist>
@@ -34,12 +34,12 @@
           <p>An error occurred</p>
         </item>
       </taglist>
-      <code type="none">%PACKAGE_NAME% [--version] [--square Integer]</code>
+      <code type="none">%LC_PACKAGE_NAME% [--version] [--square Integer]</code>
       <p><em>Options:</em></p>
       <taglist>
         <tag><c>--version</c></tag>
         <item>
-          <p>Print the %PACKAGE_NAME% version and exit.</p>
+          <p>Print the %LC_PACKAGE_NAME% version and exit.</p>
         </item>
         <tag><c>--square Integer</c></tag>
         <item>

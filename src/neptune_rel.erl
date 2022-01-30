@@ -18,8 +18,8 @@
 %% release directory structure, built with GNU Autotools.
 %% @end
 %%--------------------------------------------------------------------
--spec create(Args :: map()) -> ok | {error, Reason :: binary()}.
-create(_Args) ->
+-spec create(Pars :: map()) -> ok | {error, Reason :: binary()}.
+create(_Pars) ->
     ok.
 
 %%%===================================================================

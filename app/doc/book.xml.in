@@ -20,7 +20,7 @@
       See the License for the specific language governing permissions and
       limitations under the License.    
     </legalnotice>
-    <title>%PACKAGE_NAME%</title>
+    <title>%TC_PACKAGE_NAME%</title>
     <prepared>%AUTHOR%</prepared>
     <docno></docno>
     <date>%DATE%</date>
@@ -29,7 +29,7 @@
   </header>
   <insidecover>
   </insidecover>
-  <pagetext>%PACKAGE_NAME%</pagetext>
+  <pagetext>%TC_PACKAGE_NAME%</pagetext>
   <preamble>
     <contents level="2"></contents>
   </preamble>

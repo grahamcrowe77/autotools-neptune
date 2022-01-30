@@ -1,12 +1,12 @@
 %%%-------------------------------------------------------------------
-%%% @author %CAP_AUTHOR% %email%
-%%% @copyright (C) %YEAR%, %CAP_AUTHOR%
-%%% @doc %CAP_PACKAGE_NAME% NIF Module
+%%% @author %AUTHOR% %EMAIL%
+%%% @copyright (C) %YEAR%, %AUTHOR%
+%%% @doc %TC_PACKAGE_NAME% NIF Module
 %%%
 %%% demonstrates a trivial example using a Native Implemented Function
 %%% (NIF) written in C and integrated with the Erlang Runtime System.
 %%% @end
-%%% Created :  %DATE% by %CAP_AUTHOR% %email%
+%%% Created :  %DATE% by %AUTHOR% %EMAIL%
 %%%-------------------------------------------------------------------
 -module(%LC_PACKAGE_NAME%_nif).
 

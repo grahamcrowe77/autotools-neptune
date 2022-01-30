@@ -22,6 +22,7 @@ $(builddir)/bin/neptune: $(srcdir)/bin/neptune.in
 	@$(MKDIR_P) $(@D)
 	$(AM_V_GEN)$(SED) \
 	  -e "s#%NEPTUNE_EBINDIR%#$(DESTDIR)$(neptune_ebindir)#g" \
+	  -e "s#%NEPTUNE_SYSCONFDIR%#$(DESTDIR)$(neptune_sysconfdir)#g" \
 	  -e "s#%PACKAGE_VERSION%#$(PACKAGE_VERSION)#g" $< > $@
 	@chmod +x $@
 

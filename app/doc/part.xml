@@ -22,7 +22,7 @@
 
   The Initial Developer of the Original Code is Ericsson AB.
     </legalnotice>
-    <title>%PACKAGE_NAME%'s User's Guide</title>
+    <title>%TC_PACKAGE_NAME%'s User's Guide</title>
     <prepared>%AUTHOR%</prepared>
     <docno></docno>
     <date>%DATE%</date>

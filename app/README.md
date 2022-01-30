@@ -2,17 +2,7 @@ Bootstrapping the build system requires the installation of GNU Autotools
 (autoconf, automake and libtool).To bootstrap the build system run the
 following:
 ```bash
-git clone @GIT_URL@
-cd %LC_PACKAGE_NAME%
 ./bootstrap.sh
-```
-
-Alternatively a distribution tarball can be fetched. These can be configured
-and built without the need to install GNU Autotools:
-```bash
-wget @DOWNLOAD_URL@/0.1.0/%LC_PACKAGE_NAME%-%PACKAGE_VERSION%.tar.gz
-tar xf %LC_PACKAGE_NAME%-%PACKAGE_VERSION%.tar.gz
-cd %LC_PACKAGE_NAME%-%PACKAGE_VERSION%
 ```
 
 To test building in the source tree:

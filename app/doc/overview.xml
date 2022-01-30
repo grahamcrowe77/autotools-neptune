@@ -31,7 +31,7 @@
     <file>overview.xml</file>
   </header>
   <section>
-    <title>%PACKAGE_NAME%</title>
-    <p>%PACKAGE_NAME% is an application ...</p>
+    <title>%TC_PACKAGE_NAME%</title>
+    <p>%TC_PACKAGE_NAME% is an application ...</p>
   </section>
 </chapter>

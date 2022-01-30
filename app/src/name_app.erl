@@ -1,11 +1,11 @@
 %%%-------------------------------------------------------------------
-%%% @author %CAP_AUTHOR% %email%
-%%% @copyright (C) %YEAR%, %CAP_AUTHOR%
-%%% @doc %CAP_PACKAGE_NAME% Application Module
+%%% @author %AUTHOR% %email%
+%%% @copyright (C) %YEAR%, %AUTHOR%
+%%% @doc %TC_PACKAGE_NAME% Application Module
 %%%
 %%% demonstrates a trivial example of an application behaviour module.
 %%% @end
-%%% Created :  %DATE% by %CAP_AUTHOR% %email%
+%%% Created :  %DATE% by %AUTHOR% %EMAIL%
 %%%-------------------------------------------------------------------
 -module(%LC_PACKAGE_NAME%_app).
 

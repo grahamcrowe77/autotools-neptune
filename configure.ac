@@ -28,6 +28,8 @@ AC_ERLANG_CHECK_LIB([erl_docgen], [],
   [AC_MSG_WARN([erl_docgen was not found! Documentation build disabled])])
 AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([neptune], [${PACKAGE_VERSION}])
 
+neptune_sysconfdir="${sysconfdir}/neptune"
+AC_SUBST([neptune_sysconfdir])
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 

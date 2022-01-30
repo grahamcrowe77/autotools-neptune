@@ -21,7 +21,7 @@
       limitations under the License.
 
     </legalnotice>
-    <title>%PACKAGE_NAME% Reference Manual</title>
+    <title>%TC_PACKAGE_NAME% Reference Manual</title>
     <prepared>%AUTHOR%</prepared>
     <docno></docno>
     <date>%DATE%</date>
@@ -30,5 +30,5 @@
   </header>
   <description>
   </description>
-  <xi:include href="@TOP_SRCDIR@/doc/%PACKAGE_NAME%.xml"/>@XI_MODULES@
+  <xi:include href="@TOP_SRCDIR@/doc/%LC_PACKAGE_NAME%.xml"/>@XI_MODULES@
 </application>

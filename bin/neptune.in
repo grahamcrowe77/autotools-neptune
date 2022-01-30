@@ -6,6 +6,7 @@
 
 main(CmdLine) ->
     Args = neptune_args:parse(CmdLine),
+    Pars = Args#{sysconfdir => <<"%NEPTUNE_SYSCONFDIR%">>},
     case Args of
 	#{help := null} ->
 	    ok = usage(),
@@ -13,8 +14,8 @@ main(CmdLine) ->
 	#{version := null} ->
 	    ok = version(),
 	    halt(0);
-	#{release := null} ->
-	    case neptune_rel:create(Args) of
+	#{type := <<"release">>} ->
+	    case neptune_rel:create(Pars) of
 		ok ->
 		    halt(0);
 		{error, Reason} ->
@@ -22,7 +23,7 @@ main(CmdLine) ->
 		    halt(1)
 	    end;
 	#{} ->
-	    case neptune_app:create(Args) of
+	    case neptune_app:create(Pars#{type => <<"application">>}) of
 		ok ->
 		    halt(0);
 		{error, Reason} ->
@@ -32,7 +33,8 @@ main(CmdLine) ->
     end.
 
 usage() ->
-    ok = io:format("~s [--version]~n", [?COMMAND_NAME]),
+    ok = io:format("~s Name~n", [?COMMAND_NAME]),
+    ok = io:format("~s [--help]~n", [?COMMAND_NAME]),
     Format = "see manual page for ~s(1) for more details~n",
     ok = io:format(Format, [?COMMAND_NAME]).
 
@@ -40,6 +42,6 @@ version() ->
     ok = io:format("~s ~s~n", [?COMMAND_NAME, "%PACKAGE_VERSION%"]).
 
 reason(Reason) ->
-    Format = "Failed to create because ~s~n",
+    Format = "Failed to create because ~s.~n",
     ok = io:format(Format, [Reason]),
     ok = usage().

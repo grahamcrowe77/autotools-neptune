@@ -4,7 +4,7 @@ AT_COLOR_TESTS
 m4_define([DIALYZER_CMD], [[set -x
 export dialyzer_runcmd="${DIALYZER} \
   -Wno_behaviours -Wno_fail_call \
-  --plts ${abs_top_builddir}/tests/neptune.plt \
+  --plts ${abs_top_builddir}/tests/%LC_PACKAGE_NAME%.plt \
   -- ${abs_top_srcdir}/src/*.erl"
 ]])
 
@@ -22,19 +22,20 @@ rm priv
 m4_define([APP_TEST_SETUP], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
   mkdir -pv ${abs_top_builddir}/bin
-  sed -e s#%NEPTUNE_EBINDIR%#${abs_top_builddir}/ebin#g \
+  sed -e s#%%UC_PACKAGE_NAME%_EBINDIR%#${abs_top_builddir}/ebin#g \
+      -e s#%%UC_PACKAGE_NAME%_SYSCONFDIR%#${abs_top_builddir}#g \
       -e s#%PACKAGE_VERSION%#${PACKAGE_VERSION}#g \
-    ${abs_top_srcdir}/bin/neptune.in > ${abs_top_builddir}/bin/neptune
-  chmod +x ${abs_top_builddir}/bin/neptune
+    ${abs_top_srcdir}/bin/%LC_PACKAGE_NAME%.in > ${abs_top_builddir}/bin/%LC_PACKAGE_NAME%
+  chmod +x ${abs_top_builddir}/bin/%LC_PACKAGE_NAME%
 fi
 mkdir -p ${abs_top_srcdir}/priv && \
   cd ${abs_top_srcdir}/priv && \
-  ln -s ${abs_top_srcdir}/.libs/libneptune_nif.so . && cd -
+  ln -s ${abs_top_srcdir}/.libs/lib%LC_PACKAGE_NAME%_nif.so . && cd -
 PATH=${abs_top_builddir}/bin:${PATH} export PATH]]).
 
 m4_define([APP_TEST_CLEANUP], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
-  rm ${abs_top_builddir}/bin/neptune
+  rm ${abs_top_builddir}/bin/%LC_PACKAGE_NAME%
 fi
 rm -rf ${abs_top_srcdir}/priv
 ]]).
