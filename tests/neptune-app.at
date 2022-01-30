@@ -1,0 +1,12 @@
+AT_SETUP([neptune-app])
+AT_KEYWORDS([blackbox])
+APP_TEST_SETUP
+AT_CHECK_UNQUOTED([neptune myapp],[0])
+find myapp -type f -ls
+NrFiles=`find myapp -type f -ls | wc -l`
+if test ${NrFiles} != 30; then
+  echo Unexpected number of files: ${NrFiles}, expected 30
+  AT_CHECK_UNQUOTED([false],[0])
+fi
+APP_TEST_CLEANUP
+AT_CLEANUP

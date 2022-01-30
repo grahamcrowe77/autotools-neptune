@@ -15,7 +15,7 @@ main(CmdLine) ->
 	    ok = version(),
 	    halt(0);
 	#{type := <<"release">>} ->
-	    case neptune_rel:create(Pars) of
+	    case neptune_rel:create(Pars#{type => <<"rel">>}) of
 		ok ->
 		    halt(0);
 		{error, Reason} ->
@@ -23,7 +23,7 @@ main(CmdLine) ->
 		    halt(1)
 	    end;
 	#{} ->
-	    case neptune_app:create(Pars#{type => <<"application">>}) of
+	    case neptune_app:create(Pars#{type => <<"app">>}) of
 		ok ->
 		    halt(0);
 		{error, Reason} ->

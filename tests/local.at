@@ -23,6 +23,7 @@ m4_define([APP_TEST_SETUP], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
   mkdir -pv ${abs_top_builddir}/bin
   sed -e s#%NEPTUNE_EBINDIR%#${abs_top_builddir}/ebin#g \
+      -e s#%NEPTUNE_SYSCONFDIR%#${abs_top_builddir}#g \
       -e s#%PACKAGE_VERSION%#${PACKAGE_VERSION}#g \
     ${abs_top_srcdir}/bin/neptune.in > ${abs_top_builddir}/bin/neptune
   chmod +x ${abs_top_builddir}/bin/neptune

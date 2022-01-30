@@ -1,3 +1,5 @@
 m4_include([neptune-dialyzer.at])
 m4_include([neptune_args-eunit.at])
+m4_include([neptune_app-eunit.at])
 m4_include([neptune-version.at])
+m4_include([neptune-app.at])

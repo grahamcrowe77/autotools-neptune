@@ -95,7 +95,7 @@ square_test_() ->
 	       "--email", "john.doe@neptune.org",
 	       "--type", "release",
 	       "myrel"]))
-].
+    ].
 
 -endif.
 %% -------------------------------------------------------------------

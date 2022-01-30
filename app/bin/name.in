@@ -1,6 +1,6 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
-%%! -pa %%LC_PACKAGE_NAME%_EBINDIR%
+%%! -pa %%UC_PACKAGE_NAME%_EBINDIR%
 
 -define(COMMAND_NAME, "%LC_PACKAGE_NAME%").
 

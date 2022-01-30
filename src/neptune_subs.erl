@@ -45,18 +45,18 @@ erts_version(Pars) ->
     {<<"%ERLANG_ERTS_VER%">>, maps:get(erts_version, Pars, <<"11">>)}.
 
 email(Pars) ->
-    {<<"%EMAIL%">>, maps:get(email, Pars, <<"unknown@unknown.org">>)}.
+    {<<"%EMAIL%">>, maps:get(email, Pars, <<"undisclosed email address">>)}.
 
 author(Pars) ->
-    {<<"AUTHOR">>, maps:get(author, Pars, <<"unknown">>)}.
+    {<<"%AUTHOR%">>, maps:get(author, Pars, <<"undeclared author">>)}.
 
 year(_Pars) ->
     {{Year, _Month, _Day}, _Time} = calendar:local_time(),
-    {<<"YEAR">>, integer_to_binary(Year)}.
+    {<<"%YEAR%">>, integer_to_binary(Year)}.
 
 date(_Pars) ->
     {{Year, Month, Day}, _Time} = calendar:local_time(),
-    {<<"DATE">>,
+    {<<"%DATE%">>,
      <<(integer_to_binary(Day))/binary, 32,
        (to_enum(month, Month))/binary, 32,
        (integer_to_binary(Year))/binary>>}.
