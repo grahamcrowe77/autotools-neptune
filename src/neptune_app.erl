@@ -46,7 +46,7 @@ read_template_tree(#{name := Name, sysconfdir := SysConfDir, type := Type}) ->
     Dir = filename:join(SysConfDir, Type),
     case file:read_file_info(Dir) of
 	{ok, #file_info{type = directory}} ->
-	    {ok, (read_dir(Dir))#{name => Name}};
+	    {ok, #{directory => Name, content => read_dir(Dir)}};
 	_ ->
 	    Error = io_lib:format("~s is not a directory", [Dir]),
 	    {error, Error}
@@ -54,7 +54,7 @@ read_template_tree(#{name := Name, sysconfdir := SysConfDir, type := Type}) ->
 
 read_dir(Dir) ->
     {ok, Files} = file:list_dir(Dir),
-    #{directory => read_files(Dir, Files)}.
+    read_files(Dir, Files).
 
 read_files(Dir, Files) ->
     Fun = fun(File) ->
@@ -62,9 +62,9 @@ read_files(Dir, Files) ->
 		  case file:read_file_info(FilePath) of
 		      {ok, #file_info{type = regular}} ->
 			  {ok, Binary} = file:read_file(FilePath),
-			  #{file => File, content => Binary};
+			  #{file => FilePath, content => Binary};
 		      {ok, #file_info{type = directory}} ->
-			  #{name => File, directory => read_dir(FilePath)}
+			  #{directory => FilePath, content => read_dir(FilePath)}
 		  end
 	  end,
     lists:map(Fun, Files).
@@ -80,30 +80,33 @@ process_tree(Tree, Pars) ->
       Tree,
       Funs).
 
-substitute_values(Tree, _Pars) ->
-    Tree.
+substitute_values(Tree, Pars) ->
+    Substitutions = neptune_subs:main(Pars),
+    Dir = maps:get(directory, Tree),
+    Content = maps:get(content, Tree),
+    NewContent = substitute_dir_values(Content, Substitutions),
+    #{directory => Dir, content => NewContent}.
+
+substitute_dir_values(DirContent, Substitutions) ->
+    Fun = fun(#{file := FilePath, content := Content}) ->
+		  substitute_file_values(FilePath, Content, Substitutions);
+	     (#{directory := SubDir, content := SubDirContent}) ->
+		  #{directory => SubDir,
+		    content => substitute_dir_values(SubDirContent, Substitutions)}
+	  end,
+    lists:map(Fun, DirContent).
+
+substitute_file_values(FilePath, Content, Substitutions) ->
+    Fun = fun({RE, Replacement}, Subject) ->
+		  re:replace(
+		    Subject, RE, Replacement,
+		    [{return, binary}, global])
+	  end,
+    NewContent = lists:foldl(Fun, Content, Substitutions),
+    #{file => FilePath, content => NewContent}.
 
 rename_files(Tree, _Pars) ->
     Tree.
 
-write_app_structure(_Tree, _Pars) ->
-    ok.
-
-lowercase_package_name(#{name := Name}) ->
-    string:lowercase(Name).
-
-uppercase_package_name(#{name := Name}) ->
-    string:uppercase(Name).
-
-titlecase_package_name(#{name := Name}) ->
-    string:titlecase(Name).
-
-%LC_PACKAGE_NAME%
-%UC_PACKAGE_NAME%
-%CAPS_PACKAGE_NAME%
-%PACKAGE_VERSION%
-%EMAIL%
-%ERLANG_ERTS_VER%
-%YEAR%
-%AUTHOR%
-%DATE%
+write_app_structure(Tree, _Pars) ->
+    Tree.
