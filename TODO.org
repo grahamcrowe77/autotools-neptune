@@ -1,5 +1,8 @@
 * TODO Create tools for generating template repos
-** neptune-app
+** DONE neptune-app
+*** TODO Cleanup and refactor
+*** TODO Test myapp standalone
+*** TODO Test with neptune with options
 ** neptune-rel
 ** Build methodology and tools documented
 * TODO Document build methodology principles
