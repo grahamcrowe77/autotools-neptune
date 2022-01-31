@@ -119,29 +119,54 @@ $(TESTSUITE): $(TESTSOURCES) $(builddir)/tests/package.m4
 # Templates
 # --------------------------------------
 neptune_sysconfdir = $(sysconfdir)/neptune
-neptune_app_sysconfdir = $(neptune_sysconfdir)/app
-neptune_rel_sysconfdir = $(neptune_sysconfdir)/rel
 
-neptune_app_sysconf_DATA = \
+neptune_appdir = $(neptune_sysconfdir)/app
+neptune_appbindir = $(neptune_sysconfdir)/app/bin
+neptune_appcsrcdir = $(neptune_sysconfdir)/app/c_src
+neptune_appdocdir = $(neptune_sysconfdir)/app/doc
+neptune_appebindir = $(neptune_sysconfdir)/app/ebin
+neptune_appincludedir = $(neptune_sysconfdir)/app/include
+neptune_appm4dir = $(neptune_sysconfdir)/app/m4
+neptune_appsrcdir = $(neptune_sysconfdir)/app/src
+neptune_apptestsdir = $(neptune_sysconfdir)/app/tests
+
+neptune_app_DATA = \
   app/Makefile.am \
   app/README.md \
-  app/bin/name.in \
   app/bootstrap.sh \
-  app/c_src/name.c \
   app/configure.ac \
+  app/.gitignore
+
+neptune_appbin_DATA = \
+  app/bin/name.in
+
+neptune_appcsrc_DATA = \
+  app/c_src/name.c
+
+neptune_appdoc_DATA = \
   app/doc/book.xml.in \
   app/doc/name.xml \
   app/doc/overview.xml \
   app/doc/part.xml \
-  app/doc/ref_man.xml.in.in \
-  app/ebin/name.app.in \
-  app/include/name.hrl \
-  app/m4/erlang-app.m4 \
+  app/doc/ref_man.xml.in.in
+
+neptune_appebin_DATA = \
+  app/ebin/name.app.in
+
+neptune_appinclude_DATA = \
+  app/include/name.hrl
+
+neptune_appm4_DATA = \
+  app/m4/erlang-app.m4
+
+neptune_appsrc_DATA = \
   app/src/name_app.erl \
   app/src/name_nif.erl \
   app/src/name_priv.hrl \
   app/src/name_server.erl \
-  app/src/name_sup.erl \
+  app/src/name_sup.erl
+
+neptune_apptests_DATA = \
   app/tests/atlocal.in \
   app/tests/local.at \
   app/tests/name-ct.at \
@@ -151,8 +176,9 @@ neptune_app_sysconf_DATA = \
   app/tests/name-version.at \
   app/tests/name_SUITE.erl \
   app/tests/name_nif-eunit.at \
-  app/tests/testsuite.at \
-  app/.gitignore
+  app/tests/testsuite.at
+
+neptune_rel_sysconfdir = $(neptune_sysconfdir)/rel
 
 # --------------------------------------
 # Documentation

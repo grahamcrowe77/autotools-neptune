@@ -22,7 +22,7 @@ main(CmdLine) ->
 		    ok = reason(Reason),
 		    halt(1)
 	    end;
-	#{} ->
+	#{type := <<"application">>} ->
 	    case neptune_app:create(Pars#{type => <<"app">>}) of
 		ok ->
 		    halt(0);

@@ -27,12 +27,13 @@
 parse(CmdLine) ->
     Funs = [fun strings_to_tuples/1,
 	    fun tuples_to_map/1],
-    lists:foldl(
-      fun(Fun, Input) ->
-	      apply(Fun, [Input])
-      end,
-      CmdLine,
-      Funs).
+    Cmd = lists:foldl(
+	    fun(Fun, Input) ->
+		    apply(Fun, [Input])
+	    end,
+	    CmdLine,
+	    Funs),
+    default_arguments(Cmd).
 
 %%%===================================================================
 %%% Internal functions
@@ -59,6 +60,21 @@ tuples_to_map([{value, Value}], Map) ->
     Map#{name => list_to_binary(Value)};
 tuples_to_map([_|T], Map) ->
     tuples_to_map(T, Map).
+
+default_arguments(Cmd) ->
+    Defaults = [{type, <<"application">>},
+		{outdir, <<".">>}],
+    lists:foldl(
+      fun({Name, Value}, AccCmd) ->
+	      case maps:is_key(Name, AccCmd) of
+		  true ->
+		      AccCmd;
+		  false ->
+		      AccCmd#{Name => Value}
+	      end
+      end,
+      Cmd,
+      Defaults).
 
 %% -------------------------------------------------------------------
 %% Internal eunit tests

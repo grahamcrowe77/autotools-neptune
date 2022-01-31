@@ -2,7 +2,7 @@ AT_BANNER([Blackbox tests])
 AT_SETUP([neptune-version])
 AT_KEYWORDS([blackbox])
 APP_TEST_SETUP
-AT_CHECK_UNQUOTED([neptune --version],,
+AT_CHECK_UNQUOTED([neptune --version],[0],
                   [neptune ${PACKAGE_VERSION}
 ])
 APP_TEST_CLEANUP

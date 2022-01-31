@@ -27,12 +27,17 @@
 %% @end
 %%--------------------------------------------------------------------
 -spec create(Pars :: map()) -> ok | {error, Reason :: io_lib:chars()}.
-create(#{name := _}=Pars) ->
-    case read_template_tree(Pars) of
-	{ok, Tree} ->
-	    ok = process_tree(Tree, Pars);
-	{error, Reason} ->
-	    {error, Reason}
+create(#{name := Name}=Pars) ->
+    case filename:basename(Name) of
+	Name ->
+	    case read_template_tree(Pars) of
+		{ok, Tree} ->
+		    process_tree(Tree, Pars);
+		{error, Reason} ->
+		    {error, Reason}
+	    end;
+	_ ->
+	    {error, io_lib:format("~s includes a path", [Name])}
     end;
 create(_) ->
     {error, "no name for application was provided"}.
@@ -129,9 +134,9 @@ rename_dir_values(DirContent, Name) ->
 	  end,
     lists:map(Fun, DirContent).
 
-write_app_structure(Tree, _Pars) ->
+write_app_structure(Tree, #{outdir := OutDir}) ->
     Name = maps:get(directory, Tree),
-    Dir = filename:join(".", Name),
+    Dir = filename:join(OutDir, Name),
     case file:read_file_info(Dir) of
 	{ok, #file_info{}} ->
 	    Reason = io_lib:format("~s already exists", [Name]),
