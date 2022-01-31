@@ -8,5 +8,14 @@ if test ${NrFiles} != 30; then
   echo Unexpected number of files: ${NrFiles}, expected 30
   AT_CHECK_UNQUOTED([false],[0])
 fi
+AT_CHECK_UNQUOTED([cd myapp && ./bootstrap.sh],[0],
+                  [ignore],
+		  [ignore])
+AT_CHECK_UNQUOTED([cd myapp && ./configure],[0],
+                  [ignore])
+AT_CHECK_UNQUOTED([cd myapp && make],[0],
+                  [ignore])
+AT_CHECK_UNQUOTED([cd myapp && make maintainer-clean],[0],
+                  [ignore])
 APP_TEST_CLEANUP
 AT_CLEANUP

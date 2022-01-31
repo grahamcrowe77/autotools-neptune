@@ -36,7 +36,7 @@
 	  {ok, Pid :: pid(), State :: term()} |
 	  {error, Reason :: term()}.
 start(_StartType, _StartArgs) ->
-    case neptune_sup:start_link() of
+    case %LC_PACKAGE_NAME%_sup:start_link() of
 	{ok, Pid} ->
 	    {ok, Pid};
 	Error ->

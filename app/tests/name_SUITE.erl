@@ -14,7 +14,7 @@ all() ->
 application(_) ->
     false = lists:keyfind(%LC_PACKAGE_NAME%, 1, application:which_applications()),
     ok = application:start(%LC_PACKAGE_NAME%),
-    {%LC_PACKAGE_NAME%, "%LC_PACKAGE_NAME% application", _} =
+    {%LC_PACKAGE_NAME%, "%TC_PACKAGE_NAME% application", "%PACKAGE_VERSION%"} =
 	lists:keyfind(%LC_PACKAGE_NAME%, 1, application:which_applications()),
     ok = application:stop(%LC_PACKAGE_NAME%),
     false = lists:keyfind(%LC_PACKAGE_NAME%, 1, application:which_applications()),

@@ -192,7 +192,7 @@ HTMLS += \
   $(builddir)/doc/users_guide.html
 
 HTML_EXTRAS = \
-  $(srcdir)/doc/%LC_PACKAGE_NAME%.jpg \
+  $(builddir)/doc/erlang-logo.png \
   $(builddir)/doc/stylesheet.css
 
 %LC_PACKAGE_NAME%_doc_DATA = \
@@ -204,8 +204,11 @@ if FOP
 %LC_PACKAGE_NAME%_doc_DATA += $(builddir)/doc/%LC_PACKAGE_NAME%.pdf
 endif #FOP
 
-$(builddir)/doc/stylesheet.css:
-	$(AM_V_GEN)cp $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css $@
+$(builddir)/doc/erlang-logo.png: $(ERLANG_LIB_DIR_erl_docgen)/priv/images/erlang-logo.png
+	$(AM_V_GEN)cp $< $@
+
+$(builddir)/doc/stylesheet.css: $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css
+	$(AM_V_GEN)cp $< $@
 
 $(HTMLS): $(builddir)/doc/index.html
 
@@ -222,7 +225,7 @@ $(builddir)/doc/index.html: $(builddir)/doc/book.xml $(XMLS)
 	  --stringparam appver $(PACKAGE_VERSION) \
 	  --stringparam stylesheet ./stylesheet.css \
 	  --stringparam winprefix Erlang \
-	  --stringparam logo ./%LC_PACKAGE_NAME%.jpg \
+	  --stringparam logo ./erlang-logo.png \
 	  --stringparam extra_front_page_info "" \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
@@ -247,7 +250,7 @@ $(builddir)/doc/%LC_PACKAGE_NAME%.fo: $(HTMLS) $(XMLS)
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-	  --stringparam logo $(top_srcdir)/doc/%LC_PACKAGE_NAME%.jpg \
+	  --stringparam logo $(top_srcdir)/doc/erlang-logo.png \
 	  --stringparam pdfcolor "#960003" \
 	  --stringparam extra_front_page_info "$(PACKAGE_NAME)" \
 	  --xinclude \
@@ -304,6 +307,7 @@ MOSTLYCLEANFILES += \
   $(builddir)/doc/%LC_PACKAGE_NAME%.pdf \
   $(builddir)/doc/ref_man.xml \
   $(builddir)/doc/book.xml \
+  $(builddir)/doc/erlang-logo.png \
   $(builddir)/doc/stylesheet.css
 endif #ERL_DOCGEN
 
