@@ -322,6 +322,23 @@ $(builddir)/doc/%.xml: $(srcdir)/src/%.erl
 endif #ERL_DOCGEN
 
 # --------------------------------------
+# Application Check
+# --------------------------------------
+appcheck:
+	$(MAKE) $(AM_MAKEFLAGS) mostlyclean \
+	  && rm -rf inst \
+	  && $(MAKE) $(AM_MAKEFLAGS) \
+	  && $(MAKE) $(AM_MAKEFLAGS) install DESTDIR=$(PWD)/inst \
+	  && $(am__cd) $(PWD)/inst \
+	  && $(DESTDIR)/$(bindir)/neptune myapp \
+	  && $(am__cd) $(PWD)/inst/myapp \
+	  && ./bootstrap.sh \
+	  && $(MKDIR_P) $(PWD)/inst/build \
+	  && $(am__cd) $(PWD)/inst/build \
+	  && ../myapp/configure \
+	  && $(MAKE) $(AM_MAKEFLAGS)
+
+# --------------------------------------
 # Clean
 # --------------------------------------
 CLEANFILES = \
