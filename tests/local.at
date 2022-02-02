@@ -26,6 +26,8 @@ if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
          -e "s#<<\".\">>#<<\"${abs_top_builddir}\">>#g" \
     ${abs_top_builddir}/bin/neptune
   PATH=${abs_top_builddir}/bin:${PATH} export PATH
+else
+  echo PATH: $PATH
 fi
 ]]).
 
@@ -36,3 +38,17 @@ if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
     ${abs_top_builddir}/bin/neptune
 fi
 ]]).
+
+m4_define([CT_RUN], [[set -x
+if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
+  export ct_runcmd="${CT_RUN} \
+    -pa ${abs_top_builddir}/ebin \
+    -dir ${abs_top_srcdir}/tests \
+    -config ${abs_top_srcdir}/tests/ct-config"
+else
+  export ct_runcmd="${CT_RUN} \
+    -pa ${DESTDIR}${neptune_ebindir} \
+    -dir ${abs_top_srcdir}/tests \
+    -config ${abs_top_srcdir}/tests/ct-config"
+fi
+]])

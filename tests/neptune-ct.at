@@ -1,0 +1,8 @@
+AT_BANNER([Common tests])
+AT_SETUP([neptune-ct])
+AT_KEYWORDS([ct])
+CT_RUN
+APP_TEST_SETUP
+AT_CHECK([${ct_runcmd}],[0],[ignore])
+APP_TEST_CLEANUP
+AT_CLEANUP

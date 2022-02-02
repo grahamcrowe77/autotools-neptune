@@ -12,6 +12,7 @@ AC_CONFIG_TESTDIR([tests])
 AC_ERLANG_NEED_ERL
 AC_ERLANG_NEED_ERLC
 AC_PATH_PROG(DIALYZER, dialyzer)
+AC_PATH_PROG(CT_RUN, ct_run)
 AC_PATH_PROG(XSLTPROC, xsltproc)
 AC_PATH_PROG(FOP, fop)
 AC_PATH_PROG(SED, sed)
@@ -33,6 +34,8 @@ AC_SUBST([neptune_sysconfdir])
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
 
+AC_SUBST([abs_top_builddir])
+
 # Infer Erlang source code modules
 AC_ERLANG_MODULES
 
@@ -51,7 +54,7 @@ if test "x${FOP}" == "x"; then
   AC_MSG_WARN([fop was not found! PDF Documentation build disabled])
 fi
 
-AC_CONFIG_FILES([Makefile ebin/neptune.app tests/atlocal doc/ref_man.xml.in])
+AC_CONFIG_FILES([Makefile ebin/neptune.app tests/atlocal tests/ct-config doc/ref_man.xml.in])
 AC_CONFIG_FILES([bin/neptune], [chmod +x bin/neptune])
 AC_OUTPUT
 cat << EOF

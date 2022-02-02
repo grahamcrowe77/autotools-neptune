@@ -17,6 +17,7 @@ doc/ref_man.xml.in
 ebin/neptune.app
 tests/atconfig
 tests/atlocal
+tests/ct-config
 
 # Artifacts created after running:
 # make
