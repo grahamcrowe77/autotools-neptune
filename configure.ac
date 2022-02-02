@@ -52,6 +52,7 @@ if test "x${FOP}" == "x"; then
 fi
 
 AC_CONFIG_FILES([Makefile ebin/neptune.app tests/atlocal doc/ref_man.xml.in])
+AC_CONFIG_FILES([bin/neptune], [chmod +x bin/neptune])
 AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------

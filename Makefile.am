@@ -18,13 +18,11 @@ neptune_incdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/include
 # --------------------------------------
 dist_bin_SCRIPTS = $(addprefix $(builddir)/bin/, $(ESCRIPTS))
 
-$(builddir)/bin/neptune: $(srcdir)/bin/neptune.in
-	@$(MKDIR_P) $(@D)
-	$(AM_V_GEN)$(SED) \
-	  -e "s#%NEPTUNE_EBINDIR%#$(DESTDIR)$(neptune_ebindir)#g" \
-	  -e "s#%NEPTUNE_SYSCONFDIR%#$(DESTDIR)$(neptune_sysconfdir)#g" \
-	  -e "s#%PACKAGE_VERSION%#$(PACKAGE_VERSION)#g" $< > $@
-	@chmod +x $@
+install-exec-hook:
+	$(AM_V_GEN)$(SED) -i \
+	  -e "s#%%! -pa ebin#%%! -pa $(DESTDIR)$(neptune_ebindir)#g" \
+	  -e "s#<<\".\">>#<<\"$(DESTDIR)$(neptune_sysconfdir)\">>#g" \
+	  $(DESTDIR)$(bindir)/neptune
 
 # --------------------------------------
 # Public Erlang Header Files

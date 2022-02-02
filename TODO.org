@@ -1,10 +1,5 @@
 * TODO Create tools for generating template repos
 ** DONE neptune-app
-*** TODO Rethink bin/neptune buid
-%%! -pa %NEPTUNE_EBINDIR% to %%! -pa ebin
--define(SYSCONDIR, <<".">>).
-Consider install-local rule that updates neptune ebin and syconfdir in place
-This will make more sense.
 *** TODO Replace appcheck rule with erlang ct tests
 This will allow for more complete tests of myapp
 *** TODO symbolic link of .libs to priv

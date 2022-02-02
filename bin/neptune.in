@@ -1,12 +1,13 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
-%%! -pa %NEPTUNE_EBINDIR%
+%%! -pa ebin
 
--define(COMMAND_NAME, "neptune").
+-define(SYSCONFDIR, <<".">>).
+-define(COMMAND_NAME, <<"neptune">>).
 
 main(CmdLine) ->
     Args = neptune_args:parse(CmdLine),
-    Pars = Args#{sysconfdir => <<"%NEPTUNE_SYSCONFDIR%">>},
+    Pars = Args#{sysconfdir => ?SYSCONFDIR},
     case Args of
 	#{help := null} ->
 	    ok = usage(),
@@ -39,7 +40,7 @@ usage() ->
     ok = io:format(Format, [?COMMAND_NAME]).
 
 version() ->
-    ok = io:format("~s ~s~n", [?COMMAND_NAME, "%PACKAGE_VERSION%"]).
+    ok = io:format("~s ~s~n", [?COMMAND_NAME, "@PACKAGE_VERSION@"]).
 
 reason(Reason) ->
     Format = "Failed to create because ~s.~n",
