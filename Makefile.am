@@ -11,7 +11,6 @@ TESTSUITE = $(builddir)/tests/testsuite
 # --------------------------------------
 neptune_srcdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/src
 neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
-neptune_incdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/include
 
 # --------------------------------------
 # Escripts
@@ -23,12 +22,6 @@ install-exec-hook:
 	  -e "s#%%! -pa ebin#%%! -pa $(DESTDIR)$(neptune_ebindir)#g" \
 	  -e "s#<<\".\">>#<<\"$(DESTDIR)$(neptune_sysconfdir)\">>#g" \
 	  $(DESTDIR)$(bindir)/neptune
-
-# --------------------------------------
-# Public Erlang Header Files
-# --------------------------------------
-dist_neptune_inc_DATA = \
-  $(srcdir)/include/neptune.hrl
 
 # --------------------------------------
 # Build beam files
