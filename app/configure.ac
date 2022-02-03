@@ -30,16 +30,26 @@ erlang_erts_maj_ver=`echo $ERLANG_ERTS_VER | cut -d'.' -f1`
 if test ${erlang_erts_maj_ver} -lt %ERLANG_ERTS_VER%; then
   AC_MSG_ERROR([Erlang Runtime System must >= %ERLANG_ERTS_VER%])
 fi
+## Run time and Dialyzer build time dependencies
 AC_ERLANG_CHECK_LIB([erts], [],
   [AC_MSG_ERROR([erts was not found!])])
 AC_ERLANG_CHECK_LIB([kernel], [],
   [AC_MSG_ERROR([kernel was not found!])])
 AC_ERLANG_CHECK_LIB([stdlib], [],
   [AC_MSG_ERROR([stdlib was not found!])])
+## Dialyzer build time dependencies
+AC_ERLANG_CHECK_LIB([compiler], [],
+  [AC_MSG_ERROR([compiler was not found!])])
+AC_ERLANG_CHECK_LIB([crypto], [],
+  [AC_MSG_ERROR([crypto was not found!])])
+## Documentation build time dependencies
 AC_ERLANG_CHECK_LIB([erl_docgen], [],
   [AC_MSG_WARN([erl_docgen was not found! Documentation build disabled])])
+
+# Application installation directory
 AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([%LC_PACKAGE_NAME%], [${PACKAGE_VERSION}])
 
+## Installation dependent data
 %LC_PACKAGE_NAME%_ebindir="${ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%}/ebin"
 AC_SUBST([%LC_PACKAGE_NAME%_ebindir])
 
@@ -55,7 +65,8 @@ if test "x${build_vendor}" == "xapple"; then
 fi
 AM_CONDITIONAL([APPLE], [test "x${APPLE}" != "x"])
 
-AM_CONDITIONAL([ERL_DOCGEN], [test "x${ERLANG_LIB_DIR_erl_docgen}" != "xnot found"])
+AM_CONDITIONAL([ERL_DOCGEN],
+  [test "x${ERLANG_LIB_DIR_erl_docgen}" != "xnot found"])
 
 AM_CONDITIONAL([XSLTPROC], [test "x${XSLTPROC}" != "x"])
 if test "x${XSLTPROC}" == "x"; then
@@ -67,7 +78,8 @@ if test "x${FOP}" == "x"; then
   AC_MSG_WARN([fop was not found! PDF Documentation build disabled])
 fi
 
-AC_CONFIG_FILES([Makefile ebin/%LC_PACKAGE_NAME%.app tests/atlocal doc/ref_man.xml.in])
+AC_CONFIG_FILES([Makefile ebin/%LC_PACKAGE_NAME%.app])
+AC_CONFIG_FILES([tests/atlocal doc/ref_man.xml.in])
 AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------

@@ -19,21 +19,30 @@ AC_PATH_PROG(SED, sed)
 AC_PROG_MKDIR_P
 
 # Checks for libraries.
+## Run time and Dialyzer build time dependencies
 AC_ERLANG_CHECK_LIB([erts], [],
   [AC_MSG_ERROR([erts was not found!])])
 AC_ERLANG_CHECK_LIB([kernel], [],
   [AC_MSG_ERROR([kernel was not found!])])
 AC_ERLANG_CHECK_LIB([stdlib], [],
   [AC_MSG_ERROR([stdlib was not found!])])
+## Dialyzer build time dependencies
+AC_ERLANG_CHECK_LIB([compiler], [],
+  [AC_MSG_ERROR([compiler was not found!])])
+AC_ERLANG_CHECK_LIB([crypto], [],
+  [AC_MSG_ERROR([crypto was not found!])])
+## Documentation build time dependencies
 AC_ERLANG_CHECK_LIB([erl_docgen], [],
   [AC_MSG_WARN([erl_docgen was not found! Documentation build disabled])])
-AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([neptune], [${PACKAGE_VERSION}])
 
+# Application installation directory
+AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([neptune], [${PACKAGE_VERSION}])
+## Installation dependent data
 neptune_sysconfdir="${sysconfdir}/neptune"
 AC_SUBST([neptune_sysconfdir])
 neptune_ebindir="${ERLANG_INSTALL_LIB_DIR_neptune}/ebin"
 AC_SUBST([neptune_ebindir])
-
+## Test dependent data
 AC_SUBST([abs_top_builddir])
 
 # Infer Erlang source code modules
@@ -42,7 +51,8 @@ AC_ERLANG_MODULES
 # Infer autotest modules
 AC_AUTOTEST_FILES
 
-AM_CONDITIONAL([ERL_DOCGEN], [test "x${ERLANG_LIB_DIR_erl_docgen}" != "xnot found"])
+AM_CONDITIONAL([ERL_DOCGEN],
+  [test "x${ERLANG_LIB_DIR_erl_docgen}" != "xnot found"])
 
 AM_CONDITIONAL([XSLTPROC], [test "x${XSLTPROC}" != "x"])
 if test "x${XSLTPROC}" == "x"; then
@@ -54,7 +64,8 @@ if test "x${FOP}" == "x"; then
   AC_MSG_WARN([fop was not found! PDF Documentation build disabled])
 fi
 
-AC_CONFIG_FILES([Makefile ebin/neptune.app tests/atlocal tests/ct-config doc/ref_man.xml.in])
+AC_CONFIG_FILES([Makefile ebin/neptune.app])
+AC_CONFIG_FILES([tests/atlocal tests/ct-config doc/ref_man.xml.in])
 AC_CONFIG_FILES([bin/neptune], [chmod +x bin/neptune])
 AC_OUTPUT
 cat << EOF

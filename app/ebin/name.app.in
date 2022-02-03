@@ -13,7 +13,8 @@
    [{version, "@VERSION@"}]},
   {runtime_dependencies,
    ["erts-@ERLANG_LIB_VER_erts@",
-    "kernel-@ERLANG_LIB_VER_kernel@"]},
+    "kernel-@ERLANG_LIB_VER_kernel@",
+    "stdlib-@ERLANG_LIB_VER_stdlib@"]},
   {mod,
    {%LC_PACKAGE_NAME%_app,
     []}}
