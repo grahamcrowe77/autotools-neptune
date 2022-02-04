@@ -173,7 +173,7 @@ read_template_tree_test_() ->
 	{ok, #{content := _}},
 	read_template_tree(
 	  #{name => <<"myapp">>,
-	    sysconfdir => ".",
+	    sysconfdir => os:getenv("SYSCONFDIR"),
 	    type => "app"}))
     ].
 
@@ -183,7 +183,7 @@ substitute_dir_values_test_() ->
 	    {ok, Tree} =
 		read_template_tree(
 		  #{name => <<"myapp">>,
-		    sysconfdir => ".",
+		    sysconfdir => os:getenv("SYSCONFDIR"),
 		    type => "app"}),
 	    Content = maps:get(content, Tree),
 	    Substitutions =
@@ -210,7 +210,7 @@ rename_files_test_() ->
 	    {ok, Tree} =
 		read_template_tree(
 		  #{name => <<"myapp">>,
-		    sysconfdir => ".",
+		    sysconfdir => os:getenv("SYSCONFDIR"),
 		    type => "app"}),
 	    rename_files(Tree, #{name => <<"myapp">>})
 	end)

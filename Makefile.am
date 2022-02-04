@@ -262,6 +262,7 @@ $(builddir)/doc/index.html: $(builddir)/doc/book.xml $(XMLS)
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd \
 	  -path $(ERLANG_LIB_DIR_erl_docgen)/priv/dtd_html_entities \
 	  -path $(top_srcdir)/doc \
+	  -path $(top_builddir)/doc \
           $(ERLANG_LIB_DIR_erl_docgen)/priv/xsl/db_html.xsl $< 2> /dev/null
 endif #XSLTPROC
 

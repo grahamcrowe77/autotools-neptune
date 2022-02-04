@@ -12,6 +12,7 @@ m4_define([COMPILE_EUNIT], [[set -x
 mkdir -pv ${abs_top_builddir}/src
 ${ERLC} -DTEST -I${abs_top_srcdir}/include -o ${abs_top_builddir}/src $1
 cd ${abs_top_builddir}
+SYSCONFDIR=${abs_top_srcdir} export SYSCONFDIR
 ]]).
 
 m4_define([EUNIT_CLEANUP], [[set -x
@@ -21,13 +22,10 @@ rm ${abs_top_builddir}/$1_testsuite.*
 
 m4_define([APP_TEST_SETUP], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
-  mkdir -pv ${abs_top_builddir}/bin
   sed -i -e "s#%%! -pa ebin#%%! -pa ${abs_top_builddir}/ebin#g" \
-         -e "s#<<\".\">>#<<\"${abs_top_builddir}\">>#g" \
+         -e "s#<<\".\">>#<<\"${abs_top_srcdir}\">>#g" \
     ${abs_top_builddir}/bin/neptune
   PATH=${abs_top_builddir}/bin:${PATH} export PATH
-else
-  echo PATH: $PATH
 fi
 ]]).
 
@@ -44,11 +42,15 @@ if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
   export ct_runcmd="${CT_RUN} \
     -pa ${abs_top_builddir}/ebin \
     -dir ${abs_top_srcdir}/tests \
-    -config ${abs_top_srcdir}/tests/ct-config"
+    -config ${abs_top_builddir}/tests/ct-config"
 else
+  sed -i -e "s#%%! -pa ebin#%%! -pa ${DESTDIR}${neptune_ebindir}#g" \
+         -e "s#<<\".\">>#<<\"${abs_top_srcdir}\">>#g" \
+    ${abs_top_builddir}/bin/neptune
+  PATH=${abs_top_builddir}/bin:${PATH} export PATH
   export ct_runcmd="${CT_RUN} \
     -pa ${DESTDIR}${neptune_ebindir} \
     -dir ${abs_top_srcdir}/tests \
-    -config ${abs_top_srcdir}/tests/ct-config"
+    -config ${abs_top_builddir}/tests/ct-config"
 fi
 ]])
