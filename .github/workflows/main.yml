@@ -106,7 +106,6 @@ jobs:
 
       - name: Test distribution tarball
         run: |
-          make maintainer-clean
           ./configure --prefix=/usr
           # TODO:
           # The distcheck target depends upon the following targets having been run in this order
