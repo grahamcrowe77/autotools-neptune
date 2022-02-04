@@ -34,6 +34,10 @@ if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
   sed -i -e "s#%%! -pa ${abs_top_builddir}/ebin#%%! -pa ebin#g" \
          -e "s#<<\"${abs_top_builddir}\">>#<<\".\">>#g" \
     ${abs_top_builddir}/bin/neptune
+else
+  sed -i -e "s#%%! -pa ${DESTDIR}${neptune_ebindir}#%%! -pa ebin#g" \
+         -e "s#<<\"${abs_top_srcdir}\">>#<<\".\">>#g" \
+    ${abs_top_builddir}/bin/neptune
 fi
 ]]).
 
