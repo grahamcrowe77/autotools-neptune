@@ -9,6 +9,6 @@ if test ${NrFiles} != 30; then
   AT_CHECK([false],[0])
 fi
 AT_CHECK([cd myapp && ./bootstrap.sh],[0],[ignore],[ignore])
-AT_CHECK([mkdir build && cd build && ../myapp/configure],[0],[ignore])
+AT_CHECK([mkdir build && cd build && ../myapp/configure],[0],[ignore],[ignore])
 APP_TEST_CLEANUP
 AT_CLEANUP
