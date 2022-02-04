@@ -342,6 +342,15 @@ endif #ERL_DOCGEN
 # --------------------------------------
 EXTRA_DIST = \
   $(srcdir)/bootstrap.sh \
+  $(neptune_app_DATA) \
+  $(neptune_appbin_DATA) \
+  $(neptune_appcsrc_DATA) \
+  $(neptune_appdoc_DATA) \
+  $(neptune_appebin_DATA) \
+  $(neptune_appinclude_DATA) \
+  $(neptune_appm4_DATA) \
+  $(neptune_appsrc_DATA) \
+  $(neptune_apptests_DATA) \
   $(builddir)/bin/neptune.in \
   $(builddir)/tests/atconfig \
   $(builddir)/tests/package.m4 \
