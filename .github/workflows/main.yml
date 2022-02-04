@@ -60,9 +60,9 @@ jobs:
           ls man3/neptune*.3 # test for presence of generated man3 documentation
           ls doc/*.html      # test for presence of generated html documentation
           # Use cached ./tests/neptune.plt
-          make check V=1 TESTSUITEFLAGS=-v
-          make install DESTDIR=$PWD/inst V=1
-          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
+          make check TESTSUITEFLAGS=-v
+          make install DESTDIR=$PWD/inst
+          make installcheck DESTDIR=$PWD/inst TESTSUITEFLAGS=-v
 
       - name: Install fop
         run: |
@@ -76,9 +76,24 @@ jobs:
           make
           ls doc/neptune.pdf # test for presence of generated pdf documentation
           # Use cached ./tests/neptune.plt
-          make check V=1 TESTSUITEFLAGS=-v
-          make install DESTDIR=$PWD/inst V=1
-          make installcheck DESTDIR=$PWD/inst V=1 TESTSUITEFLAGS=-v
+          make check TESTSUITEFLAGS=-v
+          make install DESTDIR=$PWD/inst
+          make installcheck DESTDIR=$PWD/inst TESTSUITEFLAGS=-v
+
+      - name: Test out of source tree build
+        run: |
+          make maintainer-clean
+          top_srcdir=$PWD
+          mkdir -pv /tmp/build
+          pushd /tmp/build
+          $top_srcdir/configure --prefix=/usr
+          make
+          ls doc/neptune.pdf # test for presence of generated pdf documentation
+          # Use cached ./tests/neptune.plt
+          make check TESTSUITEFLAGS=-v
+          make install DESTDIR=$PWD/inst
+          make installcheck DESTDIR=$PWD/inst TESTSUITEFLAGS=-v
+          popd
 
 #      - name: Test distribution tarball
 #        run: |
