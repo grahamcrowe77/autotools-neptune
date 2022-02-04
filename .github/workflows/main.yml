@@ -80,20 +80,20 @@ jobs:
           make install DESTDIR=$PWD/inst
           make installcheck DESTDIR=$PWD/inst
 
-#      - name: Test out of source tree build
-#        run: |
-#          make maintainer-clean
-#          top_srcdir=$PWD
-#          mkdir -pv /tmp/build
-#          pushd /tmp/build
-#          $top_srcdir/configure --prefix=/usr
-#          make
-#          ls doc/neptune.pdf # test for presence of generated pdf documentation
-#          # Use cached ./tests/neptune.plt
-#          make check
-#          make install DESTDIR=$PWD/inst
-#          make installcheck DESTDIR=$PWD/inst
-#          popd
+      - name: Test out of source tree build
+        run: |
+          make maintainer-clean
+          top_srcdir=$PWD
+          mkdir -pv /tmp/build
+          pushd /tmp/build
+          $top_srcdir/configure --prefix=/usr
+          make
+          ls doc/neptune.pdf # test for presence of generated pdf documentation
+          # Use cached ./tests/neptune.plt
+          make check
+          make install DESTDIR=$PWD/inst
+          make installcheck DESTDIR=$PWD/inst
+          popd
 
 #      - name: Test distribution tarball
 #        run: |
@@ -112,10 +112,10 @@ jobs:
 #          # Not possible to use cached ./tests/neptune.plt
 #          make distcheck V=1 TESTSUITEFLAGS=-v
 
-#      - name: Test install and installcheck (without DESTDIR)
-#        run: |
-#          make mostlyclean
-#          make
-#          sudo make install
-#          make installcheck
-#          make maintainer-clean
+      - name: Test install and installcheck (without DESTDIR)
+        run: |
+          make mostlyclean
+          make
+          sudo make install
+          make installcheck
+          make maintainer-clean
