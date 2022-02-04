@@ -21,7 +21,7 @@
   <section>
     <marker id="command_line"></marker>
     <title>Using %TC_PACKAGE_NAME%</title>
-    <p>%TC_PACKAGE_NAME% takes an integer and returns a greeting from neptune returning
+    <p>%TC_PACKAGE_NAME% takes an integer and returns a greeting from %LC_PACKAGE_NAME% returning
     the square of the integer supplied.</p>
     <p><em>Exit status:</em></p>
       <taglist>
@@ -44,7 +44,7 @@
         <tag><c>--square Integer</c></tag>
         <item>
           <p>Calculate the square of the integer and return that information
-	  as a greeting from neptune.</p>
+	  as a greeting from %LC_PACKAGE_NAME%.</p>
         </item>
       </taglist>
   </section>

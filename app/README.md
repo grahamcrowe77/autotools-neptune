@@ -25,7 +25,7 @@ To test building out of source tree:
 ```
 mkdir -pv ../build
 cd ../build
-./configure ../neptune/configure
+./configure ../%LC_PACKAGE_NAME%/configure
 make
 make distcheck
 ```

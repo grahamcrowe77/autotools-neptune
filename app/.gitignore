@@ -34,7 +34,7 @@ ebin/*.beam
 c_src/.dirstamp
 doc/*.xml
 doc/*.html
-doc/%PACKAGE_NAME%.pdf
+doc/%LC_PACKAGE_NAME%.pdf
 doc/*.css
 
 # Artifacts created after running:

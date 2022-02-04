@@ -1,13 +1,11 @@
 * TODO Create tools for generating template repos
 ** DONE neptune-app
-*** TODO Replace appcheck rule with erlang ct tests
-This will allow for more complete tests of myapp
 *** TODO symbolic link of .libs to priv
 This is to simplify tests where myapp_nif needs to find privdir
 *** TODO Test myapp standalone
 *** TODO Test with neptune with options
-** neptune-rel
-** Build methodology and tools documented
+** TODO neptune-rel
+** TODO Build methodology and tools documented
 * TODO Document build methodology principles
 Using new documentation system (XMLs and type/specs)
 ** TODO Merge neptune man page into one (see dialyzer example)

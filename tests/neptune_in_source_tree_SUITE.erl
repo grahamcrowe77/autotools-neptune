@@ -18,20 +18,16 @@ all() ->
      {group, build_in_src_tree}].
 
 init_per_suite(Config) ->
-    Env = env(Config),
-    ok = ct:pal("~p", [Env]),
-    file:del_dir_r("/tmp/myapp"),
-    file:del_dir_r("/tmp/build"),
-    SrcDir = filename:join("/tmp", myapp),
+    {ok, CWD} = file:get_cwd(),
+    Env = os:env(),
+    SrcDir = filename:join(CWD, myapp),
     BuildDir = SrcDir,
     [{env, Env},
-     {tmpdir, "/tmp"},
      {srcdir, SrcDir},
      {builddir, BuildDir} | Config].
 
 end_per_suite(_Config) ->
-    file:del_dir_r("/tmp/myapp"),
-    file:del_dir_r("/tmp/build").
+    ok.
 
 init_per_group(_, Config) ->
     Config.
@@ -39,7 +35,13 @@ init_per_group(_, Config) ->
 end_per_group(_, _Config) ->
     ok.
 
-env(_Config) ->
+init_per_testcase(_, Config) ->
+    Config.
+
+end_per_testcase(_, _Config) ->
+    ok.
+
+neptune_env() ->
     TopBuildDir = ct:get_config(top_builddir),
     Env = os:env(),
     {"PATH", Path} = lists:keyfind("PATH", 1, Env),
@@ -52,11 +54,11 @@ env(_Config) ->
     end.
 
 neptune(Config) ->
-    Env = ?config(env, Config),
-    Dir = ?config(tmpdir, Config),
+    Env = neptune_env(),
+    {ok, CWD} = file:get_cwd(),
     Port = open_port(
-	     {spawn, "neptune --outdir " ++ Dir ++ " myapp"},
-	     port_opts(Dir, Env)),
+	     {spawn, "neptune myapp"},
+	     port_opts(CWD, Env)),
     ok = get_response(Port, []).
 
 bootstrap(Config) ->
