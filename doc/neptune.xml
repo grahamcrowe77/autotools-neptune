@@ -4,27 +4,36 @@
 <erlref>
   <header>
     <title>neptune</title>
-    <prepared></prepared>
+    <prepared>Graham Crowe</prepared>
     <responsible></responsible>
     <docno>1</docno>
     <approved></approved>
     <checked></checked>
     <date></date>
     <rev>A</rev>
-  <file>neptune.xml</file></header>
+    <file>neptune.xml</file>
+  </header>
   <module>neptune</module>
-  <modulesummary>neptune command</modulesummary>
+  <modulesummary>Neptune</modulesummary>
   <description>
-    <p>neptune is a tool for creating a skeleton erlang application or release
-    using GNU Autotools as the build system.</p>
+    <p>The <c>neptune</c> escript is a tool for creating a skeleton erlang
+    application or release using GNU Autotools as the build system.</p>
   </description>
+
+  <funcs>
+    <func>
+      <name>neptune [Options] name</name>
+      <fsummary>Creates skeleton code.</fsummary>
+      <desc>
+        <p>Create skeleton code with a build system in the directory
+	<c>name</c>. By default the skeleton code is for an application and
+	the directory is created in the current working directory.</p>
+      </desc>
+    </func>
+  </funcs>
+
   <section>
-    <marker id="command_line"></marker>
-    <title>Using neptune</title>
-    <p>neptune can be used to create a skeleton erlang application or
-    release. The resulting structure of files can be built, tested and
-    installed.</p>
-    <p><em>Exit status:</em></p>
+    <title>Exit Status</title>
     <taglist>
       <tag><c>0</c></tag>
       <item>
@@ -35,12 +44,33 @@
         <p>An error occurred</p>
       </item>
     </taglist>
-    <code type="none">neptune [--version]</code>
-    <p><em>Options:</em></p>
+  </section>
+  <section>
+    <title>Options</title>
+    <p>The following flags are supported:</p>
     <taglist>
       <tag><c>--version</c></tag>
       <item>
         <p>Print the neptune version and exit.</p>
+      </item>
+      <tag><c>--help</c></tag>
+      <item>
+        <p>Print the neptune help summary.</p>
+      </item>
+      <tag><c>--type [application|release]</c></tag>
+      <item>
+        <p>Select which skeleton code type to create. By default an Erlang
+	<c>application</c> is created.</p>
+      </item>
+      <tag><c>--author &lt;Author&gt;</c></tag>
+      <item>
+        <p>Define the author. By default the author is set to <c>undeclared
+	author</c>.</p>
+      </item>
+      <tag><c>--email &lt;Email&gt;</c></tag>
+      <item>
+        <p>Define the email address. By default the email address is set to
+	<c>undisclosed email address.</c></p>
       </item>
     </taglist>
   </section>
