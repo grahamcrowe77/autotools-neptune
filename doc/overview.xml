@@ -22,7 +22,7 @@
     
     </legalnotice>
 
-    <title>Introduction</title>
+    <title>Overview</title>
     <prepared>Graham Crowe</prepared>
     <responsible></responsible>
     <docno></docno>
@@ -34,9 +34,47 @@
   </header>
 
   <section>
-    <title>Neptune</title>
-    <p>Neptune is a tool for craeting a skeleton erlang application or
-    release.</p>
+    <title>Summary</title>
+    <p>Neptune is a tool for creating Erlang skeleton code, for an Erlang
+    Application or an Erlang Release. The skeleton code created includes a
+    build system based upon GNU Autotools in order to support portability and
+    follow standard build and installing practices. Neptune creates skeleton
+    code that follows the configure, build and install pattern of for code
+    distribution.</p>
+  </section>
+
+  <section>
+    <title>Why use GNU Autotools?</title>
+    <p>The short answer is support portability of the application code. There
+    are many Erlang applications that include foreign code typically written
+    in <c>C</c>. Erlang source code is typically portable since it runs on the
+    ERTS but NIFs (Native Implemented Functions) are deployed as shared
+    libraries and are thus highly dependent upon the target system, be that
+    the CPU architecture or the manner in which the system handles shared
+    libraries. GNU Autotools provides solutions to these problems.</p>
+  </section>
+
+  <section>
+    <title>Applications and Releases</title>
+    <p>An Erlang Release is a deployed sytem consisting of a number of Erlang
+    Applications. An Erlang Application consists of a number of modules
+    providing some functionality. An application can be passive in that it
+    just provides libraries, or it can be dynamic with a hierarchy of
+    supervised processes. A unit of development is typically an Erlang
+    Application but in practice these can be extremely large and complex or
+    quite small and focused.</p>
+  </section>
+
+  <section>
+    <title>Build and Run Time Dependencies</title>
+    <p>An Erlang Application has runtime dependencies, at least to the
+    <c>erts</c> and typically to the <c>kernel</c> and <c>stdLib</c>
+    applications. It has build time dependencies to the erlang compiler,
+    <c>erlc</c> and possibly to some public header files provided by other
+    applications. It may have other dependencies too. These dependencies can
+    be declared up front in <c>configure.ac</c> which is the source for
+    <c>configure</c> script, and it is this script that creates makefiles,
+    from templates, that are tuned to the build environment.</p>
   </section>
 
   </chapter>
