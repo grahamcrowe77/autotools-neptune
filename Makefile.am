@@ -136,7 +136,7 @@ neptune_appcsrc_DATA = \
 
 neptune_appdoc_DATA = \
   app/doc/book.xml.in \
-  app/doc/name.xml \
+  app/doc/name_cmd.xml \
   app/doc/overview.xml \
   app/doc/part.xml \
   app/doc/ref_man.xml.in.in

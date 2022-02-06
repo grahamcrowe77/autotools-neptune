@@ -150,7 +150,7 @@ MAN1S = $(addprefix $(builddir)/man1/, $(addsuffix .1, $(ESCRIPTS)))
 man1_MANS = \
   $(MAN1S)
 
-$(builddir)/man1/%.1: $(srcdir)/doc/%.xml
+$(builddir)/man1/%.1: $(srcdir)/doc/%_cmd.xml
 	$(AM_V_GEN)$(XSLTPROC) --output $@ \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
@@ -327,7 +327,7 @@ EXTRA_DIST = \
 
 if ERL_DOCGEN
 EXTRA_DIST += \
-  $(srcdir)/doc/%LC_PACKAGE_NAME%.xml \
+  $(srcdir)/doc/%LC_PACKAGE_NAME%_cmd.xml \
   $(srcdir)/doc/overview.xml \
   $(srcdir)/doc/part.xml \
   $(srcdir)/doc/ref_man.xml.in.in \

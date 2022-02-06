@@ -18,7 +18,7 @@
     <file>neptune_cmd.xml</file>
   </header>
   <com>neptune</com>
-  <comsummary>Tool</comsummary>
+  <comsummary>Neptune command</comsummary>
   <description>
     <p>The <c>neptune</c> escript is a tool for creating a skeleton erlang
     application or release using GNU Autotools as the build system.</p>

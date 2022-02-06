@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE erlref SYSTEM "comref.dtd">
+
+<comref>
+  <header>
+   <copyright>
+      <year>2022</year><year>2022</year>
+      <holder></holder>
+    </copyright>
+    <title>%LC_PACKAGE_NAME%</title>
+    <prepared>%AUTHOR%</prepared>
+    <responsible></responsible>
+    <docno>1</docno>
+    <approved></approved>
+    <checked></checked>
+    <date>%DATE%</date>
+    <rev>%PACKAGE_VERSION%</rev>
+    <file>%LC_PACKAGE_NAME%_cmd.xml</file>
+  </header>
+  <com>%LC_PACKAGE_NAME%</com>
+  <comsummary>%TC_PACKAGE_NAME% command</comsummary>
+  <description>
+    <p>The <c>%LC_PACKAGE_NAME%</c> escript is a tool whose sole purpose is to
+    write binary string greetings to IO.</p>
+  </description>
+  <funcs>
+    <func>
+      <name>%LC_PACKAGE_NAME% [Options]</name>
+      <fsummary>Write binary string greetings to IO.</fsummary>
+      <desc>
+	<p>%TC_PACKAGE_NAME% takes an integer and returns a greeting from
+	%LC_PACKAGE_NAME% returning the square of the integer supplied.</p>
+      </desc>
+    </func>
+  </funcs>
+  <section>
+    <title>Exit Status</title>
+    <taglist>
+      <tag><c>0</c></tag>
+      <item>
+        <p>Processed successfully.</p>
+      </item>
+      <tag><c>1</c></tag>
+      <item>
+        <p>An error occurred</p>
+      </item>
+    </taglist>
+  </section>
+  <section>
+    <title>Options</title>
+    <p>The following flags are supported:</p>
+      <taglist>
+        <tag><c>--version</c></tag>
+        <item>
+          <p>Print the %LC_PACKAGE_NAME% version and exit.</p>
+        </item>
+        <tag><c>--square &lt;Integer&gt;</c></tag>
+        <item>
+          <p>Calculate the square of <c>Integer</c> and return that information
+	  as a greeting from %LC_PACKAGE_NAME%.</p>
+        </item>
+      </taglist>
+  </section>
+  <authors>
+    <aname>%AUTHOR%</aname>
+    <email>%EMAIL%</email>
+  </authors>
+</comref>
