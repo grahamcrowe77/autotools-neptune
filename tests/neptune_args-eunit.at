@@ -1,8 +1,0 @@
-AT_BANNER([Eunit Tests])
-AT_SETUP([neptune_args-eunit])
-AT_KEYWORDS([eunit])
-COMPILE_EUNIT(["${abs_top_srcdir}/src/neptune_args.erl"])
-AT_CHECK_EUNIT([neptune_args_testsuite], [{module, neptune_args}],
-  [-pa "${abs_top_builddir}/src"])
-EUNIT_CLEANUP([neptune_args])
-AT_CLEANUP

@@ -59,10 +59,10 @@
       <item>
         <p>Print the neptune help summary.</p>
       </item>
-      <tag><c>--type [application|release]</c></tag>
+      <tag><c>--type [app|rel]</c></tag>
       <item>
         <p>Select which skeleton code type to create. By default an Erlang
-	<c>application</c> is created.</p>
+	Application (<c>app</c>) is created.</p>
       </item>
       <tag><c>--author &lt;Author&gt;</c></tag>
       <item>

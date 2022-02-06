@@ -3,11 +3,12 @@
 %%% @copyright (C) 2022, Graham Crowe
 %%% @doc Neptune application
 %%%
-%%% creates a minimal Erlang application.
+%%% creates a minimal skeleton code for either an Erlang application
+%%% or an Erlang release.
 %%% @end
 %%% Created :  30 Jan 2022 by Graham Crowe <graham.crowe@telia.com>
 %%%-------------------------------------------------------------------
--module(neptune_app).
+-module(neptune_mod).
 
 -ifdef(TEST).
 
@@ -17,17 +18,37 @@
 
 -include_lib("kernel/include/file.hrl").
 
--export([create/1]).
+-export([parse_args/1, skeleton/1]).
 
 %%--------------------------------------------------------------------
 %% @doc
-%% This function creates an Erlang application based upon the input
-%% expressed in the form of a map. It results in a minimal Erlang
-%% application directory structure, built with GNU Autotools.
+%% This function is called to parse the command line arguments and
+%% return a map expressing the options and arguments as parameters
+%% for creating skeleton code.
 %% @end
 %%--------------------------------------------------------------------
--spec create(Pars :: map()) -> ok | {error, Reason :: io_lib:chars()}.
-create(#{name := Name}=Pars) ->
+-spec parse_args(Args :: [string()]) -> Pars :: map().
+parse_args(Args) ->
+    Funs = [fun strings_to_tuples/1,
+	    fun tuples_to_map/1],
+    Pars = lists:foldl(
+	    fun(Fun, Input) ->
+		    apply(Fun, [Input])
+	    end,
+	    Args,
+	    Funs),
+    default_parameters(Pars).
+
+%%--------------------------------------------------------------------
+%% @doc
+%% This function creates skeleton Erlang code based upon the input
+%% expressed in the form of a map. It results in a minimal Erlang
+%% application or release directory structure, built with GNU
+%% Autotools.
+%% @end
+%%--------------------------------------------------------------------
+-spec skeleton(Pars :: map()) -> ok | {error, Reason :: io_lib:chars()}.
+skeleton(#{name := Name, type := <<"app">>}=Pars) ->
     case filename:basename(Name) of
 	Name ->
 	    case read_template_tree(Pars) of
@@ -39,12 +60,52 @@ create(#{name := Name}=Pars) ->
 	_ ->
 	    {error, io_lib:format("~s includes a path", [Name])}
     end;
-create(_) ->
-    {error, "no name for application was provided"}.
+skeleton(#{name := _Name, type := <<"rel">>}=_Pars) ->
+    {error, "not implemented yet"};
+skeleton(_) ->
+    {error, "no name was provided"}.
 
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
+strings_to_tuples(Strings) ->
+    Fun = fun([ $-, $- | OptName], Elements) ->
+		  [{option_name, list_to_atom(OptName)} | Elements];
+	     (Value, Elements) ->
+		  [{value, Value} | Elements]
+	  end,
+    lists:foldr(Fun, [], Strings).
+
+tuples_to_map(Tuples) ->
+    tuples_to_map(Tuples, #{}).
+
+tuples_to_map([], Map) ->
+    Map;
+tuples_to_map([{option_name, OptName}, {value, Value} | T], Map) ->
+    tuples_to_map(T, Map#{OptName => list_to_binary(Value)});
+tuples_to_map([{option_name, OptName} | T], Map) ->
+    tuples_to_map(T, Map#{OptName => null});
+%% Ignore values without option names except the last argument
+tuples_to_map([{value, Value}], Map) ->
+    Map#{name => list_to_binary(Value)};
+tuples_to_map([_|T], Map) ->
+    tuples_to_map(T, Map).
+
+default_parameters(Pars) ->
+    Defaults = [{type, <<"app">>},
+		{outdir, <<".">>}],
+    lists:foldl(
+      fun({Name, Value}, Acc) ->
+	      case maps:is_key(Name, Acc) of
+		  true ->
+		      Acc;
+		  false ->
+		      Acc#{Name => Value}
+	      end
+      end,
+      Pars,
+      Defaults).
+
 read_template_tree(#{name := Name, sysconfdir := SysConfDir, type := Type}) ->
     Dir = filename:join(SysConfDir, Type),
     case file:read_file_info(Dir) of
@@ -86,7 +147,7 @@ process_tree(Tree, Pars) ->
       Funs).
 
 substitute_values(Tree, Pars) ->
-    Substitutions = neptune_subs:main(Pars),
+    Substitutions = substitutions(Pars),
     Dir = maps:get(directory, Tree),
     Content = maps:get(content, Tree),
     NewContent = substitute_dir_values(Content, Substitutions),
@@ -163,10 +224,98 @@ set_file_access_mode(<<"bootstrap.sh">>, FullFilePath) ->
 set_file_access_mode(_, _) ->
     ok.
 
+substitutions(Pars) ->
+    [lowercase_package_name(Pars),
+     uppercase_package_name(Pars),
+     titlecase_package_name(Pars),
+     package_version(Pars),
+     erts_version(Pars),
+     email(Pars),
+     author(Pars),
+     year(Pars),
+     date(Pars)].
+
+lowercase_package_name(#{name := Name}) ->
+    {<<"%LC_PACKAGE_NAME%">>, string:lowercase(Name)}.
+
+uppercase_package_name(#{name := Name}) ->
+    {<<"%UC_PACKAGE_NAME%">>, string:uppercase(Name)}.
+
+titlecase_package_name(#{name := Name}) ->
+    {<<"%TC_PACKAGE_NAME%">>, string:titlecase(Name)}.
+
+package_version(Pars) ->
+    {<<"%PACKAGE_VERSION%">>, maps:get(version, Pars, <<"0.1.0">>)}.
+
+erts_version(Pars) ->
+    {<<"%ERLANG_ERTS_VER%">>, maps:get(erts_version, Pars, <<"11">>)}.
+
+email(Pars) ->
+    {<<"%EMAIL%">>, maps:get(email, Pars, <<"undisclosed email address">>)}.
+
+author(Pars) ->
+    {<<"%AUTHOR%">>, maps:get(author, Pars, <<"undeclared author">>)}.
+
+year(_Pars) ->
+    {{Year, _Month, _Day}, _Time} = calendar:local_time(),
+    {<<"%YEAR%">>, integer_to_binary(Year)}.
+
+date(_Pars) ->
+    {{Year, Month, Day}, _Time} = calendar:local_time(),
+    {<<"%DATE%">>,
+     <<(integer_to_binary(Day))/binary, 32,
+       (to_enum(month, Month))/binary, 32,
+       (integer_to_binary(Year))/binary>>}.
+
+to_enum(month, 1)  -> <<"Jan">>;
+to_enum(month, 2)  -> <<"Feb">>;
+to_enum(month, 3)  -> <<"Mar">>;
+to_enum(month, 4)  -> <<"Apr">>;
+to_enum(month, 5)  -> <<"May">>;
+to_enum(month, 6)  -> <<"Jun">>;
+to_enum(month, 7)  -> <<"Jul">>;
+to_enum(month, 8)  -> <<"Aug">>;
+to_enum(month, 9)  -> <<"Sep">>;
+to_enum(month, 10) -> <<"Oct">>;
+to_enum(month, 11) -> <<"Nov">>;
+to_enum(month, 12) -> <<"Dec">>.
+
 %% -------------------------------------------------------------------
 %% Internal eunit tests
 %% -------------------------------------------------------------------
 -ifdef(TEST).
+
+square_test_() ->
+    [?_assertMatch(
+	#{version := null},
+	parse_args(["--version"])),
+     ?_assertMatch(
+	#{help := null},
+	parse_args(["--help"])),
+     ?_assertMatch(
+	#{author := <<"John Doe">>,
+	  name := <<"myapp">>},
+	parse_args(["--author", "John Doe",
+	       "myapp"])),
+     ?_assertMatch(
+	#{author := <<"John Doe">>,
+	  email := <<"john.doe@neptune.org">>,
+	  type := <<"application">>,
+	  name := <<"myapp">>},
+	parse_args(["--author", "John Doe",
+	       "--email", "john.doe@neptune.org",
+	       "--type", "application",
+	       "myapp"])),
+     ?_assertMatch(
+	#{author := <<"John Doe">>,
+	  email := <<"john.doe@neptune.org">>,
+	  type := <<"release">>,
+	  name := <<"myrel">>},
+	parse_args(["--author", "John Doe",
+	       "--email", "john.doe@neptune.org",
+	       "--type", "release",
+	       "myrel"]))
+    ].
 
 read_template_tree_test_() ->
     [?_assertMatch(

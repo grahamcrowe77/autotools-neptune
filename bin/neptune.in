@@ -5,32 +5,31 @@
 -define(SYSCONFDIR, <<".">>).
 -define(COMMAND_NAME, <<"neptune">>).
 
-main(CmdLine) ->
-    Args = neptune_args:parse(CmdLine),
-    Pars = Args#{sysconfdir => ?SYSCONFDIR},
-    case Args of
+main(Args) ->
+    InPars = neptune_mod:parse_args(Args),
+    Pars = InPars#{sysconfdir => ?SYSCONFDIR},
+    case Pars of
 	#{help := null} ->
 	    ok = usage(),
 	    halt(0);
 	#{version := null} ->
 	    ok = version(),
 	    halt(0);
-	#{type := <<"release">>} ->
-	    case neptune_rel:create(Pars#{type => <<"rel">>}) of
+	#{type := Type}
+	  when Type =:= <<"app">>
+	       orelse
+	       Type =:= <<"rel">> ->
+	    case neptune_mod:skeleton(Pars) of
 		ok ->
 		    halt(0);
 		{error, Reason} ->
 		    ok = reason(Reason),
 		    halt(1)
 	    end;
-	#{type := <<"application">>} ->
-	    case neptune_app:create(Pars#{type => <<"app">>}) of
-		ok ->
-		    halt(0);
-		{error, Reason} ->
-		    ok = reason(Reason),
-		    halt(1)
-	    end
+	#{type := Type} ->
+	    Reason = io_lib:format("type <~s> is unsupported", [Type]),
+	    ok = reason(Reason),
+	    halt(1)
     end.
 
 usage() ->

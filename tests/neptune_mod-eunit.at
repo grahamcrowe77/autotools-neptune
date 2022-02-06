@@ -1,0 +1,7 @@
+AT_SETUP([neptune_mod-eunit])
+AT_KEYWORDS([eunit])
+COMPILE_EUNIT(["${abs_top_srcdir}/src/neptune_mod.erl"])
+AT_CHECK_EUNIT([neptune_mod_testsuite], [{module, neptune_mod}],
+  [-pa "${abs_top_builddir}/src"])
+EUNIT_CLEANUP([neptune_mod])
+AT_CLEANUP
