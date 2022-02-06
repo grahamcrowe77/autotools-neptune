@@ -105,10 +105,16 @@ AUTOM4TE = $(SHELL) $(srcdir)/build-aux/missing --run autom4te
 
 AUTOTEST = $(AUTOM4TE) --language=autotest
 
-check-local: $(builddir)/tests/atconfig $(builddir)/tests/atlocal $(TESTSUITE) $(builddir)/tests/%LC_PACKAGE_NAME%.plt
+check_dependencies = \
+  $(TESTSUITE) \
+  $(builddir)/tests/atconfig \
+  $(builddir)/tests/atlocal \
+  $(builddir)/tests/%LC_PACKAGE_NAME%.plt
+
+check-local: $(check_dependencies)
 	cd $(builddir)/tests && $(SHELL) testsuite $(TESTSUITEFLAGS)
 
-installcheck-local: $(builddir)/tests/atconfig $(builddir)/tests/atlocal $(TESTSUITE)
+installcheck-local: $(check_dependencies)
 	cd $(builddir)/tests && $(SHELL) testsuite \
            'AUTOTEST_PATH=$(DESTDIR)$(bindir)' \
            $(TESTSUITEFLAGS)
@@ -117,7 +123,8 @@ uninstall-local:
 	rm -f  $(DESTDIR)$(bindir)/%LC_PACKAGE_NAME%_test
 
 clean-local:
-	test ! -f '$(TESTSUITE)' || (cd $(builddir)/tests && $(SHELL) testsuite --clean)
+	test ! -f '$(TESTSUITE)' || \
+	  (cd $(builddir)/tests && $(SHELL) testsuite --clean)
 	rm -rf $(builddir)/tests/atconfig $(builddir)/src/*.beam $(TESTSUITE)
 
 $(builddir)/tests/atconfig: $(builddir)/config.status
@@ -207,10 +214,13 @@ if FOP
 %LC_PACKAGE_NAME%_doc_DATA += $(builddir)/doc/%LC_PACKAGE_NAME%.pdf
 endif #FOP
 
-$(builddir)/doc/erlang-logo.png: $(ERLANG_LIB_DIR_erl_docgen)/priv/images/erlang-logo.png
+
+erl_docgen_privdir = $(ERLANG_LIB_DIR_erl_docgen)/priv
+
+$(builddir)/doc/erlang-logo.png: $(erl_docgen_privdir)/images/erlang-logo.png
 	$(AM_V_GEN)cp $< $@
 
-$(builddir)/doc/stylesheet.css: $(ERLANG_LIB_DIR_erl_docgen)/priv/css/otp_doc.css
+$(builddir)/doc/stylesheet.css: $(erl_docgen_privdir)/css/otp_doc.css
 	$(AM_V_GEN)cp $< $@
 
 $(HTMLS): $(builddir)/doc/index.html

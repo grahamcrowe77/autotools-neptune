@@ -73,10 +73,16 @@ AUTOM4TE = $(SHELL) $(srcdir)/build-aux/missing --run autom4te
 
 AUTOTEST = $(AUTOM4TE) --language=autotest
 
-check-local: $(builddir)/tests/atconfig $(builddir)/tests/atlocal $(TESTSUITE) $(builddir)/tests/neptune.plt
+check_dependencies = \
+  $(TESTSUITE) \
+  $(builddir)/tests/atconfig \
+  $(builddir)/tests/atlocal \
+  $(builddir)/tests/neptune.plt
+
+check-local: $(check_dependencies)
 	cd $(builddir)/tests && $(SHELL) testsuite $(TESTSUITEFLAGS)
 
-installcheck-local: $(builddir)/tests/atconfig $(builddir)/tests/atlocal $(TESTSUITE) $(builddir)/tests/neptune.plt
+installcheck-local: $(check_dependencies)
 	cd $(builddir)/tests && $(SHELL) testsuite \
            'AUTOTEST_PATH=$(DESTDIR)$(bindir)' \
            $(TESTSUITEFLAGS)
@@ -85,7 +91,8 @@ uninstall-local:
 	rm -f  $(DESTDIR)$(bindir)/neptune_test
 
 clean-local:
-	test ! -f '$(TESTSUITE)' || (cd $(builddir)/tests && $(SHELL) testsuite --clean)
+	test ! -f '$(TESTSUITE)' || \
+          (cd $(builddir)/tests && $(SHELL) testsuite --clean)
 	rm -rf $(builddir)/tests/atconfig $(builddir)/src/*.beam $(TESTSUITE)
 
 $(builddir)/tests/atconfig: $(builddir)/config.status
