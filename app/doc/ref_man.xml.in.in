@@ -4,7 +4,7 @@
 <application xmlns:xi="http://www.w3.org/2001/XInclude">
   <header>
     <copyright>
-      <year>%DATE%</year><year>%DATE%</year>
+      <year>%YEAR%</year><year>%YEAR%</year>
       <holder>%AUTHOR%. All Rights Reserved.</holder>
     </copyright>
     <title>%TC_PACKAGE_NAME% Reference Manual</title>
