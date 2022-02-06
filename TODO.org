@@ -1,11 +1,12 @@
 * TODO Create tools for generating template repos
 ** TODO neptune-rel
 ** TODO release documentation
-All app documentation bound together, e.g. kernel, stdlibm ..., myapp
-** TODO Build methodology and tools documented
+All app documentation bound together, e.g. kernel, stdlib ..., myapp
+* TODO github flow
+Why does neptune-ct.at terminate erlang when run on github and still appear to pass?
+This works fine locally
 * TODO Document build methodology principles
 Using new documentation system (XMLs and type/specs)
-** TODO Merge neptune man page into one (see dialyzer example)
 ** TODO Pros/cons of variant build systems
 ** TODO rebar3, a build, package and distribution management system rolled into one
 ** TODO Conclusions (build systems and package/distribution management)
@@ -15,6 +16,7 @@ Using new documentation system (XMLs and type/specs)
 ** TODO Expand All and Contract All not working as expected
 * TODO Fix PDF Documentation
 ** TODO Fix missing logo from PDF
+This doesn't seem to be an issue on other environments, e.g. MacOS. Why?
 * TODO Fix distcheck dependency
 The distcheck target works when preceded by the targets run in the order:
 - 'all'
