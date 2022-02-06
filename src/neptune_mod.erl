@@ -27,7 +27,10 @@
 %% for creating skeleton code.
 %% @end
 %%--------------------------------------------------------------------
--spec parse_args(Args :: [string()]) -> Pars :: map().
+-spec parse_args(Args) -> Pars when
+      Args :: [string()],
+      Pars :: map().
+
 parse_args(Args) ->
     Funs = [fun strings_to_tuples/1,
 	    fun tuples_to_map/1],
@@ -47,7 +50,9 @@ parse_args(Args) ->
 %% Autotools.
 %% @end
 %%--------------------------------------------------------------------
--spec skeleton(Pars :: map()) -> ok | {error, Reason :: io_lib:chars()}.
+-spec skeleton(Pars) -> ok | {error, Reason} when
+      Pars   :: map(),
+      Reason :: atom().
 skeleton(#{name := Name, type := <<"app">>}=Pars) ->
     case filename:basename(Name) of
 	Name ->
@@ -58,12 +63,12 @@ skeleton(#{name := Name, type := <<"app">>}=Pars) ->
 		    {error, Reason}
 	    end;
 	_ ->
-	    {error, io_lib:format("~s includes a path", [Name])}
+	    {error, bad_name}
     end;
 skeleton(#{name := _Name, type := <<"rel">>}=_Pars) ->
-    {error, "not implemented yet"};
+    {error, not_implemented};
 skeleton(_) ->
-    {error, "no name was provided"}.
+    {error, no_name}.
 
 %%%===================================================================
 %%% Internal functions
@@ -112,8 +117,7 @@ read_template_tree(#{name := Name, sysconfdir := SysConfDir, type := Type}) ->
 	{ok, #file_info{type = directory}} ->
 	    {ok, #{directory => Name, content => read_dir(Dir)}};
 	_ ->
-	    Error = io_lib:format("~s is not a directory", [Dir]),
-	    {error, Error}
+	    {error, name_is_dir}
     end.
 
 read_dir(Dir) ->
@@ -200,8 +204,7 @@ write_app_structure(Tree, #{outdir := OutDir}) ->
     Dir = filename:join(OutDir, Name),
     case file:read_file_info(Dir) of
 	{ok, #file_info{}} ->
-	    Reason = io_lib:format("~s already exists", [Name]),
-	    {error, Reason};
+	    {error, name_exists};
 	_ ->
 	    Content = maps:get(content, Tree),
 	    ok = create_dir_content(Dir, Content)

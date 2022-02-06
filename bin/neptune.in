@@ -23,12 +23,12 @@ main(Args) ->
 		ok ->
 		    halt(0);
 		{error, Reason} ->
-		    ok = reason(Reason),
+		    ok = reason(Reason, Pars),
 		    halt(1)
 	    end;
 	#{type := Type} ->
 	    Reason = io_lib:format("type <~s> is unsupported", [Type]),
-	    ok = reason(Reason),
+	    ok = reason(Reason, Pars),
 	    halt(1)
     end.
 
@@ -41,7 +41,13 @@ usage() ->
 version() ->
     ok = io:format("~s ~s~n", [?COMMAND_NAME, "@PACKAGE_VERSION@"]).
 
-reason(Reason) ->
-    Format = "Failed to create because ~s.~n",
-    ok = io:format(Format, [Reason]),
-    ok = usage().
+reason(not_implemented, #{type := Type}) ->
+    ok = io:format("~s is not implemented~n", [Type]);
+reason(no_name, #{}) ->
+    ok = io:format("No name provided~n");
+reason(bad_name, #{name := Name}) ->
+    ok = io:format("~s includes a path~n", [Name]);
+reason(name_is_dir, #{name := Name}) ->
+    ok = io:format("~s is a directory~n", [Name]);
+reason(name_exists, #{name := Name}) ->
+    ok = io:format("~s already exists~n", [Name]).
