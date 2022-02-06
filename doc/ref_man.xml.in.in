@@ -27,10 +27,10 @@
     <docno></docno>
     <date>2022-01-27</date>
     <rev>0.1.0</rev>
-    <file>neptune.xml</file>
+    <file>ref_man.xml</file>
   </header>
   <description>
   </description>
-  <xi:include href="@TOP_SRCDIR@/doc/neptune.xml"/>@XI_MODULES@
+  <xi:include href="@TOP_SRCDIR@/doc/neptune_cmd.xml"/>@XI_MODULES@
 </application>
 

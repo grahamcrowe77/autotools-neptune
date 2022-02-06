@@ -185,7 +185,7 @@ MAN1S = $(addprefix $(builddir)/man1/, $(addsuffix .1, $(ESCRIPTS)))
 man1_MANS = \
   $(MAN1S)
 
-$(builddir)/man1/%.1: $(srcdir)/doc/%.xml
+$(builddir)/man1/%.1: $(srcdir)/doc/%_cmd.xml
 	$(AM_V_GEN)$(XSLTPROC) --output $@ \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
@@ -302,6 +302,7 @@ XMLS = $(addprefix $(builddir)/doc/, $(addsuffix .xml, $(MODULES)))
 
 $(builddir)/doc/ref_man.xml: $(builddir)/doc/ref_man.xml.in
 	$(AM_V_GEN)$(SED) \
+	  -e "s#@TOP_BUILDDIR@#$(top_srcdir)#g" \
 	  -e "s#@TOP_SRCDIR@#$(top_srcdir)#g" $< > $@
 
 XMLS += $(builddir)/doc/ref_man.xml
@@ -358,7 +359,7 @@ EXTRA_DIST = \
 
 if ERL_DOCGEN
 EXTRA_DIST += \
-  $(srcdir)/doc/neptune.xml \
+  $(srcdir)/doc/neptune_cmd.xml \
   $(srcdir)/doc/overview.xml \
   $(srcdir)/doc/part.xml \
   $(srcdir)/doc/ref_man.xml.in.in \
