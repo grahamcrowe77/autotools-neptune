@@ -7,20 +7,37 @@
 main(["--version"]) ->
     ok = application:start(%LC_PACKAGE_NAME%),
     {ok, Version} = %LC_PACKAGE_NAME%_server:version(),
-    ok = io:format("~s ~s~n", [?COMMAND_NAME, Version]);
+    ok = io:format("~s ~s~n", [?COMMAND_NAME, Version]),
+    halt(0);
+main(["--help"]) ->
+    ok = manpage(),
+    halt(0);
 main(["--square", Value]) ->
     ok = application:start(%LC_PACKAGE_NAME%),
     case string:to_integer(Value) of
 	{error, _} ->
-	    ok = io:format("~s is not an integer!~n", [Value]);
+	    ok = io:format("~s is not an integer!~n", [Value]),
+	    halt(1);
 	{Integer, _Rest} ->
 	    {ok, Message} = %LC_PACKAGE_NAME%_server:message({square, Integer}),
-	    ok = io:format("~s", [Message])
+	    ok = io:format("~s", [Message]),
+	    halt(0)
     end;
 main(_) ->
-    usage(),
+    ok = usage(),
     halt(1).
 
+manpage() ->
+    Cmd = "man " ++ binary_to_list(?COMMAND_NAME),
+    None = "No manual entry for " ++ binary_to_list(?COMMAND_NAME) ++ "\n",
+    case os:cmd(Cmd) of
+       None ->
+           ok = usage();
+       ManPage ->
+           ok = io:format("~s", [ManPage])
+    end.
+
 usage() ->
-    io:format("~s [--square Integer]~n", [?COMMAND_NAME]),
-    io:format("see manual page for ~s(1) for more details~n", [?COMMAND_NAME]).
+    ok = io:format("~s [--square Integer]~n", [?COMMAND_NAME]),
+    Format = "see manual page for ~s(1) for more details~n",
+    ok = io:format(Format, [?COMMAND_NAME]).
