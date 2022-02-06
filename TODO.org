@@ -1,9 +1,4 @@
 * TODO Create tools for generating template repos
-** DONE neptune-app
-*** TODO symbolic link of .libs to priv
-This is to simplify tests where myapp_nif needs to find privdir
-*** TODO Test myapp standalone
-*** TODO Test with neptune with options
 ** TODO neptune-rel
 ** TODO release documentation
 All app documentation bound together, e.g. kernel, stdlibm ..., myapp

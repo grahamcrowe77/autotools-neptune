@@ -37,11 +37,16 @@ lib%LC_PACKAGE_NAME%_nif_la_CFLAGS = -I@ERLANG_ROOT_DIR@/usr/include
 lib%LC_PACKAGE_NAME%_nif_la_SOURCES = \
   $(srcdir)/c_src/%LC_PACKAGE_NAME%.c
 
+lib%LC_PACKAGE_NAME%_nif_la_DEPENDENCIES = $(builddir)/priv
+
+$(builddir)/priv:
+	$(LN_S) $(builddir)/.libs $@
+
 if APPLE
 %LC_PACKAGE_NAME%_priv_DATA = \
-  .libs/lib%LC_PACKAGE_NAME%_nif.so
+  $(builddir)/.libs/lib%LC_PACKAGE_NAME%_nif.so
 
-.libs/lib%LC_PACKAGE_NAME%_nif.so: .libs/lib%LC_PACKAGE_NAME%_nif.dylib
+$(builddir)/.libs/lib%LC_PACKAGE_NAME%_nif.so: $(builddir)/.libs/lib%LC_PACKAGE_NAME%_nif.dylib
 	(cd $(@D) && $(LN_S) $(<F) $(@F))
 endif #APPLE
 
