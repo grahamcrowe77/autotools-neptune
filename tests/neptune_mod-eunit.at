@@ -1,3 +1,4 @@
+AT_BANNER([Eunit tests])
 AT_SETUP([neptune_mod-eunit])
 AT_KEYWORDS([eunit])
 COMPILE_EUNIT(["${abs_top_srcdir}/src/neptune_mod.erl"])

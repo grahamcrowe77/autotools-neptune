@@ -1,4 +1,4 @@
-AT_BANNER([Eunit Tests])
+AT_BANNER([Eunit tests])
 AT_SETUP([%LC_PACKAGE_NAME%_nif-eunit])
 AT_KEYWORDS([eunit])
 COMPILE_EUNIT(["${abs_top_srcdir}/src/%LC_PACKAGE_NAME%_nif.erl"])
