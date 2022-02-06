@@ -10,7 +10,7 @@ main(Args) ->
     Pars = InPars#{sysconfdir => ?SYSCONFDIR},
     case Pars of
 	#{help := null} ->
-	    ok = usage(),
+	    ok = manpage(),
 	    halt(0);
 	#{version := null} ->
 	    ok = version(),
@@ -30,6 +30,16 @@ main(Args) ->
 	    Reason = io_lib:format("type <~s> is unsupported", [Type]),
 	    ok = reason(Reason, Pars),
 	    halt(1)
+    end.
+
+manpage() ->
+    Cmd = "man " ++ binary_to_list(?COMMAND_NAME),
+    None = "No manual entry for " ++ binary_to_list(?COMMAND_NAME) ++ "\n",
+    case os:cmd(Cmd) of
+	None ->
+	    usage();
+	ManPage ->
+	    ok = io:format("~s", [ManPage])
     end.
 
 usage() ->
