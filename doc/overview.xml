@@ -4,24 +4,9 @@
 <chapter>
   <header>
     <copyright>
-      <year>2022</year>
+      <year>2022</year><year>2022</year>
       <holder>Graham Crowe. All Rights Reserved.</holder>
     </copyright>
-    <legalnotice>
-      Licensed under the Apache License, Version 2.0 (the "License");
-      you may not use this file except in compliance with the License.
-      You may obtain a copy of the License at
- 
-          http://www.apache.org/licenses/LICENSE-2.0
-
-      Unless required by applicable law or agreed to in writing, software
-      distributed under the License is distributed on an "AS IS" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-      See the License for the specific language governing permissions and
-      limitations under the License.
-    
-    </legalnotice>
-
     <title>Overview</title>
     <prepared>Graham Crowe</prepared>
     <responsible></responsible>
@@ -32,7 +17,6 @@
     <rev></rev>
     <file>overview.xml</file>
   </header>
-
   <section>
     <title>Summary</title>
     <p>Neptune is a tool for creating Erlang skeleton code, for an Erlang
@@ -42,7 +26,6 @@
     code that follows the configure, build and install pattern of for code
     distribution.</p>
   </section>
-
   <section>
     <title>Why use GNU Autotools?</title>
     <p>The short answer is support portability of the application code. There
@@ -53,7 +36,6 @@
     the CPU architecture or the manner in which the system handles shared
     libraries. GNU Autotools provides solutions to these problems.</p>
   </section>
-
   <section>
     <title>Applications and Releases</title>
     <p>An Erlang Release is a deployed sytem consisting of a number of Erlang
@@ -64,7 +46,6 @@
     Application but in practice these can be extremely large and complex or
     quite small and focused.</p>
   </section>
-
   <section>
     <title>Build and Run Time Dependencies</title>
     <p>An Erlang Application has runtime dependencies, at least to the
@@ -76,5 +57,4 @@
     <c>configure</c> script, and it is this script that creates makefiles,
     from templates, that are tuned to the build environment.</p>
   </section>
-
   </chapter>
