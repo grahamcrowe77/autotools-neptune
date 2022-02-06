@@ -19,18 +19,22 @@ rm ${abs_top_builddir}/src/$1.beam
 
 m4_define([APP_TEST_SETUP], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
-  mkdir -pv ${abs_top_builddir}/bin
-  sed -e s#%%UC_PACKAGE_NAME%_EBINDIR%#${abs_top_builddir}/ebin#g \
-      -e s#%%UC_PACKAGE_NAME%_SYSCONFDIR%#${abs_top_builddir}#g \
-      -e s#%PACKAGE_VERSION%#${PACKAGE_VERSION}#g \
-    ${abs_top_srcdir}/bin/%LC_PACKAGE_NAME%.in > ${abs_top_builddir}/bin/%LC_PACKAGE_NAME%
-  chmod +x ${abs_top_builddir}/bin/%LC_PACKAGE_NAME%
+  sed -i -e "s#%%! -pa ebin#%%! -pa ${abs_top_builddir}/ebin#g" \
+         -e "s#<<\".\">>#<<\"${abs_top_srcdir}\">>#g" \
+    ${abs_top_builddir}/bin/%LC_PACKAGE_NAME%
+  PATH=${abs_top_builddir}/bin:${PATH} export PATH
 fi
-PATH=${abs_top_builddir}/bin:${PATH} export PATH]]).
+]]).
 
 m4_define([APP_TEST_CLEANUP], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
-  rm ${abs_top_builddir}/bin/%LC_PACKAGE_NAME%
+  sed -i -e "s#%%! -pa ${abs_top_builddir}/ebin#%%! -pa ebin#g" \
+         -e "s#<<\"${abs_top_builddir}\">>#<<\".\">>#g" \
+    ${abs_top_builddir}/bin/%LC_PACKAGE_NAME%
+else
+  sed -i -e "s#%%! -pa ${DESTDIR}${neptune_ebindir}#%%! -pa ebin#g" \
+         -e "s#<<\"${abs_top_srcdir}\">>#<<\".\">>#g" \
+    ${abs_top_builddir}/bin/%LC_PACKAGE_NAME%
 fi
 ]]).
 

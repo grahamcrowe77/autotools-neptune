@@ -21,12 +21,10 @@ TESTSUITE = $(builddir)/tests/testsuite
 # --------------------------------------
 dist_bin_SCRIPTS = $(addprefix $(builddir)/bin/, $(ESCRIPTS))
 
-$(builddir)/bin/%LC_PACKAGE_NAME%: $(srcdir)/bin/%LC_PACKAGE_NAME%.in
-	@$(MKDIR_P) $(@D)
-	$(AM_V_GEN)$(SED) \
-	  -e "s#%%LC_PACKAGE_NAME%_EBINDIR%#$(DESTDIR)$(%LC_PACKAGE_NAME%_ebindir)#g" \
-	  -e "s#%PACKAGE_VERSION%#$(PACKAGE_VERSION)#g" $< > $@
-	@chmod +x $@
+install-exec-hook:
+	$(AM_V_GEN)$(SED) -i \
+	  -e "s#%%! -pa ebin#%%! -pa $(DESTDIR)$(%LC_PACKAGE_NAME%_ebindir)#g" \
+	  $(DESTDIR)$(bindir)/%LC_PACKAGE_NAME%
 
 # --------------------------------------
 # NIF
@@ -336,6 +334,5 @@ EXTRA_DIST += \
   $(srcdir)/doc/overview.xml \
   $(srcdir)/doc/part.xml \
   $(srcdir)/doc/ref_man.xml.in.in \
-  $(srcdir)/doc/book.xml.in \
-  $(srcdir)/doc/%LC_PACKAGE_NAME%.jpg
+  $(srcdir)/doc/book.xml.in
 endif #ERL_DOCGEN

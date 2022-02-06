@@ -80,6 +80,7 @@ fi
 
 AC_CONFIG_FILES([Makefile ebin/%LC_PACKAGE_NAME%.app])
 AC_CONFIG_FILES([tests/atlocal doc/ref_man.xml.in])
+AC_CONFIG_FILES([bin/%LC_PACKAGE_NAME%], [chmod +x bin/%LC_PACKAGE_NAME%])
 AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------
