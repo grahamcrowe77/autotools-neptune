@@ -29,11 +29,13 @@
 %% Starts the supervisor
 %% @end
 %%--------------------------------------------------------------------
--spec start_link() -> {ok, Pid :: pid()} |
-	  {error, {already_started, Pid :: pid()}} |
+-spec start_link() ->
+	  {ok, Pid} |
+	  {error, {already_started, Pid}} |
 	  {error, {shutdown, term()}} |
 	  {error, term()} |
-	  ignore.
+	  ignore when
+      Pid :: pid().
 start_link() ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, []).
 
@@ -50,10 +52,10 @@ start_link() ->
 %% specifications.
 %% @end
 %%--------------------------------------------------------------------
--spec init(Args :: term()) ->
-	  {ok, {SupFlags :: supervisor:sup_flags(),
-		[ChildSpec :: supervisor:child_spec()]}} |
-	  ignore.
+-spec init(Args) -> {ok, {SupFlags, [ChildSpec]}} | ignore when
+      Args :: term(),
+      SupFlags :: supervisor:sup_flags(),
+      ChildSpec :: supervisor:child_spec().
 init([]) ->
 
     SupFlags = #{strategy => one_for_one,

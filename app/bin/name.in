@@ -8,19 +8,19 @@ main(["--version"]) ->
     ok = application:start(%LC_PACKAGE_NAME%),
     {ok, Version} = %LC_PACKAGE_NAME%_server:version(),
     ok = io:format("~s ~s~n", [?COMMAND_NAME, Version]);
-main(["--square", Number]) ->
+main(["--square", Value]) ->
     ok = application:start(%LC_PACKAGE_NAME%),
-    case string:to_integer(Number) of
+    case string:to_integer(Value) of
 	{error, _} ->
-	    {ok, Message} = %LC_PACKAGE_NAME%_server:message({square, Number});
+	    ok = io:format("~s is not an integer!~n", [Value]);
 	{Integer, _Rest} ->
-	    {ok, Message} = %LC_PACKAGE_NAME%_server:message({square, Integer})
-    end,
-    ok = io:format("~s", [Message]);
+	    {ok, Message} = %LC_PACKAGE_NAME%_server:message({square, Integer}),
+	    ok = io:format("~s", [Message])
+    end;
 main(_) ->
     usage(),
     halt(1).
 
 usage() ->
-    io:format("~s [--square Number]~n", [?COMMAND_NAME]),
+    io:format("~s [--square Integer]~n", [?COMMAND_NAME]),
     io:format("see manual page for ~s(1) for more details~n", [?COMMAND_NAME]).

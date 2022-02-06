@@ -28,13 +28,17 @@
 %% top supervisor of the tree.
 %% @end
 %%--------------------------------------------------------------------
--spec start(StartType :: normal |
-			 {takeover, Node :: node()} |
-			 {failover, Node :: node()},
-	    StartArgs :: term()) ->
-	  {ok, Pid :: pid()} |
-	  {ok, Pid :: pid(), State :: term()} |
-	  {error, Reason :: term()}.
+-spec start(StartType, StartArgs) ->
+	  {ok, Pid} |
+	  {ok, Pid, State} |
+	  {error, Reason} when
+      StartType :: normal
+		 | {takeover, Node :: node()}
+		 | {failover, Node :: node()},
+      StartArgs :: term(),
+      Pid       :: pid(),
+      State     :: term(),
+      Reason    :: term().
 start(_StartType, _StartArgs) ->
     case %LC_PACKAGE_NAME%_sup:start_link() of
 	{ok, Pid} ->
@@ -51,11 +55,14 @@ start(_StartType, _StartArgs) ->
 %% synchronization is needed between processes in the different
 %% applications during startup.%% @end
 %%--------------------------------------------------------------------
--spec start_phase(Phase :: atom(),
-		  StartType :: normal |
-			       {takeover, Node :: node()} |
-			       {failover, Node :: node()},
-		  PhaseArgs :: term()) -> ok | {error, Reason :: term()}.
+-spec start_phase(Phase, StartType, PhaseArgs) ->
+	  ok | {error, Reason} when
+      Phase     :: atom(),
+      StartType :: normal
+		 | {takeover, Node :: node()}
+		 | {failover, Node :: node()},
+      PhaseArgs :: term(),
+      Reason    :: term().
 start_phase(_Phase, _StartType, _PhaseArgs) ->
     ok.
 
@@ -66,7 +73,8 @@ start_phase(_Phase, _StartType, _PhaseArgs) ->
 %% any necessary cleaning up. The return value is ignored.
 %% @end
 %%--------------------------------------------------------------------
--spec stop(State :: term()) -> any().
+-spec stop(State) -> any() when
+      State :: term().
 stop(_State) ->
     ok.
 
@@ -77,7 +85,9 @@ stop(_State) ->
 %% before shutting down the processes of the application.
 %% @end
 %%--------------------------------------------------------------------
--spec prep_stop(State :: term()) -> NewState :: term().
+-spec prep_stop(State) -> NewState when
+      State    :: term(),
+      NewState :: term().
 prep_stop(State) ->
     State.
 
@@ -88,9 +98,10 @@ prep_stop(State) ->
 %% if the configuration parameters have changed.
 %% @end
 %%--------------------------------------------------------------------
--spec config_change(Changed :: [{Par :: atom(), Val :: term()}],
-		    New :: [{Par :: atom(), Val :: term()}],
-		    Removed :: [Par :: atom()]) -> ok.
+-spec config_change(Changed, New, Removed) -> ok when
+      Changed :: [{Par :: atom(), Val :: term()}],
+      New     :: [{Par :: atom(), Val :: term()}],
+      Removed :: [Par :: atom()].
 config_change(_Changed, _New, _Removed) ->
     ok.
 

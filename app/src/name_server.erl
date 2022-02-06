@@ -42,10 +42,13 @@
 %% Starts the server
 %% @end
 %%--------------------------------------------------------------------
--spec start_link() -> {ok, Pid :: pid()} |
-	  {error, Error :: {already_started, pid()}} |
-	  {error, Error :: term()} |
-	  ignore.
+-spec start_link() ->
+	  {ok, Pid} |
+	  {error, {already_started, pid()}} |
+	  {error, Reason} |
+	  ignore when
+      Pid    :: pid(),
+      Reason :: term().
 start_link() ->
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
@@ -54,7 +57,8 @@ start_link() ->
 %% Return the application version
 %% @end
 %%--------------------------------------------------------------------
--spec version() -> {ok, string()}.
+-spec version() -> {ok, Version} when
+      Version :: string().
 version() ->
     gen_server:call(?SERVER, version).
 
@@ -63,9 +67,12 @@ version() ->
 %% Construct a message
 %% @end
 %%--------------------------------------------------------------------
--spec message({Type :: atom(), Number :: integer()}) -> {ok, string()}.
-message({Type, Number}) ->
-    gen_server:call(?SERVER, {Type, Number}).
+-spec message(Request) -> {ok, Response} | {error, Reason} when
+      Request  :: {square, integer()},
+      Response :: io_lib:chars(),
+      Reason   :: term().
+message({Type, Integer}) ->
+    gen_server:call(?SERVER, {Type, Integer}).
 
 %%%===================================================================
 %%% gen_server callbacks
@@ -77,11 +84,15 @@ message({Type, Number}) ->
 %% Initializes the server
 %% @end
 %%--------------------------------------------------------------------
--spec init(Args :: term()) -> {ok, State :: term()} |
-	  {ok, State :: term(), Timeout :: timeout()} |
-	  {ok, State :: term(), hibernate} |
-	  {stop, Reason :: term()} |
-	  ignore.
+-spec init(Args :: term()) ->
+	  {ok, State} |
+	  {ok, State, Timeout} |
+	  {ok, State, hibernate} |
+	  {stop, Reason} |
+	  ignore when
+      State   :: term(),
+      Timeout :: timeout(),
+      Reason  :: term().
 init([]) ->
     process_flag(trap_exit, true),
     {ok, #state{count = 0}, ?TIMEOUT}.
@@ -92,22 +103,31 @@ init([]) ->
 %% Handling call messages
 %% @end
 %%--------------------------------------------------------------------
--spec handle_call(Request :: term(), From :: {pid(), term()}, State :: term()) ->
-	  {reply, Reply :: term(), NewState :: term()} |
-	  {reply, Reply :: term(), NewState :: term(), Timeout :: timeout()} |
-	  {reply, Reply :: term(), NewState :: term(), hibernate} |
-	  {noreply, NewState :: term()} |
-	  {noreply, NewState :: term(), Timeout :: timeout()} |
-	  {noreply, NewState :: term(), hibernate} |
-	  {stop, Reason :: term(), Reply :: term(), NewState :: term()} |
-	  {stop, Reason :: term(), NewState :: term()}.
+-spec handle_call(Request, From, State) ->
+	  {reply, Reply, NewState} |
+	  {reply, Reply, NewState, Timeout} |
+	  {reply, Reply, NewState, hibernate} |
+	  {noreply, NewState} |
+	  {noreply, NewState, Timeout} |
+	  {noreply, NewState, hibernate} |
+	  {stop, Reason, Reply, NewState} |
+	  {stop, Reason, NewState} when
+      Request  :: term(),
+      From     :: {pid(), term()},
+      State    :: term(),
+      Reply    :: term(),
+      NewState :: term(),
+      Timeout  :: timeout(),
+      Reason   :: term().
 handle_call(version, _From, State) ->
     {ok, Application} = application:get_application(),
     Reply = application:get_env(Application, version),
     {reply, Reply, State, ?TIMEOUT};
 handle_call({square, Integer}, _From, State) ->
-    Reply = {ok, message(square, Integer)},
-    {reply, Reply, State, ?TIMEOUT}.
+    Reply = message(square, Integer),
+    {reply, Reply, State, ?TIMEOUT};
+handle_call(_Request, _From, State) ->
+    {reply, {error, unsupported_request}, State, ?TIMEOUT}.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -115,11 +135,16 @@ handle_call({square, Integer}, _From, State) ->
 %% Handling cast messages
 %% @end
 %%--------------------------------------------------------------------
--spec handle_cast(Request :: term(), State :: term()) ->
-	  {noreply, NewState :: term()} |
-	  {noreply, NewState :: term(), Timeout :: timeout()} |
-	  {noreply, NewState :: term(), hibernate} |
-	  {stop, Reason :: term(), NewState :: term()}.
+-spec handle_cast(Request, State) ->
+	  {noreply, NewState} |
+	  {noreply, NewState, Timeout} |
+	  {noreply, NewState, hibernate} |
+	  {stop, Reason, NewState} when
+      Request  :: term(),
+      State    :: term(),
+      NewState :: term(),
+      Timeout  :: timeout(),
+      Reason   :: term().
 handle_cast(_Request, State) ->
     {noreply, State}.
 
@@ -129,11 +154,16 @@ handle_cast(_Request, State) ->
 %% Handling all non call/cast messages
 %% @end
 %%--------------------------------------------------------------------
--spec handle_info(Info :: timeout() | term(), State :: term()) ->
-	  {noreply, NewState :: term()} |
-	  {noreply, NewState :: term(), Timeout :: timeout()} |
-	  {noreply, NewState :: term(), hibernate} |
-	  {stop, Reason :: normal | term(), NewState :: term()}.
+-spec handle_info(Info, State) ->
+	  {noreply, NewState} |
+	  {noreply, NewState, Timeout} |
+	  {noreply, NewState, hibernate} |
+	  {stop, Reason, NewState} when
+      Info     :: timeout() | term(),
+      State    :: term(),
+      NewState :: term(),
+      Timeout  :: timeout(),
+      Reason   :: normal | term().
 handle_info(timeout, #state{count = Count}=State) ->
     Integer = (Count rem 10) + 1,
     Message = message(square, Integer),
@@ -151,8 +181,9 @@ handle_info(_Info, State) ->
 %% with Reason. The return value is ignored.
 %% @end
 %%--------------------------------------------------------------------
--spec terminate(Reason :: normal | shutdown | {shutdown, term()} | term(),
-		State :: term()) -> any().
+-spec terminate(Reason,	State) -> any() when
+      Reason :: normal | shutdown | {shutdown, term()} | term(),
+      State  :: term().
 terminate(_Reason, _State) ->
     ok.
 
@@ -162,10 +193,13 @@ terminate(_Reason, _State) ->
 %% Convert process state when code is changed
 %% @end
 %%--------------------------------------------------------------------
--spec code_change(OldVsn :: term() | {down, term()},
-		  State :: term(),
-		  Extra :: term()) -> {ok, NewState :: term()} |
-	  {error, Reason :: term()}.
+-spec code_change(OldVsn, State, Extra) ->
+	  {ok, NewState} | {error, Reason} when
+      OldVsn   :: term() | {down, term()},
+      State    :: term(),
+      Extra    :: term(),
+      NewState :: term(),
+      Reason   :: term().
 code_change(_OldVsn, State, _Extra) ->
     {ok, State}.
 
@@ -177,24 +211,26 @@ code_change(_OldVsn, State, _Extra) ->
 %% or when it appears in termination error logs.
 %% @end
 %%--------------------------------------------------------------------
--spec format_status(Opt :: normal | terminate,
-		    Status :: list()) -> Status :: term().
+-spec format_status(Opt, Status) -> Status when
+      Opt    :: normal | terminate,
+      Status :: list().
 format_status(_Opt, Status) ->
     Status.
 
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
--spec message(Type :: atom(), Integer :: integer()) -> io_lib:chars().
+-spec message(Type, Integer) -> {ok, Response} | {error, Reason}  when
+      Type     :: atom(),
+      Integer  :: integer(),
+      Response :: io_lib:chars(),
+      Reason   :: term().
 message(square, Integer)
   when is_integer(Integer) ->
     {ok, Application} = application:get_application(),
     Place = atom_to_binary(Application),
     Greeting = <<"Hello from ", Place/binary, "!">>,
     Squared = %LC_PACKAGE_NAME%_nif:square(Integer),
-    io_lib:format("~s ~p squared is ~p.~n", [Greeting, Integer, Squared]);
-message(square, Value) ->
-    {ok, Application} = application:get_application(),
-    Place = atom_to_binary(Application),
-    Greeting = <<"Hello from ", Place/binary, "!">>,
-    io_lib:format("~s ~p is not an integer!~n", [Greeting, Value]).
+    {ok, io_lib:format("~s ~p squared is ~p.~n", [Greeting, Integer, Squared])};
+message(square, _Value) ->
+    {error, not_an_integer}.

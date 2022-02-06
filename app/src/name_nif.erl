@@ -49,7 +49,9 @@ init() ->
 %% @doc Square an integer.
 %%
 
--spec square(integer()) -> integer().
+-spec square(X) -> Y when
+      X :: integer(),
+      Y :: integer().
 
 square(_Y) ->
     exit(nif_library_not_loaded).

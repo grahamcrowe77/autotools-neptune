@@ -7,7 +7,7 @@
       <year>%YEAR%</year><year>%YEAR%</year>
       <holder>%AUTHOR%. All Rights Reserved.</holder>
     </copyright>
-    <title>Introduction</title>
+    <title>Overview</title>
     <prepared>%AUTHOR%</prepared>
     <responsible></responsible>
     <docno></docno>
@@ -18,7 +18,7 @@
     <file>overview.xml</file>
   </header>
   <section>
-    <title>%TC_PACKAGE_NAME%</title>
+    <title>Summary</title>
     <p>%TC_PACKAGE_NAME% is an application ...</p>
   </section>
 </chapter>
