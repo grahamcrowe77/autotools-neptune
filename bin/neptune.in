@@ -51,8 +51,8 @@ usage() ->
 version() ->
     ok = io:format("~s ~s~n", [?COMMAND_NAME, "@PACKAGE_VERSION@"]).
 
-reason(not_implemented, #{type := Type}) ->
-    ok = io:format("~s is not implemented~n", [Type]);
+reason(not_supported, #{type := Type}) ->
+    ok = io:format("~s is not supported~n", [Type]);
 reason(no_name, #{}) ->
     ok = io:format("No name provided~n");
 reason(bad_name, #{name := Name}) ->

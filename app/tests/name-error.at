@@ -1,7 +1,7 @@
-AT_SETUP([%LC_PACKAGE_NAME%-error])
+AT_SETUP([%LC_APP_NAME%-error])
 AT_KEYWORDS([blackbox])
 APP_TEST_SETUP
-AT_CHECK_UNQUOTED([%LC_PACKAGE_NAME% --square box],[1],
+AT_CHECK_UNQUOTED([%LC_APP_NAME% --square box],[1],
                   [box is not an integer!
 ])
 APP_TEST_CLEANUP

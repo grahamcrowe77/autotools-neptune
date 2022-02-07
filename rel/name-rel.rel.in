@@ -1,0 +1,8 @@
+{release,
+  {"@PACKAGE_NAME@", "@PACKAGE_VERSION@"},
+  {erts, "@ERLANG_ERTS_VER@"},
+  [{kernel, "@ERLANG_LIB_VER_kernel@"},
+   {stdlib, "@ERLANG_LIB_VER_stdlib@"},
+   {sasl, "@ERLANG_LIB_VER_sasl@"},
+   {%LC_APP_NAME%, "@ERLANG_LIB_VER_%LC_APP_NAME%@"}]
+}.

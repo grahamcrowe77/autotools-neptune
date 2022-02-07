@@ -1,7 +1,7 @@
 AC_PREREQ([2.69])
-AC_INIT([%LC_PACKAGE_NAME%], [%PACKAGE_VERSION%], [%EMAIL%])
+AC_INIT([%LC_APP_NAME%], [%APP_VERSION%], [%EMAIL%])
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_SRCDIR([src/%LC_PACKAGE_NAME%_app.erl])
+AC_CONFIG_SRCDIR([src/%LC_APP_NAME%_app.erl])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 AM_SILENT_RULES([yes])
 LT_PREREQ([2.4.6])
@@ -47,11 +47,11 @@ AC_ERLANG_CHECK_LIB([erl_docgen], [],
   [AC_MSG_WARN([erl_docgen was not found! Documentation build disabled])])
 
 # Application installation directory
-AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([%LC_PACKAGE_NAME%], [${PACKAGE_VERSION}])
+AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR([%LC_APP_NAME%], [${PACKAGE_VERSION}])
 
 ## Installation dependent data
-%LC_PACKAGE_NAME%_ebindir="${ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%}/ebin"
-AC_SUBST([%LC_PACKAGE_NAME%_ebindir])
+%LC_APP_NAME%_ebindir="${ERLANG_INSTALL_LIB_DIR_%LC_APP_NAME%}/ebin"
+AC_SUBST([%LC_APP_NAME%_ebindir])
 
 # Infer Erlang source code modules
 AC_ERLANG_MODULES
@@ -84,14 +84,14 @@ if test "x${FOP}" == "x"; then
   AC_MSG_WARN([fop was not found! PDF Documentation build disabled])
 fi
 
-AC_CONFIG_FILES([Makefile ebin/%LC_PACKAGE_NAME%.app])
+AC_CONFIG_FILES([Makefile ebin/%LC_APP_NAME%.app])
 AC_CONFIG_FILES([tests/atlocal doc/ref_man.xml.in])
-AC_CONFIG_FILES([bin/%LC_PACKAGE_NAME%], [chmod +x bin/%LC_PACKAGE_NAME%])
+AC_CONFIG_FILES([bin/%LC_APP_NAME%], [chmod +x bin/%LC_APP_NAME%])
 AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------
 
-${PACKAGE_NAME} Version ${PACKAGE_VERSION}
+${APP_NAME} Version ${PACKAGE_VERSION}
 
 Prefix: '${prefix}'
 Compiler: '${ERLC} ${ERLCFLAGS}'

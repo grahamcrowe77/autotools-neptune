@@ -1,0 +1,11 @@
+# Artifacts created after running:
+# ./configure
+atconfig
+atlocal
+
+# Artifacts created after running:
+# make check
+*.plt
+*.beam
+package.m4
+testsuite*

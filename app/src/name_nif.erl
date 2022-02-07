@@ -1,14 +1,14 @@
 %%%-------------------------------------------------------------------
 %%% @author %AUTHOR% %EMAIL%
 %%% @copyright (C) %YEAR%, %AUTHOR%
-%%% @doc %TC_PACKAGE_NAME% NIF Module
+%%% @doc %TC_APP_NAME% NIF Module
 %%%
 %%% demonstrates a trivial example using a Native Implemented Function
 %%% (NIF) written in C and integrated with the Erlang Runtime System.
 %%% @end
 %%% Created :  %DATE% by %AUTHOR% %EMAIL%
 %%%-------------------------------------------------------------------
--module(%LC_PACKAGE_NAME%_nif).
+-module(%LC_APP_NAME%_nif).
 
 -ifdef(TEST).
 
@@ -29,7 +29,7 @@
 -spec init() -> ok.
 
 init() ->
-    Path = filename:join(priv_dir(), "lib%LC_PACKAGE_NAME%_nif"),
+    Path = filename:join(priv_dir(), "lib%LC_APP_NAME%_nif"),
     ok = erlang:load_nif(Path, 0).
 
 %% -------------------------------------------------------------------
@@ -53,9 +53,9 @@ square(_Y) ->
 %% Internal
 %% -------------------------------------------------------------------
 priv_dir() ->
-    case code:lib_dir(%LC_PACKAGE_NAME%, priv) of
+    case code:lib_dir(%LC_APP_NAME%, priv) of
 	{error, bad_name} ->
-	    BeamPath = code:where_is_file("%LC_PACKAGE_NAME%_nif.beam"),
+	    BeamPath = code:where_is_file("%LC_APP_NAME%_nif.beam"),
 	    BeamDir = filename:dirname(BeamPath),
 	    AppDir = filename:dirname(BeamDir),
 	    filename:join(AppDir, "priv");

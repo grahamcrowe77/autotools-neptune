@@ -52,8 +52,16 @@ parse_args(Args) ->
 %%--------------------------------------------------------------------
 -spec skeleton(Pars) -> ok | {error, Reason} when
       Pars   :: map(),
-      Reason :: atom().
-skeleton(#{name := Name, type := <<"app">>}=Pars) ->
+      Reason ::
+	bad_name |
+	no_name |
+	name_is_dir |
+	name_exists |
+	not_supported.
+skeleton(#{name := Name, type := Type}=Pars)
+  when Type =:= <<"app">>
+       orelse
+       Type =:= <<"rel">> ->
     case filename:basename(Name) of
 	Name ->
 	    case read_template_tree(Pars) of
@@ -65,8 +73,8 @@ skeleton(#{name := Name, type := <<"app">>}=Pars) ->
 	_ ->
 	    {error, bad_name}
     end;
-skeleton(#{name := _Name, type := <<"rel">>}=_Pars) ->
-    {error, not_implemented};
+skeleton(#{name := _Name, type := _Type}=_Pars) ->
+    {error, not_supported};
 skeleton(_) ->
     {error, no_name}.
 
@@ -227,28 +235,51 @@ set_file_access_mode(<<"bootstrap.sh">>, FullFilePath) ->
 set_file_access_mode(_, _) ->
     ok.
 
-substitutions(Pars) ->
-    [lowercase_package_name(Pars),
-     uppercase_package_name(Pars),
-     titlecase_package_name(Pars),
-     package_version(Pars),
+substitutions(#{type := <<"app">>}=Pars) ->
+    [lowercase_app_name(Pars),
+     uppercase_app_name(Pars),
+     titlecase_app_name(Pars),
+     app_version(Pars),
+     erts_version(Pars),
+     email(Pars),
+     author(Pars),
+     year(Pars),
+     date(Pars)];
+substitutions(#{type := <<"rel">>}=Pars) ->
+    [lowercase_rel_name(Pars),
+     uppercase_rel_name(Pars),
+     titlecase_rel_name(Pars),
+     rel_version(Pars),
+     lowercase_app_name(Pars),
      erts_version(Pars),
      email(Pars),
      author(Pars),
      year(Pars),
      date(Pars)].
 
-lowercase_package_name(#{name := Name}) ->
-    {<<"%LC_PACKAGE_NAME%">>, string:lowercase(Name)}.
+lowercase_app_name(#{name := Name}) ->
+    {<<"%LC_APP_NAME%">>, string:lowercase(Name)}.
 
-uppercase_package_name(#{name := Name}) ->
-    {<<"%UC_PACKAGE_NAME%">>, string:uppercase(Name)}.
+uppercase_app_name(#{name := Name}) ->
+    {<<"%UC_APP_NAME%">>, string:uppercase(Name)}.
 
-titlecase_package_name(#{name := Name}) ->
-    {<<"%TC_PACKAGE_NAME%">>, string:titlecase(Name)}.
+titlecase_app_name(#{name := Name}) ->
+    {<<"%TC_APP_NAME%">>, string:titlecase(Name)}.
 
-package_version(Pars) ->
-    {<<"%PACKAGE_VERSION%">>, maps:get(version, Pars, <<"0.1.0">>)}.
+app_version(Pars) ->
+    {<<"%APP_VERSION%">>, maps:get(version, Pars, <<"0.1.0">>)}.
+
+lowercase_rel_name(#{name := Name}) ->
+    {<<"%LC_REL_NAME%">>, string:lowercase(Name)}.
+
+uppercase_rel_name(#{name := Name}) ->
+    {<<"%UC_REL_NAME%">>, string:uppercase(Name)}.
+
+titlecase_rel_name(#{name := Name}) ->
+    {<<"%TC_REL_NAME%">>, string:titlecase(Name)}.
+
+rel_version(Pars) ->
+    {<<"%REL_VERSION%">>, maps:get(version, Pars, <<"0.1.0">>)}.
 
 erts_version(Pars) ->
     {<<"%ERLANG_ERTS_VER%">>, maps:get(erts_version, Pars, <<"10">>)}.
@@ -339,10 +370,10 @@ substitute_dir_values_test_() ->
 		    type => "app"}),
 	    Content = maps:get(content, Tree),
 	    Substitutions =
-		[{<<"%LC_PACKAGE_NAME%">>,<<"myapp">>},
-		 {<<"%UC_PACKAGE_NAME%">>,<<"MYAPP">>},
-		 {<<"%TC_PACKAGE_NAME%">>,<<"Myapp">>},
-		 {<<"%PACKAGE_VERSION%">>,<<"0.1.0">>},
+		[{<<"%LC_APP_NAME%">>,<<"myapp">>},
+		 {<<"%UC_APP_NAME%">>,<<"MYAPP">>},
+		 {<<"%TC_APP_NAME%">>,<<"Myapp">>},
+		 {<<"%APP_VERSION%">>,<<"0.1.0">>},
 		 {<<"%ERLANG_ERTS_VER%">>,<<"11">>},
 		 {<<"%EMAIL%">>,<<"undisclosed email address">>},
 		 {<<"%AUTHOR%">>,<<"undeclared author">>},

@@ -21,4 +21,4 @@ int square(int y)
   return (y * y);
 }
 
-ERL_NIF_INIT(%LC_PACKAGE_NAME%_nif, nif_funcs, NULL, NULL, NULL, NULL)
+ERL_NIF_INIT(%LC_APP_NAME%_nif, nif_funcs, NULL, NULL, NULL, NULL)

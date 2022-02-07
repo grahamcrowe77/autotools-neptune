@@ -1,0 +1,18 @@
+#!/bin/bash
+
+PIPE_DIR=/tmp/
+LOG_DIR=/tmp
+
+export RUN_ERL_LOG_GENERATIONS=10
+export RUN_ERL_LOG_MAXSIZE=10000
+
+EXEC_CMD="exec $ERL_ROOTDIR/erts-@ERLANG_ERTS_VER@/bin/erl \
+ -boot $ERL_ROOTDIR/releases/0.1.0/start \
+ -config $ERL_ROOTDIR/releases/0.1.0/@PACKAGE_NAME@.config \
+ -sname @PACKAGE_NAME@"
+
+$ERL_ROOTDIR/erts-@ERLANG_ERTS_VER@/bin/run_erl \
+    -daemon \
+    $PIPE_DIR \
+    $LOG_DIR \
+    "$EXEC_CMD"

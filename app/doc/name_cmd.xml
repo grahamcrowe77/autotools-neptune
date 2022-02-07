@@ -7,29 +7,29 @@
       <year>%YEAR%</year><year>%YEAR%</year>
       <holder></holder>
     </copyright>
-    <title>%LC_PACKAGE_NAME%</title>
+    <title>%LC_APP_NAME%</title>
     <prepared>%AUTHOR%</prepared>
     <responsible></responsible>
     <docno>1</docno>
     <approved></approved>
     <checked></checked>
     <date>%DATE%</date>
-    <rev>%PACKAGE_VERSION%</rev>
-    <file>%LC_PACKAGE_NAME%_cmd.xml</file>
+    <rev>%APP_VERSION%</rev>
+    <file>%LC_APP_NAME%_cmd.xml</file>
   </header>
-  <com>%LC_PACKAGE_NAME%</com>
-  <comsummary>%TC_PACKAGE_NAME% command</comsummary>
+  <com>%LC_APP_NAME%</com>
+  <comsummary>%TC_APP_NAME% command</comsummary>
   <description>
-    <p>The <c>%LC_PACKAGE_NAME%</c> escript is a tool whose sole purpose is to
+    <p>The <c>%LC_APP_NAME%</c> escript is a tool whose sole purpose is to
     write binary string greetings to IO.</p>
   </description>
   <funcs>
     <func>
-      <name>%LC_PACKAGE_NAME% [Options]</name>
+      <name>%LC_APP_NAME% [Options]</name>
       <fsummary>Write binary string greetings to IO.</fsummary>
       <desc>
-	<p>%TC_PACKAGE_NAME% takes an integer and returns a greeting from
-	%LC_PACKAGE_NAME% returning the square of the integer supplied.</p>
+	<p>%TC_APP_NAME% takes an integer and returns a greeting from
+	%LC_APP_NAME% returning the square of the integer supplied.</p>
       </desc>
     </func>
   </funcs>
@@ -52,20 +52,20 @@
       <taglist>
         <tag><c>--version</c></tag>
         <item>
-          <p>Print the %LC_PACKAGE_NAME% version and exit.</p>
+          <p>Print the %LC_APP_NAME% version and exit.</p>
         </item>
         <tag><c>--square &lt;Integer&gt;</c></tag>
         <item>
           <p>Calculate the square of <c>Integer</c> and return that information
-	  as a greeting from %LC_PACKAGE_NAME%.</p>
+	  as a greeting from %LC_APP_NAME%.</p>
         </item>
       </taglist>
   </section>
   <section>
     <title>Examples</title>
     <pre>
-      <input>$ %LC_PACKAGE_NAME% --square 4</input>
-      Hello from %LC_PACKAGE_NAME%! The sqaure of 4 is 16
+      <input>$ %LC_APP_NAME% --square 4</input>
+      Hello from %LC_APP_NAME%! The square of 4 is 16
     </pre>
   </section>
   <authors>

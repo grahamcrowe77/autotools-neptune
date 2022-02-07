@@ -11,10 +11,10 @@ TESTSUITE = $(builddir)/tests/testsuite
 # --------------------------------------
 # Directory Structure
 # --------------------------------------
-%LC_PACKAGE_NAME%_srcdir=$(ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%)/src
-%LC_PACKAGE_NAME%_ebindir=$(ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%)/ebin
-%LC_PACKAGE_NAME%_incdir=$(ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%)/include
-%LC_PACKAGE_NAME%_privdir=$(ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%)/priv
+%LC_APP_NAME%_srcdir=$(ERLANG_INSTALL_LIB_DIR_%LC_APP_NAME%)/src
+%LC_APP_NAME%_ebindir=$(ERLANG_INSTALL_LIB_DIR_%LC_APP_NAME%)/ebin
+%LC_APP_NAME%_incdir=$(ERLANG_INSTALL_LIB_DIR_%LC_APP_NAME%)/include
+%LC_APP_NAME%_privdir=$(ERLANG_INSTALL_LIB_DIR_%LC_APP_NAME%)/priv
 
 # --------------------------------------
 # Escripts
@@ -32,11 +32,11 @@ install-exec-hook:
 # --------------------------------------
 # NIF
 # --------------------------------------
-%LC_PACKAGE_NAME%_priv_LTLIBRARIES = lib%LC_PACKAGE_NAME%_nif.la
-lib%LC_PACKAGE_NAME%_nif_la_CFLAGS = -I@ERLANG_ROOT_DIR@/usr/include
+%LC_APP_NAME%_priv_LTLIBRARIES = lib%LC_APP_NAME%_nif.la
+lib%LC_APP_NAME%_nif_la_CFLAGS = -I@ERLANG_ROOT_DIR@/usr/include
 
-lib%LC_PACKAGE_NAME%_nif_la_SOURCES = \
-  $(srcdir)/c_src/%LC_PACKAGE_NAME%.c
+lib%LC_APP_NAME%_nif_la_SOURCES = \
+  $(srcdir)/c_src/%LC_APP_NAME%.c
 
 BUILT_SOURCES = $(builddir)/priv
 
@@ -44,18 +44,18 @@ $(builddir)/priv:
 	$(LN_S) $(builddir)/.libs $@
 
 if APPLE
-%LC_PACKAGE_NAME%_priv_DATA = \
-  $(builddir)/.libs/lib%LC_PACKAGE_NAME%_nif.so
+%LC_APP_NAME%_priv_DATA = \
+  $(builddir)/.libs/lib%LC_APP_NAME%_nif.so
 
-$(builddir)/.libs/lib%LC_PACKAGE_NAME%_nif.so: $(builddir)/.libs/lib%LC_PACKAGE_NAME%_nif.dylib
+$(builddir)/.libs/lib%LC_APP_NAME%_nif.so: $(builddir)/.libs/lib%LC_APP_NAME%_nif.dylib
 	(cd $(@D) && $(LN_S) $(<F) $(@F))
 endif #APPLE
 
 # --------------------------------------
 # Public Erlang Header Files
 # --------------------------------------
-dist_%LC_PACKAGE_NAME%_inc_DATA = \
-  $(srcdir)/include/%LC_PACKAGE_NAME%.hrl
+dist_%LC_APP_NAME%_inc_DATA = \
+  $(srcdir)/include/%LC_APP_NAME%.hrl
 
 # --------------------------------------
 # Build beam files
@@ -68,15 +68,15 @@ am__v_ERLC_1 =
 SOURCES = $(addprefix $(srcdir)/src/, $(addsuffix .erl, $(MODULES)))
 BEAMS   = $(addprefix $(builddir)/ebin/, $(addsuffix .beam, $(MODULES)))
 
-dist_%LC_PACKAGE_NAME%_src_DATA = \
-  $(%LC_PACKAGE_NAME%_priv_headers) \
+dist_%LC_APP_NAME%_src_DATA = \
+  $(%LC_APP_NAME%_priv_headers) \
   $(SOURCES)
 
-%LC_PACKAGE_NAME%_priv_headers = \
-  $(srcdir)/src/%LC_PACKAGE_NAME%_priv.hrl
+%LC_APP_NAME%_priv_headers = \
+  $(srcdir)/src/%LC_APP_NAME%_priv.hrl
 
-%LC_PACKAGE_NAME%_ebin_DATA = \
-  $(builddir)/ebin/%LC_PACKAGE_NAME%.app \
+%LC_APP_NAME%_ebin_DATA = \
+  $(builddir)/ebin/%LC_APP_NAME%.app \
   $(BEAMS)
 
 $(builddir)/ebin/%.beam: $(srcdir)/src/%.erl
@@ -95,7 +95,7 @@ DIALYZER_APPS = \
   compiler \
   crypto
 
-$(builddir)/tests/%LC_PACKAGE_NAME%.plt:
+$(builddir)/tests/%LC_APP_NAME%.plt:
 	$(AM_V_GEN)$(DIALYZER) --build_plt --output_plt $@ \
           --apps $(DIALYZER_APPS)
 
@@ -112,7 +112,7 @@ check_dependencies = \
   $(TESTSUITE) \
   $(builddir)/tests/atconfig \
   $(builddir)/tests/atlocal \
-  $(builddir)/tests/%LC_PACKAGE_NAME%.plt
+  $(builddir)/tests/%LC_APP_NAME%.plt
 
 check-local: $(check_dependencies)
 	cd $(builddir)/tests && $(SHELL) testsuite $(TESTSUITEFLAGS)
@@ -123,7 +123,7 @@ installcheck-local: $(check_dependencies)
            $(TESTSUITEFLAGS)
 
 uninstall-local:
-	rm -f  $(DESTDIR)$(bindir)/%LC_PACKAGE_NAME%_test
+	rm -f  $(DESTDIR)$(bindir)/%LC_APP_NAME%_test
 
 clean-local:
 	test ! -f '$(TESTSUITE)' || \
@@ -155,7 +155,7 @@ $(TESTSUITE): $(TESTSOURCES) $(builddir)/tests/package.m4
 # Documentation
 # --------------------------------------
 if ERL_DOCGEN
-%LC_PACKAGE_NAME%_docdir=$(ERLANG_INSTALL_LIB_DIR_%LC_PACKAGE_NAME%)/doc
+%LC_APP_NAME%_docdir=$(ERLANG_INSTALL_LIB_DIR_%LC_APP_NAME%)/doc
 
 if XSLTPROC
 # --------------------------------------
@@ -203,7 +203,7 @@ if XSLTPROC
 # --------------------------------------
 HTMLS = $(addprefix $(builddir)/doc/, $(addsuffix .html, $(MODULES)))
 HTMLS += \
-  $(builddir)/doc/%LC_PACKAGE_NAME%.html \
+  $(builddir)/doc/%LC_APP_NAME%.html \
   $(builddir)/doc/overview.html \
   $(builddir)/doc/users_guide.html
 
@@ -211,13 +211,13 @@ HTML_EXTRAS = \
   $(builddir)/doc/erlang-logo.png \
   $(builddir)/doc/stylesheet.css
 
-%LC_PACKAGE_NAME%_doc_DATA = \
+%LC_APP_NAME%_doc_DATA = \
   $(builddir)/doc/index.html \
   $(HTMLS) \
   $(HTML_EXTRAS)
 
 if FOP
-%LC_PACKAGE_NAME%_doc_DATA += $(builddir)/doc/%LC_PACKAGE_NAME%.pdf
+%LC_APP_NAME%_doc_DATA += $(builddir)/doc/%LC_APP_NAME%.pdf
 endif #FOP
 
 
@@ -237,7 +237,7 @@ $(builddir)/doc/index.html: $(builddir)/doc/book.xml $(XMLS)
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam topdocdir . \
 	  --stringparam pdfdir . \
-	  --stringparam pdfname %LC_PACKAGE_NAME% \
+	  --stringparam pdfname %LC_APP_NAME% \
 	  --xinclude \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
@@ -256,13 +256,13 @@ if FOP
 # --------------------------------------
 # pdf pages
 # --------------------------------------
-$(builddir)/doc/%LC_PACKAGE_NAME%.pdf: $(builddir)/doc/%LC_PACKAGE_NAME%.fo
+$(builddir)/doc/%LC_APP_NAME%.pdf: $(builddir)/doc/%LC_APP_NAME%.fo
 	$(AM_V_GEN)$(FOP) -fo $< -pdf $@ 2> /dev/null
 
 endif #FOP
 if XSLTPROC
 
-$(builddir)/doc/%LC_PACKAGE_NAME%.fo: $(HTMLS) $(XMLS)
+$(builddir)/doc/%LC_APP_NAME%.fo: $(HTMLS) $(XMLS)
 	$(AM_V_GEN)$(XSLTPROC) \
 	  --output $@ \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
@@ -308,12 +308,12 @@ endif #ERL_DOCGEN
 # Clean
 # --------------------------------------
 CLEANFILES = \
-  $(builddir)/tests/%LC_PACKAGE_NAME%.plt
+  $(builddir)/tests/%LC_APP_NAME%.plt
 
 MOSTLYCLEANFILES = \
   $(BEAMS) \
-  $(builddir)/bin/%LC_PACKAGE_NAME% \
-  $(builddir)/ebin/%LC_PACKAGE_NAME%.app
+  $(builddir)/bin/%LC_APP_NAME% \
+  $(builddir)/ebin/%LC_APP_NAME%.app
 
 if ERL_DOCGEN
 MOSTLYCLEANFILES += \
@@ -322,8 +322,8 @@ MOSTLYCLEANFILES += \
   $(XMLS) \
   $(HTMLS) \
   $(builddir)/doc/index.html \
-  $(builddir)/doc/%LC_PACKAGE_NAME%.fo \
-  $(builddir)/doc/%LC_PACKAGE_NAME%.pdf \
+  $(builddir)/doc/%LC_APP_NAME%.fo \
+  $(builddir)/doc/%LC_APP_NAME%.pdf \
   $(builddir)/doc/ref_man.xml \
   $(builddir)/doc/book.xml \
   $(builddir)/doc/erlang-logo.png \
@@ -331,7 +331,7 @@ MOSTLYCLEANFILES += \
 endif #ERL_DOCGEN
 
 if APPLE
-MOSTLYCLEANFILES += .libs/lib%LC_PACKAGE_NAME%_nif.so
+MOSTLYCLEANFILES += .libs/lib%LC_APP_NAME%_nif.so
 endif #APPLE
 
 # --------------------------------------
@@ -339,14 +339,14 @@ endif #APPLE
 # --------------------------------------
 EXTRA_DIST = \
   $(srcdir)/bootstrap.sh \
-  $(builddir)/bin/%LC_PACKAGE_NAME%.in \
+  $(builddir)/bin/%LC_APP_NAME%.in \
   $(builddir)/tests/atconfig \
   $(builddir)/tests/package.m4 \
   $(TESTSOURCES)
 
 if ERL_DOCGEN
 EXTRA_DIST += \
-  $(srcdir)/doc/%LC_PACKAGE_NAME%_cmd.xml \
+  $(srcdir)/doc/%LC_APP_NAME%_cmd.xml \
   $(srcdir)/doc/overview.xml \
   $(srcdir)/doc/part.xml \
   $(srcdir)/doc/ref_man.xml.in.in \

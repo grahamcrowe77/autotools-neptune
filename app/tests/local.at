@@ -4,7 +4,7 @@ AT_COLOR_TESTS
 m4_define([DIALYZER_CMD], [[set -x
 export dialyzer_runcmd="${DIALYZER} \
   -Wno_behaviours -Wno_fail_call \
-  --plts ${abs_top_builddir}/tests/%LC_PACKAGE_NAME%.plt \
+  --plts ${abs_top_builddir}/tests/%LC_APP_NAME%.plt \
   -- ${abs_top_srcdir}/src/*.erl"
 ]])
 

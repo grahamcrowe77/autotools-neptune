@@ -7,15 +7,15 @@
       <year>%YEAR%</year><year>%YEAR%</year>
       <holder>%AUTHOR%. All Rights Reserved.</holder>
     </copyright>
-    <title>%TC_PACKAGE_NAME%</title>
+    <title>%TC_APP_NAME%</title>
     <prepared>%AUTHOR%</prepared>
     <docno></docno>
     <date>%DATE%</date>
-    <rev>%PACKAGE_VERSION%</rev>
+    <rev>%APP_VERSION%</rev>
     <file>book.xml</file>
   </header>
   <insidecover></insidecover>
-  <pagetext>%TC_PACKAGE_NAME%</pagetext>
+  <pagetext>%TC_APP_NAME%</pagetext>
   <preamble>
     <contents level="2"></contents>
   </preamble>

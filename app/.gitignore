@@ -16,7 +16,7 @@ Makefile
 config.*
 libtool
 doc/ref_man.xml.in
-ebin/%LC_PACKAGE_NAME%.app
+ebin/%LC_APP_NAME%.app
 tests/atconfig
 tests/atlocal
 
@@ -29,17 +29,17 @@ tests/atlocal
 *.fo
 man1/
 man3/
-bin/%LC_PACKAGE_NAME%
+bin/%LC_APP_NAME%
 ebin/*.beam
 c_src/.dirstamp
 doc/*.xml
 doc/*.html
-doc/%LC_PACKAGE_NAME%.pdf
+doc/%LC_APP_NAME%.pdf
 doc/*.css
 
 # Artifacts created after running:
 # make check
-tests/%LC_PACKAGE_NAME%.plt
+tests/%LC_APP_NAME%.plt
 tests/*.beam
 tests/*.m4
 tests/testsuite
@@ -51,4 +51,4 @@ inst/
 
 # Artifacts created after running:
 # make dist && make distcheck
-%LC_PACKAGE_NAME%*.tar.gz
+%LC_APP_NAME%*.tar.gz

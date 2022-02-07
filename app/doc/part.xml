@@ -7,11 +7,11 @@
       <year>%YEAR%</year><year>%YEAR%</year>
       <holder>%AUTHOR%. All Rights Reserved</holder>
     </copyright>
-    <title>%TC_PACKAGE_NAME%'s User's Guide</title>
+    <title>%TC_APP_NAME%'s User's Guide</title>
     <prepared>%AUTHOR%</prepared>
     <docno></docno>
     <date>%DATE%</date>
-    <rev>%PACKAGE_VERSION%</rev>
+    <rev>%APP_VERSION%</rev>
     <file>part.xml</file>
   </header>
   <description></description>

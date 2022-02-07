@@ -1,5 +1,5 @@
 Bootstrapping the build system requires the installation of GNU Autotools
-(autoconf, automake and libtool).To bootstrap the build system run the
+(autoconf, automake and libtool). To bootstrap the build system run the
 following:
 ```bash
 ./bootstrap.sh
@@ -25,7 +25,7 @@ To test building out of source tree:
 ```
 mkdir -pv ../build
 cd ../build
-./configure ../%LC_PACKAGE_NAME%/configure
+./configure ../%LC_APP_NAME%/configure
 make
 make distcheck
 ```

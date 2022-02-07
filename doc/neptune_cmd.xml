@@ -64,6 +64,12 @@
         <p>Select which skeleton code type to create. By default an Erlang
 	Application (<c>app</c>) is created.</p>
       </item>
+      <tag><c>--app &lt;Application&gt;</c></tag>
+      <item>
+        <p>Add <c>Application</c> to the release, which assumes that
+	<c>type</c> is set to <c>rel</c>. There can be multiple entries. All
+	releases include <c>kernel</c>, <c>stdlib</c> and <c>sasl</c>.</p>
+      </item>
       <tag><c>--author &lt;Author&gt;</c></tag>
       <item>
         <p>Define the author. By default the author is set to <c>undeclared

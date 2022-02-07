@@ -1,14 +1,14 @@
 %%%-------------------------------------------------------------------
 %%% @author %AUTHOR% %EMAIL%
 %%% @copyright (C) %YEAR%, %AUTHOR%
-%%% @doc %TC_PACKAGE_NAME% NIF Module
+%%% @doc %TC_APP_NAME% NIF Module
 %%%
 %%% demonstrates a trivial example of a top level supervisor,
 %%% supervising a trivial server.
 %%% @end
 %%% Created :  %DATE% by %AUTHOR% %EMAIL%
 %%%-------------------------------------------------------------------
--module(%LC_PACKAGE_NAME%_sup).
+-module(%LC_APP_NAME%_sup).
 
 -behaviour(supervisor).
 
@@ -62,12 +62,12 @@ init([]) ->
 		 intensity => 1,
 		 period => 5},
 
-    AChild = #{id => %LC_PACKAGE_NAME%_server,
-	       start => {%LC_PACKAGE_NAME%_server, start_link, []},
+    AChild = #{id => %LC_APP_NAME%_server,
+	       start => {%LC_APP_NAME%_server, start_link, []},
 	       restart => permanent,
 	       shutdown => 5000,
 	       type => worker,
-	       modules => [%LC_PACKAGE_NAME%_server]},
+	       modules => [%LC_APP_NAME%_server]},
 
     {ok, {SupFlags, [AChild]}}.
 

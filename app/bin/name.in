@@ -2,24 +2,24 @@
 %% -*- erlang -*-
 %%! -pa ebin
 
--define(COMMAND_NAME, "%LC_PACKAGE_NAME%").
+-define(COMMAND_NAME, "%LC_APP_NAME%").
 
 main(["--version"]) ->
-    ok = application:start(%LC_PACKAGE_NAME%),
-    {ok, Version} = %LC_PACKAGE_NAME%_server:version(),
+    ok = application:start(%LC_APP_NAME%),
+    {ok, Version} = %LC_APP_NAME%_server:version(),
     ok = io:format("~s ~s~n", [?COMMAND_NAME, Version]),
     halt(0);
 main(["--help"]) ->
     ok = manpage(),
     halt(0);
 main(["--square", Value]) ->
-    ok = application:start(%LC_PACKAGE_NAME%),
+    ok = application:start(%LC_APP_NAME%),
     case string:to_integer(Value) of
 	{error, _} ->
 	    ok = io:format("~s is not an integer!~n", [Value]),
 	    halt(1);
 	{Integer, _Rest} ->
-	    {ok, Message} = %LC_PACKAGE_NAME%_server:message({square, Integer}),
+	    {ok, Message} = %LC_APP_NAME%_server:message({square, Integer}),
 	    ok = io:format("~s", [Message]),
 	    halt(0)
     end;

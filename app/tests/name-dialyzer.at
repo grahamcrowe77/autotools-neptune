@@ -1,5 +1,5 @@
 AT_BANNER([Static analysis test])
-AT_SETUP([%LC_PACKAGE_NAME%-dialyzer])
+AT_SETUP([%LC_APP_NAME%-dialyzer])
 AT_KEYWORDS([dialyzer])
 DIALYZER_CMD
 AT_CHECK([${dialyzer_runcmd}],[0],[ignore])

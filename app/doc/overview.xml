@@ -14,11 +14,11 @@
     <approved></approved>
     <checked></checked>
     <date>%DATE%</date>
-    <rev>%PACKAGE_VERSION%</rev>
+    <rev>%APP_VERSION%</rev>
     <file>overview.xml</file>
   </header>
   <section>
     <title>Summary</title>
-    <p>%TC_PACKAGE_NAME% is an application ...</p>
+    <p>%TC_APP_NAME% is an application ...</p>
   </section>
 </chapter>

@@ -1,13 +1,13 @@
 %%%-------------------------------------------------------------------
 %%% @author %AUTHOR% %EMAIL%
 %%% @copyright (C) %YEAR%, %AUTHOR%
-%%% @doc %TC_PACKAGE_NAME% Application Module
+%%% @doc %TC_APP_NAME% Application Module
 %%%
 %%% demonstrates a trivial example of an application behaviour module.
 %%% @end
 %%% Created :  %DATE% by %AUTHOR% %EMAIL%
 %%%-------------------------------------------------------------------
--module(%LC_PACKAGE_NAME%_app).
+-module(%LC_APP_NAME%_app).
 
 -behaviour(application).
 
@@ -40,7 +40,7 @@
       State     :: term(),
       Reason    :: term().
 start(_StartType, _StartArgs) ->
-    case %LC_PACKAGE_NAME%_sup:start_link() of
+    case %LC_APP_NAME%_sup:start_link() of
 	{ok, Pid} ->
 	    {ok, Pid};
 	Error ->

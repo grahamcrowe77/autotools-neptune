@@ -1,14 +1,14 @@
 %%%-------------------------------------------------------------------
 %%% @author %AUTHOR% %EMAIL%
 %%% @copyright (C) %YEAR%, %AUTHOR%
-%%% @doc %TC_PACKAGE_NAME% NIF Module
+%%% @doc %TC_APP_NAME% NIF Module
 %%%
 %%% demonstrates a trivial example of a module using the generic
 %%% server behaviour.
 %%% @end
 %%% Created :  %DATE% by %AUTHOR% %EMAIL%
 %%%-------------------------------------------------------------------
--module(%LC_PACKAGE_NAME%_server).
+-module(%LC_APP_NAME%_server).
 
 -behaviour(gen_server).
 
@@ -18,8 +18,8 @@
 
 -endif.
 
--include("%LC_PACKAGE_NAME%.hrl").
--include("%LC_PACKAGE_NAME%_priv.hrl").
+-include("%LC_APP_NAME%.hrl").
+-include("%LC_APP_NAME%_priv.hrl").
 
 %% API
 -export([start_link/0, version/0, message/1]).
@@ -232,7 +232,7 @@ message(square, Value) ->
 
 message(square, Integer, Greeting)
   when is_integer(Integer) ->
-    Squared = %LC_PACKAGE_NAME%_nif:square(Integer),
+    Squared = %LC_APP_NAME%_nif:square(Integer),
     io_lib:format("~s ~p squared is ~p.~n", [Greeting, Integer, Squared]);
 message(square, Value, Greeting) ->
     io_lib:format("~s can't square ~p, not an integer.~n", [Greeting, Value]).

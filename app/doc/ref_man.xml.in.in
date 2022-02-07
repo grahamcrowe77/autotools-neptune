@@ -7,13 +7,13 @@
       <year>%YEAR%</year><year>%YEAR%</year>
       <holder>%AUTHOR%. All Rights Reserved.</holder>
     </copyright>
-    <title>%TC_PACKAGE_NAME% Reference Manual</title>
+    <title>%TC_APP_NAME% Reference Manual</title>
     <prepared>%AUTHOR%</prepared>
     <docno></docno>
     <date>%DATE%</date>
-    <rev>%PACKAGE_VERSION%</rev>
+    <rev>%APP_VERSION%</rev>
     <file>application.xml</file>
   </header>
   <description></description>
-  <xi:include href="@TOP_SRCDIR@/doc/%LC_PACKAGE_NAME%_cmd.xml"/>@XI_MODULES@
+  <xi:include href="@TOP_SRCDIR@/doc/%LC_APP_NAME%_cmd.xml"/>@XI_MODULES@
 </application>

@@ -1,11 +1,11 @@
 {application, @PACKAGE@,
- [{description, "%TC_PACKAGE_NAME% application"},
+ [{description, "%TC_APP_NAME% application"},
   {vsn, "@VERSION@"},
   {modules,
    [@COMMA_SEPARATED_MODULES@]},
   {registered,
-   [%LC_PACKAGE_NAME%_sup,
-    %LC_PACKAGE_NAME%_server]},
+   [%LC_APP_NAME%_sup,
+    %LC_APP_NAME%_server]},
   {applications,
    [kernel,
     stdlib]},
@@ -16,7 +16,7 @@
     "kernel-@ERLANG_LIB_VER_kernel@",
     "stdlib-@ERLANG_LIB_VER_stdlib@"]},
   {mod,
-   {%LC_PACKAGE_NAME%_app,
+   {%LC_APP_NAME%_app,
     []}}
  ]
 }.
