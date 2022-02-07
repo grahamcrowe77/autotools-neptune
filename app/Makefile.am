@@ -35,7 +35,7 @@ lib%LC_PACKAGE_NAME%_nif_la_CFLAGS = -I@ERLANG_ROOT_DIR@/usr/include
 lib%LC_PACKAGE_NAME%_nif_la_SOURCES = \
   $(srcdir)/c_src/%LC_PACKAGE_NAME%.c
 
-lib%LC_PACKAGE_NAME%_nif_la_DEPENDENCIES = $(builddir)/priv
+BUILT_SOURCES = $(builddir)/priv
 
 $(builddir)/priv:
 	$(LN_S) $(builddir)/.libs $@
