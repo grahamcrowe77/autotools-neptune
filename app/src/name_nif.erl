@@ -29,16 +29,7 @@
 -spec init() -> ok.
 
 init() ->
-    PrivDir = case code:priv_dir(?MODULE) of
-		  {error, bad_name} ->
-		      BeamPath = code:where_is_file("%LC_PACKAGE_NAME%_nif.beam"),
-		      BeamDir = filename:dirname(BeamPath),
-		      AppDir = filename:dirname(BeamDir),
-		      filename:join(AppDir, "priv");
-		  Dir ->
-		      Dir
-	      end,
-    Path = filename:join(PrivDir, "lib%LC_PACKAGE_NAME%_nif"),
+    Path = filename:join(priv_dir(), "lib%LC_PACKAGE_NAME%_nif"),
     ok = erlang:load_nif(Path, 0).
 
 %% -------------------------------------------------------------------
@@ -57,6 +48,20 @@ square(_Y) ->
     exit(nif_library_not_loaded).
 
 %% -------------------------------------------------------------------
+
+%% -------------------------------------------------------------------
+%% Internal
+%% -------------------------------------------------------------------
+priv_dir() ->
+    case code:lib_dir(%LC_PACKAGE_NAME%, priv) of
+	{error, bad_name} ->
+	    BeamPath = code:where_is_file("%LC_PACKAGE_NAME%_nif.beam"),
+	    BeamDir = filename:dirname(BeamPath),
+	    AppDir = filename:dirname(BeamDir),
+	    filename:join(AppDir, "priv");
+	Dir ->
+	    Dir
+    end.
 
 %% -------------------------------------------------------------------
 %% Internal eunit tests
