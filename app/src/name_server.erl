@@ -124,7 +124,7 @@ handle_call(version, _From, State) ->
     Reply = application:get_env(Application, version),
     {reply, Reply, State, ?TIMEOUT};
 handle_call({square, Integer}, _From, State) ->
-    Reply = message(square, Integer),
+    Reply = {ok, message(square, Integer)},
     {reply, Reply, State, ?TIMEOUT};
 handle_call(_Request, _From, State) ->
     {reply, {error, unsupported_request}, State, ?TIMEOUT}.
@@ -166,8 +166,8 @@ handle_cast(_Request, State) ->
       Reason   :: normal | term().
 handle_info(timeout, #state{count = Count}=State) ->
     Integer = (Count rem 10) + 1,
-    Message = message(square, Integer),
-    ok = io:format("~s~n", [Message]),
+    Response = message(square, Integer),
+    ok = io:format("~s", [Response]),
     {noreply, State#state{count = Count + 1}, ?TIMEOUT};
 handle_info(_Info, State) ->
     {noreply, State}.
@@ -220,17 +220,19 @@ format_status(_Opt, Status) ->
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
--spec message(Type, Integer) -> {ok, Response} | {error, Reason}  when
+-spec message(Type, Integer) -> Response when
       Type     :: atom(),
       Integer  :: integer(),
-      Response :: io_lib:chars(),
-      Reason   :: term().
-message(square, Integer)
-  when is_integer(Integer) ->
+      Response :: io_lib:chars().
+message(square, Value) ->
     {ok, Application} = application:get_application(),
     Place = atom_to_binary(Application),
     Greeting = <<"Hello from ", Place/binary, "!">>,
+    message(square, Value, Greeting).
+
+message(square, Integer, Greeting)
+  when is_integer(Integer) ->
     Squared = %LC_PACKAGE_NAME%_nif:square(Integer),
-    {ok, io_lib:format("~s ~p squared is ~p.~n", [Greeting, Integer, Squared])};
-message(square, _Value) ->
-    {error, not_an_integer}.
+    io_lib:format("~s ~p squared is ~p.~n", [Greeting, Integer, Squared]);
+message(square, Value, Greeting) ->
+    io_lib:format("~s can't square ~p, not an integer.~n", [Greeting, Value]).

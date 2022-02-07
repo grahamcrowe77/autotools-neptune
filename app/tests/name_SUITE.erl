@@ -34,5 +34,6 @@ square_integer(_) ->
 
 square_string(_) ->
     ok = application:start(%LC_PACKAGE_NAME%),
-    {error, not_an_integer} = %LC_PACKAGE_NAME%_server:message({square, "6"}),
+    {ok, Message} = %LC_PACKAGE_NAME%_server:message({square, "6"}),
+    ok = ct:pal("~s", [Message]),
     ok = application:stop(%LC_PACKAGE_NAME%).
