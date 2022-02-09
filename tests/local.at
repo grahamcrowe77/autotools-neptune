@@ -22,22 +22,28 @@ rm ${abs_top_builddir}/$1_testsuite.*
 
 m4_define([APP_TEST_SETUP], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
-  sed -i -e "s#%%! -pa ebin#%%! -pa ${abs_top_builddir}/ebin#g" \
-         -e "s#<<\".\">>#<<\"${abs_top_srcdir}\">>#g" \
+  sed -i.tmp \
+      -e "s#%%! -pa ebin#%%! -pa ${abs_top_builddir}/ebin#g" \
+      -e "s#<<\".\">>#<<\"${abs_top_srcdir}\">>#g" \
     ${abs_top_builddir}/bin/neptune
+  rm ${abs_top_builddir}/bin/neptune.tmp
   PATH=${abs_top_builddir}/bin:${PATH} export PATH
 fi
 ]]).
 
 m4_define([APP_TEST_CLEANUP], [[set -x
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
-  sed -i -e "s#%%! -pa ${abs_top_builddir}/ebin#%%! -pa ebin#g" \
-         -e "s#<<\"${abs_top_builddir}\">>#<<\".\">>#g" \
+  sed -i.tmp \
+      -e "s#%%! -pa ${abs_top_builddir}/ebin#%%! -pa ebin#g" \
+      -e "s#<<\"${abs_top_builddir}\">>#<<\".\">>#g" \
     ${abs_top_builddir}/bin/neptune
+  rm ${abs_top_builddir}/bin/neptune.tmp
 else
-  sed -i -e "s#%%! -pa ${DESTDIR}${neptune_ebindir}#%%! -pa ebin#g" \
-         -e "s#<<\"${abs_top_srcdir}\">>#<<\".\">>#g" \
+  sed -i.tmp \
+      -e "s#%%! -pa ${DESTDIR}${neptune_ebindir}#%%! -pa ebin#g" \
+      -e "s#<<\"${abs_top_srcdir}\">>#<<\".\">>#g" \
     ${abs_top_builddir}/bin/neptune
+  rm ${abs_top_builddir}/bin/neptune.tmp
 fi
 ]]).
 

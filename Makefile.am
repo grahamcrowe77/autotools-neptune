@@ -18,10 +18,11 @@ neptune_ebindir=$(ERLANG_INSTALL_LIB_DIR_neptune)/ebin
 dist_bin_SCRIPTS = $(addprefix $(builddir)/bin/, $(ESCRIPTS))
 
 install-exec-hook:
-	$(AM_V_GEN)$(SED) -i \
+	$(AM_V_GEN)$(SED) -i.tmp \
 	  -e "s#%%! -pa ebin#%%! -pa $(DESTDIR)$(neptune_ebindir)#g" \
 	  -e "s#<<\".\">>#<<\"$(DESTDIR)$(neptune_sysconfdir)\">>#g" \
 	  $(DESTDIR)$(bindir)/neptune
+	rm $(DESTDIR)$(bindir)/neptune.tmp
 
 # --------------------------------------
 # Build beam files
@@ -182,6 +183,7 @@ neptune_rel_sysconfdir = $(neptune_sysconfdir)/rel
 # Documentation
 # --------------------------------------
 if ERL_DOCGEN
+neptune_docdir=$(ERLANG_INSTALL_LIB_DIR_neptune)/doc
 
 if XSLTPROC
 # --------------------------------------
@@ -237,13 +239,13 @@ HTML_EXTRAS = \
   $(srcdir)/doc/neptune.jpg \
   $(builddir)/doc/stylesheet.css
 
-pkgdata_DATA = \
+neptune_doc_DATA = \
   $(builddir)/doc/index.html \
   $(HTMLS) \
   $(HTML_EXTRAS)
 
 if FOP
-pkgdata_DATA += $(builddir)/doc/neptune.pdf
+neptune_doc_DATA += $(builddir)/doc/neptune.pdf
 endif #FOP
 
 $(builddir)/doc/stylesheet.css:
