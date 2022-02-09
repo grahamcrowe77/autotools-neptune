@@ -2,7 +2,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 MODULES = @MODULES@
 
-ESCRIPTS = %LC_PACKAGE_NAME%
+ESCRIPTS = @ESCRIPTS@
 
 ATFILES = @ATFILES@
 
@@ -22,9 +22,12 @@ TESTSUITE = $(builddir)/tests/testsuite
 dist_bin_SCRIPTS = $(addprefix $(builddir)/bin/, $(ESCRIPTS))
 
 install-exec-hook:
-	$(AM_V_GEN)$(SED) -i \
-	  -e "s#%%! -pa ebin#%%! -pa $(DESTDIR)$(%LC_PACKAGE_NAME%_ebindir)#g" \
-	  $(DESTDIR)$(bindir)/%LC_PACKAGE_NAME%
+	for escript in $(ESCRIPTS); do \
+	  $(AM_V_GEN)$(SED) -i.tmp \
+	    -e "s#%%! -pa ebin#%%! -pa $(DESTDIR)$(%LC_PACKAGE_NAME%_ebindir)#g" \
+	    $(DESTDIR)$(bindir)/$$escript; \
+	  rm $(DESTDIR)$(bindir)/$$escript.tmp; \
+	done;
 
 # --------------------------------------
 # NIF

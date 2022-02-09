@@ -53,6 +53,36 @@ done`
 AC_SUBST([XI_MODULES], [${xi_modules}])
 ])
 
+# AC_ERLANG_ESCRIPTS
+# ------------------
+# Infer the list of Erlang escripts.
+AC_DEFUN([AC_ERLANG_ESCRIPTS],
+[AC_REQUIRE([AC_ERLANG_NEED_ERL])[]dnl
+AC_ERLANG_ESCRIPT_SRCS
+AC_ERLANG_ESCRIPT_LIST
+])
+
+# AC_ERLANG_ESCRIPT_SRCS
+# ----------------------
+# Create a list of Erlang escript sources (without .in extension).
+AC_DEFUN([AC_ERLANG_ESCRIPT_SRCS],
+[escript_source_files=`ls -1 ${srcdir}/bin/*.in`
+escript_srcs=`for file in ${escript_source_files}; do \
+  basename $file .in; \
+done`
+])
+
+# AC_ERLANG_ESCRIPT_LIST
+# ----------------------
+# Provide a space separated list of Erlang escripts.
+# This is used to populate @ESCRIPTS@ in the makefiles.
+AC_DEFUN([AC_ERLANG_ESCRIPT_LIST],
+[escript_list=`for escript_src in ${escript_srcs}; do \
+  printf "%s "  $escript_src; \
+done | sed 's/.$//'`
+AC_SUBST([ESCRIPTS], [${escript_list}])
+])
+
 # AC_AUTOTEST_FILES
 # -----------------
 # Infer autotests to support the 'check' target which runs

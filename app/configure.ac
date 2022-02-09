@@ -56,8 +56,14 @@ AC_SUBST([%LC_PACKAGE_NAME%_ebindir])
 # Infer Erlang source code modules
 AC_ERLANG_MODULES
 
+# Infer Escripts
+AC_ERLANG_ESCRIPTS
+
 # Infer autotest modules
 AC_AUTOTEST_FILES
+
+# Infer Escripts
+AC_ERLANG_ESCRIPTS
 
 if test "x${build_vendor}" == "xapple"; then
   AC_MSG_NOTICE([Build target is Apple])

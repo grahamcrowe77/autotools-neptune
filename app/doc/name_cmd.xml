@@ -61,6 +61,13 @@
         </item>
       </taglist>
   </section>
+  <section>
+    <title>Examples</title>
+    <pre>
+      <input>$ %LC_PACKAGE_NAME% --square 4</input>
+      Hello from %LC_PACKAGE_NAME%! The sqaure of 4 is 16
+    </pre>
+  </section>
   <authors>
     <aname>%AUTHOR%</aname>
     <email>%EMAIL%</email>
