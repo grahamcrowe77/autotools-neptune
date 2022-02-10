@@ -53,7 +53,7 @@ neptune_env() ->
 	    lists:keyreplace("PATH", 1, Env, {"PATH", NewPath})
     end.
 
-neptune(Config) ->
+neptune(_Config) ->
     Env = neptune_env(),
     {ok, CWD} = file:get_cwd(),
     Port = open_port(

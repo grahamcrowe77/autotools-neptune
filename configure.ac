@@ -64,6 +64,11 @@ if test "x${FOP}" == "x"; then
   AC_MSG_WARN([fop was not found! PDF Documentation build disabled])
 fi
 
+erlang_kernel_maj_ver=`echo $ERLANG_LIB_VER_kernel | cut -d'.' -f1`
+if test $erlang_kernel_maj_ver -lt 8; then
+  AC_MSG_WARN([Erlang/OTP kernel version < 8.0! Common test suite won't work])
+fi
+
 AC_CONFIG_FILES([Makefile ebin/neptune.app])
 AC_CONFIG_FILES([tests/atlocal tests/ct-config doc/ref_man.xml.in])
 AC_CONFIG_FILES([bin/neptune], [chmod +x bin/neptune])
