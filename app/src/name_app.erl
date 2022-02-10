@@ -1,5 +1,5 @@
 %%%-------------------------------------------------------------------
-%%% @author %AUTHOR% %email%
+%%% @author %AUTHOR% %EMAIL%
 %%% @copyright (C) %YEAR%, %AUTHOR%
 %%% @doc %TC_PACKAGE_NAME% Application Module
 %%%
