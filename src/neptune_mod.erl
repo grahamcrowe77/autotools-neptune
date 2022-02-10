@@ -251,7 +251,7 @@ package_version(Pars) ->
     {<<"%PACKAGE_VERSION%">>, maps:get(version, Pars, <<"0.1.0">>)}.
 
 erts_version(Pars) ->
-    {<<"%ERLANG_ERTS_VER%">>, maps:get(erts_version, Pars, <<"11">>)}.
+    {<<"%ERLANG_ERTS_VER%">>, maps:get(erts_version, Pars, <<"10">>)}.
 
 email(Pars) ->
     {<<"%EMAIL%">>, maps:get(email, Pars, <<"undisclosed email address">>)}.
