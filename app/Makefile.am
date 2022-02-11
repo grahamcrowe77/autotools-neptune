@@ -23,7 +23,7 @@ dist_bin_SCRIPTS = $(addprefix $(builddir)/bin/, $(ESCRIPTS))
 
 install-exec-hook:
 	for escript in $(ESCRIPTS); do \
-	  $(AM_V_GEN)$(SED) -i.tmp \
+	  $(SED) -i.tmp \
 	    -e "s#%%! -pa ebin#%%! -pa $(DESTDIR)$(%LC_PACKAGE_NAME%_ebindir)#g" \
 	    $(DESTDIR)$(bindir)/$$escript; \
 	  rm $(DESTDIR)$(bindir)/$$escript.tmp; \
