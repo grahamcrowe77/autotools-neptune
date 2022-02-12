@@ -16,4 +16,6 @@
   </header>
   <description></description>
   <xi:include href="overview.xml"/>
+  <xi:include href="applications.xml"/>
+  <xi:include href="releases.xml"/>
 </part>

@@ -370,6 +370,8 @@ if ERL_DOCGEN
 EXTRA_DIST += \
   $(srcdir)/doc/neptune_cmd.xml \
   $(srcdir)/doc/overview.xml \
+  $(srcdir)/doc/applications.xml \
+  $(srcdir)/doc/releases.xml \
   $(srcdir)/doc/part.xml \
   $(srcdir)/doc/ref_man.xml.in.in \
   $(srcdir)/doc/book.xml \

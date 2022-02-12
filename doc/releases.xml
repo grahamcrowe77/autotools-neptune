@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter SYSTEM "chapter.dtd">
+
+<chapter>
+  <header>
+    <copyright>
+      <year>2022</year><year>2022</year>
+      <holder>Graham Crowe. All Rights Reserved.</holder>
+    </copyright>
+    <title>Releases</title>
+    <prepared>Graham Crowe</prepared>
+    <responsible></responsible>
+    <docno></docno>
+    <approved></approved>
+    <checked></checked>
+    <date>2022-01-02</date>
+    <rev></rev>
+    <file>releases.xml</file>
+  </header>
+  <section>
+    <title>Creation</title>
+    <p></p>
+  </section>
+  <section>
+    <title>Bootstrap</title>
+    <p></p>
+  </section>
+  <section>
+    <title>Configuration</title>
+    <p></p>
+  </section>
+  <section>
+    <title>Build</title>
+    <p></p>
+  </section>
+  <section>
+    <title>Test</title>
+    <p></p>
+  </section>
+  <section>
+    <title>Installation</title>
+    <p></p>
+  </section>
+  <section>
+    <title>Distribution</title>
+    <p></p>
+  </section>
+</chapter>

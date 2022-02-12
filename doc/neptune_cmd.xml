@@ -78,19 +78,15 @@
   </section>
   <section>
     <title>Examples</title>
-    <pre>
-      <input>$ neptune myapp</input>
-    </pre>
+    <pre><input>$ neptune myapp</input></pre>
     <p>Create skeleton code for an application called myapp in the current
     directory</p>
     <pre>
-      <input>$ neptune --outdir /repo --type rel myrel</input>
-    </pre>
+    <input>$ neptune --outdir /repo --type rel myrel</input></pre>
     <p>Create skeleton code for a release called myrel in the <c>/repo</c>
     directory</p>
     <pre>
-      <input>$ neptune --email john.doe@tech.org --author 'John Doe' myapp</input>
-    </pre>
+    <input>$ neptune --email john.doe@tech.org --author 'John Doe' myapp</input></pre>
     <p>Create skeleton code for an application called myapp in the current
     directory, setting the email address and author values accordingly.</p>
   </section>
