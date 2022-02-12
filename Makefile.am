@@ -369,6 +369,7 @@ EXTRA_DIST = \
 if ERL_DOCGEN
 EXTRA_DIST += \
   $(srcdir)/doc/neptune_cmd.xml \
+  $(srcdir)/doc/app.xml \
   $(srcdir)/doc/overview.xml \
   $(srcdir)/doc/applications.xml \
   $(srcdir)/doc/releases.xml \

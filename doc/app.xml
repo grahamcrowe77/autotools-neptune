@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE fileref SYSTEM "fileref.dtd">
+
+<fileref>
+  <header>
+    <copyright>
+      <year>2022</year><year>2022</year>
+      <holder>Graham Crowe. All Rights Reserved.</holder>
+    </copyright>
+    <title>app</title>
+    <prepared>Graham Crowe</prepared>
+    <docno></docno>
+    <date></date>
+    <rev></rev>
+  </header>
+  <file>app</file>
+  <filesummary>Application Template</filesummary>
+  <description>
+    <p>The application template is a tree of files used to prepare application
+    skeleton code.</p>
+  </description>
+  <section>
+    <title>File Structure</title>
+    <p>The template consists of the following files:</p>
+    <list type="bulleted">
+      <item>bin/name.in</item>
+      <item>bootstrap.sh</item>
+      <item>c_src/name.c</item>
+      <item>doc/book.xml.in</item>
+      <item>doc/name_cmd.xml</item>
+      <item>doc/overview.xml</item>
+      <item>doc/part.xml</item>
+      <item>doc/ref_man.xml.in.in</item>
+      <item>ebin/name.app.in</item>
+      <item>include/name.hrl</item>
+      <item>m4/erlang-app.m4</item>
+      <item>src/name_app.erl</item>
+      <item>src/name_nif.erl</item>
+      <item>src/name_priv.hrl</item>
+      <item>src/name_server.erl</item>
+      <item>src/name_sup.erl</item>
+      <item>tests/atlocal.in</item>
+      <item>tests/local.at</item>
+      <item>tests/name-ct.at</item>
+      <item>tests/name-dialyzer.at</item>
+      <item>tests/name-error.at</item>
+      <item>tests/name-square.at</item>
+      <item>tests/name-version.at</item>
+      <item>tests/name_SUITE.erl</item>
+      <item>tests/name_nif-eunit.at</item>
+      <item>tests/testsuite.at</item>
+      <item>.gitignore</item>
+      <item>Makefile.am</item>
+      <item>README.md</item>
+      <item>configure.ac</item>
+    </list>
+    <p>Files that with the <c>.in</c> extension are templates with variables
+    that get substituted by <c>config.status</c>, a script called by the
+    <c>configure</c> script. <c>doc/ref_man.xml.in.in</c> is a file that gets
+    substituted at configure time and again at build time.</p>
+  </section>
+  <section>
+    <title>Substitution Variables</title>
+    <p>When an application is created filenames that include <c>name</c> have
+    <c>name</c> replaced with the name of the application. These files also
+    include the following strings which are also replaced when the application
+    is created:</p>
+    <list type="bulleted">
+      <item><c>%LC_PACKAGE_NAME%</c></item>
+      <item><c>%UC_PACKAGE_NAME%</c></item>
+      <item><c>%TC_PACKAGE_NAME%</c></item>
+      <item><c>%PACKAGE_VERSION%</c></item>
+      <item><c>%ERLANG_ERTS_VER%</c></item>
+      <item><c>%EMAIL%</c></item>
+      <item><c>%AUTHOR%</c></item>
+      <item><c>%YEAR%</c></item>
+      <item><c>%DATE%</c></item>
+    </list>
+  </section>
+  <section>
+    <title>Application Code</title>
+    <p>The template includes erlang source code for a simple dynamic
+    application with a single supervisor supervising a single general
+    server. It includes a module with a NIF, a public and a private header
+    file.</p>
+  </section>
+  <section>
+    <title>Escript</title>
+    <p>The template includes a simple escript command.</p>
+  </section>
+  <section>
+    <title>Documentation Code</title>
+    <p>The template includes reference documentation of the source code,
+    based upon type/spec notations in the code, the escript command and a
+    user guide. The generated documentation includes man pages, html and pdf
+    documentation.</p>
+  </section>
+  <section>
+    <title>Test Code</title>
+    <p>The test code includes a dialyzer test (static analysis tool), eunit
+    test cases, common testcases and some blackbox tests of the escript
+    command. The test execution is orchestrated by autotest.</p>
+  </section>
+</fileref>
