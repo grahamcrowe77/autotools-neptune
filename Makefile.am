@@ -232,8 +232,11 @@ if XSLTPROC
 HTMLS = $(addprefix $(builddir)/doc/, $(addsuffix .html, $(MODULES)))
 HTMLS += \
   $(builddir)/doc/neptune.html \
+  $(builddir)/doc/app.html \
+  $(builddir)/doc/users_guide.html \
   $(builddir)/doc/overview.html \
-  $(builddir)/doc/users_guide.html
+  $(builddir)/doc/applications.html \
+  $(builddir)/doc/releases.html
 
 HTML_EXTRAS = \
   $(srcdir)/doc/neptune.jpg \
