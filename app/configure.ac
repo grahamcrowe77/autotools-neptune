@@ -91,7 +91,7 @@ AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------
 
-${APP_NAME} Version ${PACKAGE_VERSION}
+${PACKAGE_NAME} version ${PACKAGE_VERSION}
 
 Prefix: '${prefix}'
 Compiler: '${ERLC} ${ERLCFLAGS}'

@@ -23,9 +23,9 @@ all() ->
 init_per_suite(Config) ->
     Env = env(Config),
     ok = ct:pal("~p", [Env]),
-    file:del_dir_r("/tmp/myapp"),
+    file:del_dir_r("/tmp/neptune"),
     file:del_dir_r("/tmp/build"),
-    SrcDir = filename:join("/tmp", myapp),
+    SrcDir = filename:join("/tmp", neptune),
     BuildDir = filename:join("/tmp", build),
     [{env, Env},
      {tmpdir, "/tmp"},
@@ -33,7 +33,7 @@ init_per_suite(Config) ->
      {builddir, BuildDir} | Config].
 
 end_per_suite(_Config) ->
-    file:del_dir_r("/tmp/myapp"),
+    file:del_dir_r("/tmp/neptune"),
     file:del_dir_r("/tmp/build").
 
 init_per_group(_, Config) ->
@@ -58,7 +58,7 @@ neptune(Config) ->
     Env = ?config(env, Config),
     Dir = ?config(tmpdir, Config),
     Port = open_port(
-	     {spawn, "neptune --outdir " ++ Dir ++ " myapp"},
+	     {spawn, "neptune --outdir " ++ Dir ++ " neptune"},
 	     port_opts(Dir, Env)),
     ok = get_response(Port, []).
 

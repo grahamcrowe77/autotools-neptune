@@ -1,2 +1,9 @@
 AT_INIT
 AT_COLOR_TESTS
+
+m4_define([DIALYZER_CMD], [[set -x
+export dialyzer_runcmd="${DIALYZER} \
+  -Wno_behaviours -Wno_fail_call \
+  --plts ${abs_top_builddir}/tests/%LC_APP_NAME%.plt \
+  -- ${ERLANG_LIB_DIR_%LC_REL_NAME%}/src/*.erl"
+]])

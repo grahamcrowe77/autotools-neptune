@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE fileref SYSTEM "fileref.dtd">
+
+<fileref>
+  <header>
+    <copyright>
+      <year>2022</year><year>2022</year>
+      <holder>Graham Crowe. All Rights Reserved.</holder>
+    </copyright>
+    <title>rel</title>
+    <prepared>Graham Crowe</prepared>
+    <docno></docno>
+    <date></date>
+    <rev></rev>
+  </header>
+  <file>rel</file>
+  <filesummary>Release Template</filesummary>
+  <description>
+    <p>The release template is a tree of files used to prepare release
+    skeleton code.</p>
+  </description>
+  <section>
+    <title>File Structure</title>
+    <p>The template consists of the following files:</p>
+    <list type="bulleted">
+      <item>bin/name-rel.sh.in</item>
+      <item>bootstrap.sh</item>
+      <item>c_src/name.c</item>
+      <item>configure.ac</item>
+      <item>.gitignore</item>
+      <item>m4/erlang-rel.m4</item>
+      <item>Makefile.am</item>
+      <item>name-rel.config</item>
+      <item>name-rel.rel.in</item>
+      <item>README.md</item>
+      <item>tests/atlocal.in</item>
+      <item>tests/local.at</item>
+      <item>tests/name-start.at</item>
+      <item>tests/testsuite.at</item>
+    </list>
+    <p>Files that with the <c>.in</c> extension are templates with variables
+    that get substituted by <c>config.status</c>, a script called by the
+    <c>configure</c> script.</p>
+  </section>
+  <section>
+    <title>Substitution Variables</title>
+    <p>When an application is created filenames that include <c>name</c> have
+    <c>name</c> replaced with the name of the application. These files also
+    include the following strings which are also replaced when the application
+    is created:</p>
+    <list type="bulleted">
+      <item>%LC_REL_NAME%</item>
+      <item>%UC_REL_NAME%</item>
+      <item>%TC_REL_NAME%</item>
+      <item>%REL_VERSION%</item>
+      <item>%ERLANG_ERTS_VER%</item>
+      <item>%EMAIL%</item>
+      <item>%AUTHOR%</item>
+      <item>%YEAR%</item>
+      <item>%DATE%</item>
+    </list>
+  </section>
+  <section>
+    <title>Scope and Configuration</title>
+    <p>The template includes <c>name-rel.rel.in</c> that defines the scope of
+    applications included in the system release. It also includes
+    <c>name-rel.config</c> which defines the configuration parameters for each
+    application included in the system release.</p>
+  </section>
+  <section>
+    <title>Start Script</title>
+    <p>The template includes a start script <c>bin/name-rel.sh.in</c> for
+    starting the Erlang system release.</p>
+  </section>
+  <section>
+    <title>Documentation Code</title>
+    <p>The template includes system level documentation and compiles index
+    documentation for each application included in the system release.</p>
+  </section>
+  <section>
+    <title>Test Code</title>
+    <p>The test code includes a dialyzer test of all applicatios (static
+    analysis tool) and a simple blackbox smoke test to verify the system has
+    started and is online. The test execution is orchestrated by autotest.</p>
+  </section>
+</fileref>

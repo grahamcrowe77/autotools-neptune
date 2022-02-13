@@ -25,6 +25,7 @@
     <list type="bulleted">
       <item>bin/name.in</item>
       <item>bootstrap.sh</item>
+      <item>configure.ac</item>
       <item>c_src/name.c</item>
       <item>doc/book.xml.in</item>
       <item>doc/name_cmd.xml</item>
@@ -32,8 +33,11 @@
       <item>doc/part.xml</item>
       <item>doc/ref_man.xml.in.in</item>
       <item>ebin/name.app.in</item>
+      <item>.gitignore</item>
       <item>include/name.hrl</item>
       <item>m4/erlang-app.m4</item>
+      <item>Makefile.am</item>
+      <item>README.md</item>
       <item>src/name_app.erl</item>
       <item>src/name_nif.erl</item>
       <item>src/name_priv.hrl</item>
@@ -49,10 +53,6 @@
       <item>tests/name_SUITE.erl</item>
       <item>tests/name_nif-eunit.at</item>
       <item>tests/testsuite.at</item>
-      <item>.gitignore</item>
-      <item>Makefile.am</item>
-      <item>README.md</item>
-      <item>configure.ac</item>
     </list>
     <p>Files that with the <c>.in</c> extension are templates with variables
     that get substituted by <c>config.status</c>, a script called by the
@@ -66,15 +66,15 @@
     include the following strings which are also replaced when the application
     is created:</p>
     <list type="bulleted">
-      <item><c>%LC_PACKAGE_NAME%</c></item>
-      <item><c>%UC_PACKAGE_NAME%</c></item>
-      <item><c>%TC_PACKAGE_NAME%</c></item>
-      <item><c>%PACKAGE_VERSION%</c></item>
-      <item><c>%ERLANG_ERTS_VER%</c></item>
-      <item><c>%EMAIL%</c></item>
-      <item><c>%AUTHOR%</c></item>
-      <item><c>%YEAR%</c></item>
-      <item><c>%DATE%</c></item>
+      <item>%LC_APP_NAME%</item>
+      <item>%UC_APP_NAME%</item>
+      <item>%TC_APP_NAME%</item>
+      <item>%APP_VERSION%</item>
+      <item>%ERLANG_ERTS_VER%</item>
+      <item>%EMAIL%</item>
+      <item>%AUTHOR%</item>
+      <item>%YEAR%</item>
+      <item>%DATE%</item>
     </list>
   </section>
   <section>

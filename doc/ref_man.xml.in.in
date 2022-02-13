@@ -18,5 +18,6 @@
   </description>
   <xi:include href="@TOP_SRCDIR@/doc/neptune_cmd.xml"/>
   <xi:include href="@TOP_SRCDIR@/doc/app.xml"/>
+  <xi:include href="@TOP_SRCDIR@/doc/rel.xml"/>
   @XI_MODULES@
 </application>

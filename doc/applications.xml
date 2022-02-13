@@ -21,16 +21,16 @@
     <title>Creation</title>
     <p>Creating skeleton code for an Erlang Application is very simple. The
     following examples assume the name of the application to be
-    <c>myapp</c>.Just type the following:</p>
-    <pre><input>$ neptune myapp</input></pre>
-    <p>This will result in a directory <c>myapp</c> being created in the
-    current working directory. The <c>myapp</c> includes minimal skeleton code
+    <c>uranus</c>.Just type the following:</p>
+    <pre><input>$ neptune uranus</input></pre>
+    <p>This will result in a directory <c>uranus</c> being created in the
+    current working directory. The <c>uranus</c> includes minimal skeleton code
     that compiles, is documented and has some basic tests.</p>
   </section>
   <section>
     <title>Bootstrap</title>
-    <p>To bootstrap <c>myapp</c> type the following:</p>
-    <pre><input>$ cd myapp</input>
+    <p>To bootstrap <c>uranus</c> type the following:</p>
+    <pre><input>$ cd uranus</input>
 <input>$ ./bootstrap.sh</input></pre>
     <p>This prepares the build system by running <c>autoreconf</c> resulting
     in a <c>configure</c> script generated from <c>configure.ac</c>. This step
@@ -41,7 +41,7 @@
   </section>
   <section>
     <title>Configuration</title>
-    <p>To configure <c>myapp</c> run the configure script:</p>
+    <p>To configure <c>uranus</c> run the configure script:</p>
     <pre><input>$ ./configure</input></pre>
     <p>This may fail if <c>configure</c> fails to detect an Erlang/OTP
     installation or it can't detect a <c>C</c> compiler. It will provide
@@ -58,7 +58,7 @@
   </section>
   <section>
     <title>Build</title>
-    <p>To build <c>myapp</c> type the following</p>
+    <p>To build <c>uranus</c> type the following</p>
     <pre><input>$ make</input></pre>
     <p>This compiles the byte code (beam files), generates the <c>.app</c>
     file, builds the NIF shared library and generates the documentation
@@ -66,7 +66,7 @@
   </section>
   <section>
     <title>Test</title>
-    <p>To test <c>myapp</c> type the following:</p>
+    <p>To test <c>uranus</c> type the following:</p>
     <pre><input>$ make check</input></pre>
     <p>This runs all tests, including <c>dialyzer</c>, a static analysis tool
     which is a must run tool given Erlang's dynamic typing system,
@@ -80,15 +80,15 @@
   </section>
   <section>
     <title>Installation</title>
-    <p>It is possible to install <c>myapp</c> to a staging directory and run
+    <p>It is possible to install <c>uranus</c> to a staging directory and run
     tests on that:</p>
     <pre><input>$ make install DESTDIR=$PWD/inst</input>
 <input>$ make installcheck DESTDIR=$PWD/inst</input></pre>
-    <p>The following installs <c>myapp</c> on your system and runs tests on
+    <p>The following installs <c>uranus</c> on your system and runs tests on
     the installation:</p>
     <pre><input>$ sudo make install</input>
 <input>$ make installcheck</input></pre>
-    <p>By default <c>myapp</c> will be installed with prefix set to
+    <p>By default <c>uranus</c> will be installed with prefix set to
     <c>/usr/local</c>. This setting is controlled by the <c>./configure</c>
     script, e.g.</p>
     <pre><input>$ .configure --prefix=/usr</input></pre>
@@ -103,13 +103,13 @@
   </section>
   <section>
     <title>Out of Source Tree Builds</title>
-    <p>It is possible to build <c>myapp</c> outside the source code tree. This
+    <p>It is possible to build <c>uranus</c> outside the source code tree. This
     is also a somewhat obsolete feature given ubiquity of distributed version
     control systems such as <c>Git</c> since the need to keep the source clean
     an untainted is managed by the version control system. However it also
     helps check the correctness and completeness of the build system:</p>
     <pre><input>$ make maintainer-clean</input>
 <input>$ mkdir -pv ../build &amp;&amp; ../build</input>
-<input>$ ../myapp/configure &amp;&amp; make &amp;&amp; make check</input></pre>
+<input>$ ../uranus/configure &amp;&amp; make &amp;&amp; make check</input></pre>
   </section>
 </chapter>

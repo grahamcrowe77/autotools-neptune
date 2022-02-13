@@ -1,2 +1,4 @@
+DIALYZER=@DIALYZER@
 prefix=@prefix@
 pkgdatadir=@pkgdatadir@
+ERLANG_LIB_DIR_%LC_REL_NAME%=@ERLANG_LIB_DIR_%LC_REL_NAME%@

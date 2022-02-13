@@ -1,11 +1,11 @@
-AT_BANNER([%TC_REL_NAME% Release Start])
+AT_BANNER([%TC_REL_NAME% System Release Start])
 AT_SETUP([%LC_REL_NAME%-start])
 AT_KEYWORDS([start])
 rm /tmp/erlang.* /tmp/run_erl.log
 echo ${abs_top_builddir}
-AT_CHECK([ERL_ROOTDIR=${abs_top_builddir} ${abs_top_builddir}/bin/%LC_REL_NAME%-release.sh],[0],[ignore])
+AT_CHECK([ERL_ROOTDIR=${abs_top_builddir} ${abs_top_builddir}/bin/%LC_REL_NAME%-system.sh],[0],[ignore])
 sleep 6
-AT_CHECK([grep "Hi there from %LC_REL_NAME%!" /tmp/erlang.log.*],[0],[ignore])
+AT_CHECK([grep "Hello from %LC_REL_NAME%!" /tmp/erlang.log.*],[0],[ignore])
 sleep 6
 AT_CHECK([grep "Hello from %LC_REL_NAME%!" /tmp/erlang.log.*],[0],[ignore])
 pgrep erl_child_setup | xargs kill -9

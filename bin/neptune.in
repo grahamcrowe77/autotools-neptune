@@ -26,9 +26,8 @@ main(Args) ->
 		    ok = reason(Reason, Pars),
 		    halt(1)
 	    end;
-	#{type := Type} ->
-	    Reason = io_lib:format("type <~s> is unsupported", [Type]),
-	    ok = reason(Reason, Pars),
+	#{type := _Type} ->
+	    ok = reason(not_supported, Pars),
 	    halt(1)
     end.
 

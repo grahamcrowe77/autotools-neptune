@@ -20,7 +20,7 @@ all() ->
 init_per_suite(Config) ->
     {ok, CWD} = file:get_cwd(),
     Env = os:env(),
-    SrcDir = filename:join(CWD, myapp),
+    SrcDir = filename:join(CWD, uranus),
     BuildDir = SrcDir,
     [{env, Env},
      {srcdir, SrcDir},
@@ -57,7 +57,7 @@ neptune(_Config) ->
     Env = neptune_env(),
     {ok, CWD} = file:get_cwd(),
     Port = open_port(
-	     {spawn, "neptune myapp"},
+	     {spawn, "neptune uranus"},
 	     port_opts(CWD, Env)),
     ok = get_response(Port, []).
 

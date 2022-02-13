@@ -33,10 +33,10 @@ sudo make install
 
 ## Erlang Applications
 By default the neptune creates an Erlang application template in the current
-working directory:
+working directory. The following creates an Erlang application named `uranus`:
 ```bash
-neptune myapp
-cd myapp
+neptune uranus
+cd uranus
 find . -type f
 ```
 
@@ -60,7 +60,7 @@ The template application supports out of source tree builds:
 make maintainer-clean
 mkdir -pv ../build
 cd ../build
-../myapp/configure
+../uranus/configure
 make
 make check
 make install DESTDIR=$PWD/inst

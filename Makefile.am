@@ -233,6 +233,7 @@ HTMLS = $(addprefix $(builddir)/doc/, $(addsuffix .html, $(MODULES)))
 HTMLS += \
   $(builddir)/doc/neptune.html \
   $(builddir)/doc/app.html \
+  $(builddir)/doc/rel.html \
   $(builddir)/doc/users_guide.html \
   $(builddir)/doc/overview.html \
   $(builddir)/doc/applications.html \
@@ -373,6 +374,7 @@ if ERL_DOCGEN
 EXTRA_DIST += \
   $(srcdir)/doc/neptune_cmd.xml \
   $(srcdir)/doc/app.xml \
+  $(srcdir)/doc/rel.xml \
   $(srcdir)/doc/overview.xml \
   $(srcdir)/doc/applications.xml \
   $(srcdir)/doc/releases.xml \

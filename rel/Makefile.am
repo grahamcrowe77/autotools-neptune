@@ -18,7 +18,7 @@ $(PACKAGE_NAME).script $(PACKAGE_NAME).boot: $(PACKAGE_NAME).rel
 	$(ERL) -noshell -s systools make_script $(PACKAGE_NAME) -s erlang halt
 
 bin_SCRIPTS = \
-  bin/$(PACKAGE_NAME).sh
+  bin/$(PACKAGE_NAME)-system.sh
 
 pkgbindir=$(pkgdatadir)/erts-$(ERLANG_ERTS_VER)/bin
 
@@ -53,7 +53,25 @@ install-data-local:
 	  $(DESTDIR)$(pkgdatadir)/releases/$(PACKAGE_VERSION)
 
 install-data-hook:
+	$(SED) -i.tmp \
+	  -e "s#ERL_ROOTDIR=$$ROOTDIR#ERL_ROOTDIR=$(DESTDIR)$(pkgdatadir)#g" \
+	  $(DESTDIR)$(bindir)/$(PACKAGE_NAME)-system.sh
 	chmod +x $(DESTDIR)$(pkgbindir)/*
+
+# --------------------------------------
+# Dialyzer PLT
+# --------------------------------------
+DIALYZER_APPS = \
+  erts \
+  kernel \
+  stdlib \
+  sasl \
+  compiler \
+  crypto
+
+$(builddir)/tests/%LC_REL_NAME%.plt:
+	$(AM_V_GEN)$(DIALYZER) --build_plt --output_plt $@ \
+          --apps $(DIALYZER_APPS)
 
 # --------------------------------------
 # Autotests
@@ -85,6 +103,9 @@ clean-local:
 	test ! -f '$(TESTSUITE)' || \
 	  (cd $(builddir)/tests && $(SHELL) testsuite --clean)
 	rm -rf $(builddir)/tests/atconfig $(TESTSUITE)
+	rm -rf erts-$(ERLANG_ERTS_VER)
+	rm -rf releases
+	rm -rf lib
 
 $(builddir)/tests/atconfig: $(builddir)/config.status
 	cd $(builddir) && $(SHELL) ./config.status $@
@@ -126,8 +147,3 @@ CLEANFILES = \
   %LC_REL_NAME%-release.boot \
   %LC_REL_NAME%-release.script \
   %LC_REL_NAME%-release.tar.gz
-
-clean-local:
-	rm -rf erts-$(ERLANG_ERTS_VER)
-	rm -rf releases
-	rm -rf lib

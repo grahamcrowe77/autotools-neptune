@@ -207,8 +207,13 @@ rename_dir_values(DirContent, Name) ->
 	  end,
     lists:map(Fun, DirContent).
 
-write_app_structure(Tree, #{outdir := OutDir}) ->
-    Name = maps:get(directory, Tree),
+write_app_structure(Tree, #{outdir := OutDir, type := Type}) ->
+    Name = case Type of
+	       <<"app">> ->
+		   maps:get(directory, Tree);
+	       <<"rel">> ->
+		   <<(maps:get(directory, Tree))/binary, "-system">>
+	   end,
     Dir = filename:join(OutDir, Name),
     case file:read_file_info(Dir) of
 	{ok, #file_info{}} ->
@@ -328,18 +333,18 @@ square_test_() ->
 	parse_args(["--help"])),
      ?_assertMatch(
 	#{author := <<"John Doe">>,
-	  name := <<"myapp">>},
+	  name := <<"uranus">>},
 	parse_args(["--author", "John Doe",
-	       "myapp"])),
+	       "uranus"])),
      ?_assertMatch(
 	#{author := <<"John Doe">>,
 	  email := <<"john.doe@neptune.org">>,
 	  type := <<"application">>,
-	  name := <<"myapp">>},
+	  name := <<"uranus">>},
 	parse_args(["--author", "John Doe",
 	       "--email", "john.doe@neptune.org",
 	       "--type", "application",
-	       "myapp"])),
+	       "uranus"])),
      ?_assertMatch(
 	#{author := <<"John Doe">>,
 	  email := <<"john.doe@neptune.org">>,
@@ -355,7 +360,7 @@ read_template_tree_test_() ->
     [?_assertMatch(
 	{ok, #{content := _}},
 	read_template_tree(
-	  #{name => <<"myapp">>,
+	  #{name => <<"uranus">>,
 	    sysconfdir => os:getenv("SYSCONFDIR"),
 	    type => "app"}))
     ].
@@ -365,14 +370,14 @@ substitute_dir_values_test_() ->
 	begin
 	    {ok, Tree} =
 		read_template_tree(
-		  #{name => <<"myapp">>,
+		  #{name => <<"uranus">>,
 		    sysconfdir => os:getenv("SYSCONFDIR"),
 		    type => "app"}),
 	    Content = maps:get(content, Tree),
 	    Substitutions =
-		[{<<"%LC_APP_NAME%">>,<<"myapp">>},
-		 {<<"%UC_APP_NAME%">>,<<"MYAPP">>},
-		 {<<"%TC_APP_NAME%">>,<<"Myapp">>},
+		[{<<"%LC_APP_NAME%">>,<<"uranus">>},
+		 {<<"%UC_APP_NAME%">>,<<"URANUS">>},
+		 {<<"%TC_APP_NAME%">>,<<"Uranus">>},
 		 {<<"%APP_VERSION%">>,<<"0.1.0">>},
 		 {<<"%ERLANG_ERTS_VER%">>,<<"11">>},
 		 {<<"%EMAIL%">>,<<"undisclosed email address">>},
@@ -392,10 +397,10 @@ rename_files_test_() ->
 	begin
 	    {ok, Tree} =
 		read_template_tree(
-		  #{name => <<"myapp">>,
+		  #{name => <<"uranus">>,
 		    sysconfdir => os:getenv("SYSCONFDIR"),
 		    type => "app"}),
-	    rename_files(Tree, #{name => <<"myapp">>})
+	    rename_files(Tree, #{name => <<"uranus">>})
 	end)
     ].
 

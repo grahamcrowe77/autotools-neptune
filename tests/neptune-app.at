@@ -1,14 +1,14 @@
 AT_SETUP([neptune-app])
 AT_KEYWORDS([blackbox])
 APP_TEST_SETUP
-AT_CHECK([neptune myapp],[0])
-find myapp -type f -ls
-NrFiles=`find myapp -type f -ls | wc -l`
+AT_CHECK([neptune uranus],[0])
+find uranus -type f -ls
+NrFiles=`find uranus -type f -ls | wc -l`
 if test ${NrFiles} != 30; then
   echo Unexpected number of files: ${NrFiles}, expected 30
   AT_CHECK([false],[0])
 fi
-AT_CHECK([cd myapp && ./bootstrap.sh],[0],[ignore],[ignore])
-AT_CHECK([mkdir build && cd build && ../myapp/configure],[0],[ignore],[ignore])
+AT_CHECK([cd uranus && ./bootstrap.sh],[0],[ignore],[ignore])
+AT_CHECK([mkdir build && cd build && ../uranus/configure],[0],[ignore],[ignore])
 APP_TEST_CLEANUP
 AT_CLEANUP
