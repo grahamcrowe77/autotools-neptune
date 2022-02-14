@@ -1,33 +1,41 @@
--module(neptune_in_source_tree_SUITE).
+-module(neptune_app_out_SUITE).
 
 -include_lib("common_test/include/ct.hrl").
 
 -compile(export_all).
 
 groups() ->
-    [{build_in_src_tree,
+    [{build_out_of_src_tree,
       [configure,
        build,
        mostlyclean,
-       maintainer_clean
-      ]}].
+       maintainer_clean,
+       remove
+      ]}
+    ].
 
 all() ->
     [neptune,
      bootstrap,
-     {group, build_in_src_tree}].
+     make_build_dir,
+     {group, build_out_of_src_tree}
+    ].
 
 init_per_suite(Config) ->
-    {ok, CWD} = file:get_cwd(),
-    Env = os:env(),
-    SrcDir = filename:join(CWD, uranus),
-    BuildDir = SrcDir,
+    Env = env(Config),
+    ok = ct:pal("~p", [Env]),
+    file:del_dir_r("/tmp/uranus"),
+    file:del_dir_r("/tmp/build"),
+    SrcDir = filename:join("/tmp", uranus),
+    BuildDir = filename:join("/tmp", build),
     [{env, Env},
+     {tmpdir, "/tmp"},
      {srcdir, SrcDir},
      {builddir, BuildDir} | Config].
 
 end_per_suite(_Config) ->
-    ok.
+    file:del_dir_r("/tmp/neptune"),
+    file:del_dir_r("/tmp/build").
 
 init_per_group(_, Config) ->
     Config.
@@ -35,13 +43,7 @@ init_per_group(_, Config) ->
 end_per_group(_, _Config) ->
     ok.
 
-init_per_testcase(_, Config) ->
-    Config.
-
-end_per_testcase(_, _Config) ->
-    ok.
-
-neptune_env() ->
+env(_Config) ->
     TopBuildDir = ct:get_config(top_builddir),
     Env = os:env(),
     {"PATH", Path} = lists:keyfind("PATH", 1, Env),
@@ -53,12 +55,12 @@ neptune_env() ->
 	    lists:keyreplace("PATH", 1, Env, {"PATH", NewPath})
     end.
 
-neptune(_Config) ->
-    Env = neptune_env(),
-    {ok, CWD} = file:get_cwd(),
+neptune(Config) ->
+    Env = ?config(env, Config),
+    Dir = ?config(tmpdir, Config),
     Port = open_port(
-	     {spawn, "neptune uranus"},
-	     port_opts(CWD, Env)),
+	     {spawn, "neptune --outdir " ++ Dir ++ " uranus"},
+	     port_opts(Dir, Env)),
     ok = get_response(Port, []).
 
 bootstrap(Config) ->
@@ -69,11 +71,16 @@ bootstrap(Config) ->
 	     port_opts(SrcDir, Env)),
     ok = get_response(Port, []).
 
+make_build_dir(Config) ->
+    BuildDir = ?config(builddir, Config),
+    ok = file:make_dir(BuildDir).
+
 configure(Config) ->
     Env = ?config(env, Config),
+    SrcDir = ?config(srcdir, Config),
     BuildDir = ?config(builddir, Config),
     Port = open_port(
-	     {spawn, "./configure"},
+	     {spawn, filename:join(SrcDir, configure)},
 	     port_opts(BuildDir, Env)),
     ok = get_response(Port, []).
 
@@ -100,6 +107,10 @@ maintainer_clean(Config) ->
 	     {spawn, "make maintainer-clean"},
 	     port_opts(BuildDir, Env)),
     ok = get_response(Port, []).
+
+remove(Config) ->
+    SrcDir = ?config(srcdir, Config),
+    ok = file:del_dir_r(SrcDir).
 
 port_opts(Dir, Env) ->
     [{cd, Dir},

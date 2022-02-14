@@ -368,7 +368,11 @@ EXTRA_DIST = \
   $(builddir)/bin/neptune.in \
   $(builddir)/tests/atconfig \
   $(builddir)/tests/package.m4 \
-  $(TESTSOURCES)
+  $(TESTSOURCES) \
+  $(srcdir)/tests/neptune_app_in_SUITE.erl \
+  $(srcdir)/tests/neptune_app_out_SUITE.erl \
+  $(srcdir)/tests/neptune_rel_in_SUITE.erl \
+  $(srcdir)/tests/neptune_rel_out_SUITE.erl
 
 if ERL_DOCGEN
 EXTRA_DIST += \
