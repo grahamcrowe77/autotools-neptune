@@ -19,7 +19,7 @@
   </header>
   <section>
     <title>Creation</title>
-    <p>Creating skeleton code for an Erlang Application is very simple. The
+    <p>Creating skeleton code for an Erlang application is very simple. The
     following examples assume the name of the application to be
     <c>uranus</c>.Just type the following:</p>
     <pre><input>$ neptune uranus</input></pre>

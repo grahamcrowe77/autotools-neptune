@@ -19,30 +19,99 @@
   </header>
   <section>
     <title>Creation</title>
-    <p></p>
+    <p>Creating skeleton code for an Erlang system release is very simple. The
+    following examples assume the name of the application to be
+    <c>uranus</c>.Just type the following:</p>
+    <pre><input>$ neptune --type rel uranus</input></pre>
+    <p>This will result in a directory <c>uranus-system</c> being created in the
+    current working directory. The <c>uranus-system</c> directoryincludes
+    minimal skeleton code that builds, is documented and has some basic
+    tests.</p>
   </section>
   <section>
     <title>Bootstrap</title>
-    <p></p>
+    <title>Bootstrap</title>
+    <p>To bootstrap <c>uranus-system</c> type the following:</p>
+    <pre><input>$ cd uranus-system</input>
+<input>$ ./bootstrap.sh</input></pre>
+    <p>This prepares the build system by running <c>autoreconf</c> resulting
+    in a <c>configure</c> script generated from <c>configure.ac</c>. This step
+    will fail if GNU Autotools is not installed on your system. You must
+    install those tools before proceeding and how those tools are installed
+    depends upon your system's package managment system, e.g. <c>apt</c>,
+    <c>zypper</c> etc...</p>
   </section>
   <section>
     <title>Configuration</title>
-    <p></p>
+    <p>To configure <c>uranus</c> run the configure script:</p>
+    <pre><input>$ ./configure</input></pre>
+    <p>This may fail if <c>configure</c> fails to detect an Erlang/OTP. It
+    will provide warnings if <c>xsltproc</c> or <c>fop</c> are not installed
+    since the documentation depend upon those. Install missing dependencies on
+    your system before proceeding. Note that the <c>configure</c> script also
+    checks for dependencies to other all Erlang applications that the system
+    release depends upon. The template only includes basic dependencies to
+    applications distributed with Erlang/OTP. However your system release may
+    well have dependencies to other Erlang applications distributed by other
+    means. These dependencies must also be installed. Neptune provides
+    skeleton code with a build system and does not attempt to handle
+    dependencies behind the scenes, intentionally.</p>
   </section>
   <section>
     <title>Build</title>
-    <p></p>
+    <p>To build <c>uranus-system</c> type the following</p>
+    <pre><input>$ make</input></pre>
+    <p>This assembles the ERTS, dependent applications, boot and config files
+    locally ready for installation. It generates the documentation including
+    <c>man</c> pages, <c>html</c> pages and a <c>PDF</c> file.</p>
   </section>
   <section>
     <title>Test</title>
-    <p></p>
+    <p>To test <c>uranus-system</c> type the following:</p>
+    <pre><input>$ make check</input></pre>
+    <p>This runs all tests, including <c>dialyzer</c>, a static analysis tool
+    which is a must run tool given Erlang's dynamic typing system and a simple
+    blackbox smoke test that verifies the system release starts and remains
+    online. These are all run through <c>autotest</c> to provide an overall
+    summary of the test execution. <c>TESTSUITEFLAGS</c> can be used to select
+    scope and verbosity, e.g. the following will run only the common test
+    suites in verbose mode:</p>
+    <pre><input>$ make check TESTSUITEFLAGS="-v -k ct"</input></pre>
+    <p>The test run data is not saved unless a test fails.</p>
   </section>
   <section>
     <title>Installation</title>
-    <p></p>
+    <p>It is possible to install <c>uranus-system</c> to a staging directory
+    and run tests on that:</p>
+    <pre><input>$ make install DESTDIR=$PWD/inst</input>
+<input>$ make installcheck DESTDIR=$PWD/inst</input></pre>
+    <p>The following installs <c>uranus-system</c> on your system and runs
+    tests on the installation:</p>
+    <pre><input>$ sudo make install</input>
+<input>$ make installcheck</input></pre>
+    <p>By default <c>uranus-system</c> will be installed with prefix set to
+    <c>/usr/local</c>. This setting is controlled by the <c>./configure</c>
+    script, e.g.</p>
+    <pre><input>$ .configure --prefix=/usr</input></pre>
   </section>
   <section>
     <title>Distribution</title>
-    <p></p>
+    <p>It is possible to make a tarball distribution. Even though this utility
+    is somewhat obsolete given the ubiquity of distributed version control
+    systems such as <c>Git</c> the following rules help check the correctness
+    and completeness of the build system:</p>
+    <pre><input>$ make dist &amp;&amp; make distcheck</input></pre>
+  </section>
+  <section>
+    <title>Out of Source Tree Builds</title>
+    <p>It is possible to build <c>uranus-system</c> outside the source code
+    tree. This is also a somewhat obsolete feature given ubiquity of
+    distributed version control systems such as <c>Git</c> since the need to
+    keep the source clean an untainted is managed by the version control
+    system. However it also helps check the correctness and completeness of
+    the build system:</p>
+    <pre><input>$ make maintainer-clean</input>
+<input>$ mkdir -pv ../build &amp;&amp; ../build</input>
+<input>$ ../uranus-system/configure &amp;&amp; make &amp;&amp; make check</input></pre>
   </section>
 </chapter>

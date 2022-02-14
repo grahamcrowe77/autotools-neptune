@@ -32,8 +32,8 @@ sudo make install
 # Using Neptune
 
 ## Erlang Applications
-By default the neptune creates an Erlang application template in the current
-working directory. The following creates an Erlang application named `uranus`:
+By default the neptune creates an Erlang application template. The following
+creates an Erlang application named `uranus` in the current working directory:
 ```bash
 neptune uranus
 cd uranus
@@ -87,4 +87,29 @@ make check TESTSUITEFLAGS="-k dialyzer" # Dialyzer test
 make check TESTSUITEFLAGS="-k eunit"    # Eunit tests
 make check TESTSUITEFLAGS="-k ct"       # Common tests
 make check TESTSUITEFLAGS="-k blackbox" # Blackbox tests
+```
+
+## Erlang System Releases
+Neptune can be used to create an Erlang system release. The following creates
+an Erlang application named `uranus` in a directory named `uranus-system `in
+the current working directory:
+```bash
+neptune --type rel uranus
+cd uranus-system
+find . -type f
+```
+
+This will create an Erlang system release that includes an application named
+`uranus` in the minimum set of applications bundled in the system
+release. Note that build system of the created Erlang application needs to be
+boot strapped and thus depends on GNU Autotools being installed on your system:
+```bash
+./bootstrap.sh
+./configure
+make
+make check
+make install DESTDIR=$PWD/inst
+make installcheck DESTDIR=$PWD/inst
+make dist
+make distcheck
 ```

@@ -1,6 +1,4 @@
-* TODO Create tools for generating template repos
-** TODO neptune-rel
-** TODO release documentation
+* TODO release documentation
 All app documentation bound together, e.g. kernel, stdlib ..., uranus
 * TODO github flow
 Why does neptune-ct.at terminate erlang when run on github and still appear to pass?
