@@ -16,7 +16,6 @@ AC_PATH_PROG(CT_RUN, ct_run)
 AC_PATH_PROG(XSLTPROC, xsltproc)
 AC_PATH_PROG(FOP, fop)
 AC_PATH_PROG(SED, sed)
-AC_PROG_MKDIR_P
 
 # Checks for libraries.
 ## Run time and Dialyzer build time dependencies

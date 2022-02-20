@@ -156,6 +156,7 @@ $(TESTSUITE): $(TESTSOURCES) $(builddir)/tests/package.m4
 # --------------------------------------
 if ERL_DOCGEN
 %LC_APP_NAME%_docdir=$(ERLANG_INSTALL_LIB_DIR_%LC_APP_NAME%)/doc
+%LC_APP_NAME%_htmldir=$(ERLANG_INSTALL_LIB_DIR_%LC_APP_NAME%)/doc/html
 
 if XSLTPROC
 # --------------------------------------
@@ -201,48 +202,50 @@ if XSLTPROC
 # --------------------------------------
 # html pages
 # --------------------------------------
-HTMLS = $(addprefix $(builddir)/doc/, $(addsuffix .html, $(MODULES)))
+HTMLS = $(addprefix $(builddir)/doc/html/, $(addsuffix .html, $(MODULES)))
 HTMLS += \
-  $(builddir)/doc/%LC_APP_NAME%.html \
-  $(builddir)/doc/overview.html \
-  $(builddir)/doc/users_guide.html
+  $(builddir)/doc/html/%LC_APP_NAME%.html \
+  $(builddir)/doc/html/overview.html
 
 HTML_EXTRAS = \
-  $(builddir)/doc/erlang-logo.png \
-  $(builddir)/doc/stylesheet.css
+  $(builddir)/doc/html/erlang-logo.png \
+  $(builddir)/doc/html/otp_doc.css
 
-%LC_APP_NAME%_doc_DATA = \
-  $(builddir)/doc/index.html \
+%LC_APP_NAME%_html_DATA = \
+  $(builddir)/doc/html/index.html \
   $(HTMLS) \
   $(HTML_EXTRAS)
 
 if FOP
-%LC_APP_NAME%_doc_DATA += $(builddir)/doc/%LC_APP_NAME%.pdf
+%LC_APP_NAME%_pdfdir=$(ERLANG_INSTALL_LIB_DIR_%LC_APP_NAME%)/doc/pdf
+%LC_APP_NAME%_pdf_DATA = $(builddir)/doc/pdf/%LC_APP_NAME%.pdf
 endif #FOP
 
 
 erl_docgen_privdir = $(ERLANG_LIB_DIR_erl_docgen)/priv
 
-$(builddir)/doc/erlang-logo.png: $(erl_docgen_privdir)/images/erlang-logo.png
+$(builddir)/doc/html/erlang-logo.png: $(erl_docgen_privdir)/images/erlang-logo.png
+	$(MKDIR_P) $(@D)
 	$(AM_V_GEN)cp $< $@
 
-$(builddir)/doc/stylesheet.css: $(erl_docgen_privdir)/css/otp_doc.css
+$(builddir)/doc/html/otp_doc.css: $(erl_docgen_privdir)/css/otp_doc.css
+	$(MKDIR_P) $(@D)
 	$(AM_V_GEN)cp $< $@
 
-$(HTMLS): $(builddir)/doc/index.html
+$(HTMLS): $(builddir)/doc/html/index.html
 
-$(builddir)/doc/index.html: $(builddir)/doc/book.xml $(XMLS)
+$(builddir)/doc/html/index.html: $(builddir)/doc/book.xml $(XMLS)
 	$(AM_V_GEN)$(XSLTPROC) --output $@ \
 	  --stringparam outdir $(builddir) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
 	  --stringparam topdocdir . \
-	  --stringparam pdfdir . \
+	  --stringparam pdfdir ../pdf \
 	  --stringparam pdfname %LC_APP_NAME% \
 	  --xinclude \
 	  --stringparam gendate "`date +"%B %e, %Y"`" \
 	  --stringparam appname $(PACKAGE_NAME) \
 	  --stringparam appver $(PACKAGE_VERSION) \
-	  --stringparam stylesheet ./stylesheet.css \
+	  --stringparam stylesheet ./otp_doc.css \
 	  --stringparam winprefix Erlang \
 	  --stringparam logo ./erlang-logo.png \
 	  --stringparam extra_front_page_info "" \
@@ -256,13 +259,14 @@ if FOP
 # --------------------------------------
 # pdf pages
 # --------------------------------------
-$(builddir)/doc/%LC_APP_NAME%.pdf: $(builddir)/doc/%LC_APP_NAME%.fo
+$(builddir)/doc/pdf/%LC_APP_NAME%.pdf: $(builddir)/doc/pdf/%LC_APP_NAME%.fo
+	$(MKDIR_P) $(@D)
 	$(AM_V_GEN)$(FOP) -fo $< -pdf $@ 2> /dev/null
 
 endif #FOP
 if XSLTPROC
 
-$(builddir)/doc/%LC_APP_NAME%.fo: $(HTMLS) $(XMLS)
+$(builddir)/doc/pdf/%LC_APP_NAME%.fo: $(HTMLS) $(XMLS)
 	$(AM_V_GEN)$(XSLTPROC) \
 	  --output $@ \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
@@ -321,13 +325,13 @@ MOSTLYCLEANFILES += \
   $(MAN3S) \
   $(XMLS) \
   $(HTMLS) \
-  $(builddir)/doc/index.html \
-  $(builddir)/doc/%LC_APP_NAME%.fo \
-  $(builddir)/doc/%LC_APP_NAME%.pdf \
+  $(builddir)/doc/html/index.html \
+  $(builddir)/doc/pdf/%LC_APP_NAME%.fo \
+  $(builddir)/doc/pdf/%LC_APP_NAME%.pdf \
   $(builddir)/doc/ref_man.xml \
   $(builddir)/doc/book.xml \
-  $(builddir)/doc/erlang-logo.png \
-  $(builddir)/doc/stylesheet.css
+  $(builddir)/doc/html/erlang-logo.png \
+  $(builddir)/doc/html/otp_doc.css
 endif #ERL_DOCGEN
 
 if APPLE
