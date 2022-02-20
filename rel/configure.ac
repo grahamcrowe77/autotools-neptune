@@ -66,6 +66,7 @@ fi
 AC_CONFIG_FILES([Makefile %LC_REL_NAME%.rel])
 AC_CONFIG_FILES([tests/atlocal])
 AC_CONFIG_FILES([bin/%LC_REL_NAME%-system.sh], [chmod +x bin/%LC_REL_NAME%-system.sh])
+AC_CONFIG_FILES([doc/index.html])
 AC_OUTPUT
 cat << EOF
 ----------------------------------------------------------------------

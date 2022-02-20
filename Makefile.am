@@ -177,7 +177,36 @@ neptune_apptests_DATA = \
   app/tests/name_nif-eunit.at \
   app/tests/testsuite.at
 
-neptune_rel_sysconfdir = $(neptune_sysconfdir)/rel
+neptune_reldir = $(neptune_sysconfdir)/rel
+neptune_relbindir = $(neptune_sysconfdir)/rel/bin
+neptune_reldocdir = $(neptune_sysconfdir)/rel/doc
+neptune_relm4dir = $(neptune_sysconfdir)/rel/m4
+neptune_reltestsdir = $(neptune_sysconfdir)/rel/tests
+
+neptune_rel_DATA = \
+  rel/Makefile.am \
+  rel/README.md \
+  rel/bootstrap.sh \
+  rel/configure.ac \
+  rel/name.config \
+  rel/name.rel.in
+
+neptune_relbin_DATA = \
+rel/bin/name-system.sh.in
+
+neptune_reldoc_DATA = \
+rel/doc/index.html.in
+
+neptune_relm4_DATA = \
+rel/m4/erlang-rel.m4
+
+neptune_reltests_DATA = \
+  rel/tests/.gitignore \
+  rel/tests/atlocal.in \
+  rel/tests/local.at \
+  rel/tests/name-start.at \
+  rel/tests/testsuite.at \
+  rel/tests/name-dialyzer.at
 
 # --------------------------------------
 # Documentation
@@ -240,11 +269,11 @@ HTMLS += \
   $(builddir)/doc/releases.html
 
 HTML_EXTRAS = \
+  $(builddir)/doc/index.html \
   $(srcdir)/doc/neptune.jpg \
   $(builddir)/doc/stylesheet.css
 
 neptune_doc_DATA = \
-  $(builddir)/doc/index.html \
   $(HTMLS) \
   $(HTML_EXTRAS)
 
@@ -365,6 +394,11 @@ EXTRA_DIST = \
   $(neptune_appm4_DATA) \
   $(neptune_appsrc_DATA) \
   $(neptune_apptests_DATA) \
+  $(neptune_rel_DATA) \
+  $(neptune_relbin_DATA) \
+  $(neptune_reldoc_DATA) \
+  $(neptune_relm4_DATA) \
+  $(neptune_reltests_DATA) \
   $(builddir)/bin/neptune.in \
   $(builddir)/tests/atconfig \
   $(builddir)/tests/package.m4 \

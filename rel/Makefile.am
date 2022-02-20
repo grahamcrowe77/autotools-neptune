@@ -1,5 +1,13 @@
 ACLOCAL_AMFLAGS = -I m4
 
+APPS = \
+  $(ERLANG_LIB_DIR_kernel) \
+  $(ERLANG_LIB_DIR_stdlib) \
+  $(ERLANG_LIB_DIR_sasl) \
+  $(ERLANG_LIB_DIR_uranus)
+
+ALT_ERLANG_DOC_ROOT = /usr/share/doc/packages/erlang-doc
+
 ATFILES = @ATFILES@
 
 TESTSUITE = $(builddir)/tests/testsuite
@@ -31,19 +39,44 @@ ERTS_MODS = \
   erl_child_setup \
   inet_gethost
 
-ERTS = $(addprefix $(top_builddir)/erts-$(ERLANG_ERTS_VER)/bin/, $(ERTS_MODS))
+ERTS = $(addprefix $(builddir)/erts-$(ERLANG_ERTS_VER)/bin/, $(ERTS_MODS))
 
 dist_pkgbin_DATA = \
   $(ERTS) \
-  $(top_builddir)/releases/$(PACKAGE_VERSION)/$(PACKAGE_NAME).config
+  $(builddir)/releases/$(PACKAGE_VERSION)/$(PACKAGE_NAME).config
 
-$(top_builddir)/releases/$(PACKAGE_VERSION)/$(PACKAGE_NAME).config: $(PACKAGE_NAME).config
+$(builddir)/releases/$(PACKAGE_VERSION)/$(PACKAGE_NAME).config: $(PACKAGE_NAME).config
 	$(MKDIR_P) $(@D) && cp -p $< $@
 
-$(top_builddir)/erts-$(ERLANG_ERTS_VER)/bin/%: $(ERLANG_ROOT_DIR)/erts-$(ERLANG_ERTS_VER)/bin/%
+$(builddir)/erts-$(ERLANG_ERTS_VER)/bin/%: $(ERLANG_ROOT_DIR)/erts-$(ERLANG_ERTS_VER)/bin/%
 	$(MKDIR_P) $(@D) && cp -p $< $@
 
+
+if ERL_DOCGEN
+erl_docgen_privdir = $(ERLANG_LIB_DIR_erl_docgen)/priv
+
+$(builddir)/doc/otp_doc.css: $(erl_docgen_privdir)/css/otp_doc.css
+	$(AM_V_GEN)cp $< $@
+
+.PHONY:
+docs: lib $(builddir)/doc/otp_doc.css
+	cp -r $(ERLANG_ROOT_DIR)/erts-$(ERLANG_ERTS_VER)/doc \
+	  erts-$(ERLANG_ERTS_VER) 2>/dev/null || true; \
+	cp -r $(ALT_ERLANG_DOC_ROOT)/erts-$(ERLANG_ERTS_VER)/doc \
+	  erts-$(ERLANG_ERTS_VER) 2>/dev/null || true; \
+	for app in $(APPS); do \
+	  cp -r $(ERLANG_ROOT_DIR)/lib/`basename $$app`/doc \
+	    lib/`basename $$app` 2>/dev/null || true; \
+	  cp -r $(ALT_ERLANG_DOC_ROOT)/lib/`basename $$app`/doc \
+	    lib/`basename $$app` 2>/dev/null || true; \
+	done;
+endif #ERL_DOCGEN
+
+if ERL_DOCGEN
+all-local: docs
+else
 all-local: lib
+endif #ERL_DOCGEN
 
 install-data-local:
 	$(MKDIR_P) $(DESTDIR)$(pkgdatadir)
@@ -147,3 +180,18 @@ CLEANFILES = \
   %LC_REL_NAME%-release.boot \
   %LC_REL_NAME%-release.script \
   %LC_REL_NAME%-release.tar.gz
+
+# --------------------------------------
+# Distribution
+# --------------------------------------
+EXTRA_DIST = \
+  $(srcdir)/bootstrap.sh \
+  $(builddir)/bin/%LC_REL_NAME%-system.in \
+  $(builddir)/tests/atconfig \
+  $(builddir)/tests/package.m4 \
+  $(TESTSOURCES)
+
+if ERL_DOCGEN
+EXTRA_DIST += \
+  $(srcdir)/doc/index.html.in
+endif #ERL_DOCGEN

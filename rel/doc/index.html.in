@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>%TC_REL_NAME% Applications</title>
+  <style type="text/css">
+<!--
+    BODY           { background: #fefefe; color: #111; }
+
+    BODY           { font-family: sans-serif }
+
+    .header        { background: #333; color: #fefefe; }
+
+    a:link    { color: #303f9f; text-decoration: none }
+    a:active  { color: #303f9f; text-decoration: none }
+    a:visited { color: #303f9f; text-decoration: none }
+
+    h1,h2{
+        text-align: center;
+    }
+    table {
+     margin: 1em 10%;
+     width: 80%;
+     border-collapse: collapse;
+     min-width: 50%;
+    }
+
+    table, th, td {
+     border: 1px solid #666;
+    }
+
+    th, td {
+     padding: 0.5em;
+     text-align: left;
+    }
+
+    tr:hover {
+     background-color: #f5f5f5;
+    }
+
+    tr:nth-child(even) {
+     background-color: #f2f2f2;
+    }
+
+    th {
+     background-color: #777;
+     color: #fefefe;
+    }
+-->
+  </style>
+</head>
+
+<body>
+    <h1>%TC_REL_NAME% Applications</h1>
+    <table class="group-table">
+      <tr class=app>
+	<td>
+          <a href="../erts-@ERLANG_ERTS_VER@/doc/html/index.html"
+          target="_top">erts @ERLANG_ERTS_VER@</a>
+	</td>
+	<td>Functionality necessary to run the Erlang System itself</td>
+      </tr>
+      <tr class=app>
+	<td>
+          <a href="../lib/kernel-@ERLANG_LIB_VER_kernel@/doc/html/index.html"
+          target="_top">kernel @ERLANG_LIB_VER_kernel@</a>
+	</td>
+	<td>Functionality necessary to run the Erlang System itself</td>
+      </tr>
+      <tr class=app>
+	<td>
+          <a href="../lib/stdlib-@ERLANG_LIB_VER_stdlib@/doc/html/index.html"
+          target="_top">stdlib @ERLANG_LIB_VER_stdlib@</a>
+	</td>
+	<td>The Erlang standard libraries</td>
+      </tr>
+      <tr class=app>
+	<td>
+          <a href="../lib/sasl-@ERLANG_LIB_VER_sasl@/doc/html/index.html"
+          target="_top">sasl @ERLANG_LIB_VER_sasl@</a>
+	</td>
+	<td>The System Architecture Support Libraries is a set of tools for release upgrades and alarm handling etc.</td>
+      </tr>
+      <tr class=app>
+	<td>
+          <a href="../lib/%LC_REL_NAME%-@ERLANG_LIB_VER_%LC_REL_NAME%@/doc/html/index.html"
+          target="_top">%LC_REL_NAME% @ERLANG_LIB_VER_%LC_REL_NAME%@</a>
+	</td>
+	<td>%LC_REL_NAME% application code</td>
+      </tr>
+    </table>
+</body>
+</html>

@@ -27,6 +27,7 @@
       <item>bootstrap.sh</item>
       <item>c_src/name.c</item>
       <item>configure.ac</item>
+      <item>doc/index.html.in</item>
       <item>.gitignore</item>
       <item>m4/erlang-rel.m4</item>
       <item>Makefile.am</item>
