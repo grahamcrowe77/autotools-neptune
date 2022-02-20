@@ -51,27 +51,6 @@ $(builddir)/releases/$(PACKAGE_VERSION)/$(PACKAGE_NAME).config: $(PACKAGE_NAME).
 $(builddir)/erts-$(ERLANG_ERTS_VER)/bin/%: $(ERLANG_ROOT_DIR)/erts-$(ERLANG_ERTS_VER)/bin/%
 	$(MKDIR_P) $(@D) && cp -p $< $@
 
-
-if ERL_DOCGEN
-erl_docgen_privdir = $(ERLANG_LIB_DIR_erl_docgen)/priv
-
-$(builddir)/doc/otp_doc.css: $(erl_docgen_privdir)/css/otp_doc.css
-	$(AM_V_GEN)cp $< $@
-
-.PHONY:
-docs: lib $(builddir)/doc/otp_doc.css
-	cp -r $(ERLANG_ROOT_DIR)/erts-$(ERLANG_ERTS_VER)/doc \
-	  erts-$(ERLANG_ERTS_VER) 2>/dev/null || true; \
-	cp -r $(ALT_ERLANG_DOC_ROOT)/erts-$(ERLANG_ERTS_VER)/doc \
-	  erts-$(ERLANG_ERTS_VER) 2>/dev/null || true; \
-	for app in $(APPS); do \
-	  cp -r $(ERLANG_ROOT_DIR)/lib/`basename $$app`/doc \
-	    lib/`basename $$app` 2>/dev/null || true; \
-	  cp -r $(ALT_ERLANG_DOC_ROOT)/lib/`basename $$app`/doc \
-	    lib/`basename $$app` 2>/dev/null || true; \
-	done;
-endif #ERL_DOCGEN
-
 if ERL_DOCGEN
 all-local: docs
 else
@@ -79,7 +58,9 @@ all-local: lib
 endif #ERL_DOCGEN
 
 install-data-local:
-	$(MKDIR_P) $(DESTDIR)$(pkgdatadir)
+	$(MKDIR_P) $(DESTDIR)$(pkgdatadir)/erts-$(ERLANG_ERTS_VER)/doc
+	cp -vr erts-$(ERLANG_ERTS_VER)/doc \
+	  $(DESTDIR)$(pkgdatadir)/erts-$(ERLANG_ERTS_VER)
 	cp -vr lib $(DESTDIR)$(pkgdatadir)
 	cp -vr releases $(DESTDIR)$(pkgdatadir)
 	cp -v $(PACKAGE_NAME).config \
@@ -162,15 +143,29 @@ $(TESTSUITE): $(TESTSOURCES) $(builddir)/tests/package.m4
 # Documentation
 # --------------------------------------
 if ERL_DOCGEN
+pkgdocdir=$(pkgdatadir)/doc
 
-if XSLTPROC
+dist_pkgdoc_DATA = \
+  $(builddir)/doc/index.html \
+  $(builddir)/doc/otp_doc.css
 
-if FOP
+erl_docgen_privdir = $(ERLANG_LIB_DIR_erl_docgen)/priv
 
-endif #FOP
+$(builddir)/doc/otp_doc.css: $(erl_docgen_privdir)/css/otp_doc.css
+	$(AM_V_GEN)cp $< $@
 
-endif #XSLTPROC
-
+.PHONY:
+docs: lib $(builddir)/doc/otp_doc.css
+	cp -r $(ERLANG_ROOT_DIR)/erts-$(ERLANG_ERTS_VER)/doc \
+	  erts-$(ERLANG_ERTS_VER) 2>/dev/null || true; \
+	cp -r $(ALT_ERLANG_DOC_ROOT)/erts-$(ERLANG_ERTS_VER)/doc \
+	  erts-$(ERLANG_ERTS_VER) 2>/dev/null || true; \
+	for app in $(APPS); do \
+	  cp -r $(ERLANG_ROOT_DIR)/lib/`basename $$app`/doc \
+	    lib/`basename $$app` 2>/dev/null || true; \
+	  cp -r $(ALT_ERLANG_DOC_ROOT)/lib/`basename $$app`/doc \
+	    lib/`basename $$app` 2>/dev/null || true; \
+	done;
 endif #ERL_DOCGEN
 
 # --------------------------------------
@@ -179,7 +174,9 @@ endif #ERL_DOCGEN
 CLEANFILES = \
   %LC_REL_NAME%-release.boot \
   %LC_REL_NAME%-release.script \
-  %LC_REL_NAME%-release.tar.gz
+  %LC_REL_NAME%-release.tar.gz \
+  $(builddir)/doc/index.html \
+  $(builddir)/doc/otp_doc.css
 
 # --------------------------------------
 # Distribution

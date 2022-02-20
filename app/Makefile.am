@@ -238,7 +238,7 @@ $(builddir)/doc/html/index.html: $(builddir)/doc/book.xml $(XMLS)
 	$(AM_V_GEN)$(XSLTPROC) --output $@ \
 	  --stringparam outdir $(builddir) \
 	  --stringparam docgen $(ERLANG_LIB_DIR_erl_docgen) \
-	  --stringparam topdocdir . \
+	  --stringparam topdocdir ../../../../doc \
 	  --stringparam pdfdir ../pdf \
 	  --stringparam pdfname %LC_APP_NAME% \
 	  --xinclude \
