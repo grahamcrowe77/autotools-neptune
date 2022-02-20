@@ -48,6 +48,7 @@ fi
 ]]).
 
 m4_define([CT_RUN], [[set -x
+chmod -R +w ${abs_top_srcdir}/tests
 if test "x${AUTOTEST_PATH}" == "x${at_testdir}"; then
   export ct_runcmd="${CT_RUN} \
     -pa ${abs_top_builddir}/ebin \
